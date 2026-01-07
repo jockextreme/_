@@ -4,70 +4,358 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sulasok - Premium Video Gallery</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3348/3348043.png">
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body { font-family: 'Poppins', sans-serif; }
-    .card { transition: all 0.4s ease; }
-    .card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); }
-    .play-icon { transition: all 0.3s ease; }
-    .card:hover .play-icon { transform: scale(1.2); opacity: 0; }
-    .video-preview { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.5s ease; }
-    .card:hover .video-preview { opacity: 1; }
-    .thumbnail-img { transition: opacity 0.5s ease; }
-    .card:hover .thumbnail-img { opacity: 0; }
-    .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: loading 1.8s infinite; }
-    .dark .skeleton { background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%); }
-    @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
-    .heart { transition: all 0.3s ease; }
-    .heart.active { color: #ef4444; transform: scale(1.2); }
+    .card {
+      transition: all 0.5s ease;
+      break-inside: avoid;
+      margin-bottom: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .card:hover {
+      transform: translateY(-20px);
+      box-shadow: 0 35px 70px rgba(0, 0, 0, 0.5);
+    }
+    .play-icon {
+      transition: all 0.4s ease;
+    }
+    .card:hover .play-icon {
+      transform: scale(1.4);
+    }
+    .thumbnail-img {
+      transition: transform 10s ease;
+    }
+    .card:hover .thumbnail-img {
+      transform: scale(1.15);
+    }
+    #back-to-top { transition: all 0.3s ease; }
+    #back-to-top:hover { transform: scale(1.15); }
+    .grid-cols-compact { column-count: 5; }
+    .grid-cols-comfort { column-count: 4; }
+    .grid-cols-spacious { column-count: 3; }
+    @media (max-width: 1280px) { .grid-cols-compact { column-count: 4; } }
+    @media (max-width: 1024px) { .grid-cols-compact, .grid-cols-comfort { column-count: 3; } }
+    @media (max-width: 768px) { .grid-cols-compact, .grid-cols-comfort, .grid-cols-spacious { column-count: 2; } }
+    @media (max-width: 640px) { .grid-cols-compact, .grid-cols-comfort, .grid-cols-spacious { column-count: 1; } }
   </style>
 </head>
-<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen transition-colors duration-500">
-  <!-- Navigation and rest of HTML same as before -->
-  <header class="sticky top-0 z-40 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 shadow-sm">
-    <div class="container mx-auto px-6 py-4 flex items-center justify-between">
-      <h1 class="text-3xl font-bold text-indigo-600 dark:text-indigo-400">Sulasok</h1>
+<body class="bg-gradient-to-br from-gray-900 via-purple-900 to-gray-900 text-white min-h-screen">
+  <!-- Header -->
+  <header class="sticky top-0 z-40 bg-black/60 backdrop-blur-xl border-b border-white/10">
+    <div class="container mx-auto px-6 py-6 flex flex-wrap items-center justify-between gap-6">
       <div class="flex items-center gap-6">
-        <button id="favorites-btn" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-          <i class="fas fa-heart text-red-500"></i>
-          <span>Favorites (<span id="fav-count">0</span>)</span>
+        <h1 class="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-pink-500">Sulasok</h1>
+        <p class="text-xl opacity-75 hidden sm:block">Exclusive Video Collection</p>
+      </div>
+      <div class="flex flex-wrap items-center gap-6">
+        <button id="random-btn" class="px-6 py-3 bg-gradient-to-r from-pink-600 to-purple-600 hover:from-pink-700 hover:to-purple-700 rounded-xl flex items-center gap-3 transition shadow-2xl">
+          <i class="fas fa-dice text-xl"></i> Surprise Me
         </button>
-        <p id="video-count" class="text-lg text-gray-600 dark:text-gray-400">Loading...</p>
-        <button id="theme-toggle" class="p-3 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition">
+        <div class="flex items-center gap-2 bg-white/5 rounded-xl p-2 backdrop-blur">
+          <button data-view="compact" class="view-btn px-4 py-2 rounded-lg text-sm">Compact</button>
+          <button data-view="comfort" class="view-btn px-4 py-2 rounded-lg text-sm bg-white/20">Comfort</button>
+          <button data-view="spacious" class="view-btn px-4 py-2 rounded-lg text-sm">Spacious</button>
+        </div>
+        <p id="video-count" class="text-lg opacity-80">Loading videos...</p>
+        <button id="theme-toggle" class="p-3 rounded-xl bg-white/10 hover:bg-white/20 transition">
           <i class="fas fa-moon text-xl"></i>
         </button>
       </div>
     </div>
   </header>
 
-  <main class="container mx-auto px-6 py-12 max-w-7xl">
-    <div id="video-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8"></div>
+  <!-- Main Grid -->
+  <main class="container mx-auto px-6 py-16 max-w-7xl">
+    <div id="video-grid" class="grid-cols-comfort"></div>
 
-    <div id="loading" class="text-center py-16 hidden">
-      <i class="fas fa-circle-notch fa-spin text-4xl text-indigo-500 mb-4"></i>
-      <p class="text-xl text-gray-600 dark:text-gray-400">Loading more videos...</p>
+    <div id="loading" class="text-center py-20 hidden">
+      <i class="fas fa-circle-notch fa-spin text-5xl text-pink-400 mb-6"></i>
+      <p class="text-2xl">Loading more videos...</p>
     </div>
 
-    <div id="end" class="text-center py-20 hidden">
-      <p class="text-2xl font-medium text-gray-500 dark:text-gray-400">No more videos available</p>
-    </div>
-
-    <div id="error" class="text-center py-20 hidden">
-      <p class="text-2xl font-medium text-red-500">Something went wrong. Please refresh.</p>
+    <div id="end" class="text-center py-24 hidden">
+      <p class="text-3xl font-light opacity-60">End of gallery</p>
     </div>
   </main>
 
-  <!-- Modal same as before -->
-  <div id="modal" class="fixed inset-0 bg-black/90 hidden flex items-center justify-center z-50 backdrop-blur-md">
-    <div class="relative w-full max-w-5xl mx-6">
-      <button id="close-modal" class="absolute -top-14 right-0 text-white text-4xl hover:text-indigo-400 transition">
+  <!-- Back to Top -->
+  <button id="back-to-top" class="fixed bottom-10 right-10 z-50 p-5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-full shadow-2xl hidden transition">
+    <i class="fas fa-arrow-up text-2xl"></i>
+  </button>
+
+  <!-- Modal -->
+  <div id="modal" class="fixed inset-0 bg-black/95 hidden flex items-center justify-center z-50 backdrop-blur-md overflow-y-auto">
+    <div class="relative w-full max-w-6xl mx-6 my-12">
+      <button id="close-modal" class="absolute -top-16 right-0 text-white text-5xl hover:text-pink-400 transition">
         <i class="fas fa-times"></i>
       </button>
-      <div class="aspect-video bg-black rounded-xl overflow-hidden shadow-2xl mb-6">
+      <div class="aspect-video bg-black rounded-2xl overflow-hidden shadow-2xl mb-10">
         <iframe id="video-frame" class="w-full h-full" frameborder="0" allowfullscreen allow="autoplay"></iframe>
       </div>
+      <div class="flex justify-center gap-6 flex-wrap mb-12">
+        <button class="share-btn px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 rounded-xl flex items-center gap-3 shadow-xl" data-type="copy">
+          <i class="fas fa-link"></i> Copy Link
+        </button>
+        <button class="share-btn px-8 py-4 bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 rounded-xl flex items-center gap-3 shadow-xl" data-type="whatsapp">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </button>
+        <button class="share-btn px-8 py-4 bg-gradient-to-r from-gray-800 to-black hover:from-black hover:to-gray-900 rounded-xl flex items-center gap-3 shadow-xl" data-type="twitter">
+          <i class="fab fa-x-twitter"></i> X
+        </button>
+        <button class="share-btn px-8 py-4 bg-gradient-to-r from-indigo-600 to-blue-600 hover:from-indigo-700 hover:to-blue-700 rounded-xl flex items-center gap-3 shadow-xl" data-type="facebook">
+          <i class="fab fa-facebook"></i> Facebook
+        </button>
+      </div>
+      <div>
+        <h3 class="text-3xl font-bold mb-8 text-center">Related Videos</h3>
+        <div id="related-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Working CORS proxy (2026 confirmed)
+    const PROXY = 'https://api.allorigins.win/raw?url=';
+    const API_BASE = PROXY + encodeURIComponent('https://betadash-api-swordslush-production.up.railway.app/sulasok');
+
+    const grid = document.getElementById('video-grid');
+    const loading = document.getElementById('loading');
+    const end = document.getElementById('end');
+    const videoCount = document.getElementById('video-count');
+    const modal = document.getElementById('modal');
+    const videoFrame = document.getElementById('video-frame');
+    const relatedGrid = document.getElementById('related-grid');
+    const backToTop = document.getElementById('back-to-top');
+    const randomBtn = document.getElementById('random-btn');
+    const themeToggle = document.getElementById('theme-toggle');
+    const viewBtns = document.querySelectorAll('.view-btn');
+
+    let page = 1;
+    let allVideos = [];
+    let currentVideo = null;
+    let loadingData = false;
+    let hasMore = true;
+
+    // Grid view
+    const savedView = localStorage.getItem('sulasok_grid_view') || 'comfort';
+    grid.className = `grid-cols-${savedView}`;
+    document.querySelector(`[data-view="${savedView}"]`).classList.add('bg-white/20');
+
+    viewBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.dataset.view;
+        grid.className = `grid-cols-${view}`;
+        localStorage.setItem('sulasok_grid_view', view);
+        viewBtns.forEach(b => b.classList.remove('bg-white/20'));
+        btn.classList.add('bg-white/20');
+      });
+    });
+
+    // Theme toggle
+    if (localStorage.theme === 'light') document.documentElement.classList.remove('dark');
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      themeToggle.querySelector('i').classList.toggle('fa-moon');
+      themeToggle.querySelector('i').classList.toggle('fa-sun');
+    });
+
+    // Mock data
+    function mockViews() {
+      const views = ['3.2K', '8.7K', '15.4K', '22.1K', '47.9K', '68.3K'];
+      return views[Math.floor(Math.random() * views.length)] + ' views';
+    }
+
+    function mockDate() {
+      const dates = ['1 day ago', '3 days ago', '1 week ago', '2 weeks ago', '1 month ago'];
+      return dates[Math.floor(Math.random() * dates.length)];
+    }
+
+    function mockDuration() {
+      const mins = Math.floor(Math.random() * 12) + 3;
+      const secs = Math.floor(Math.random() * 60).toString().padStart(2, '0');
+      return `${mins}:${secs}`;
+    }
+
+    function createSkeleton() {
+      const card = document.createElement('div');
+      card.className = 'card bg-white/5';
+      card.innerHTML = `
+        <div class="aspect-video bg-white/10 rounded-t-2xl"></div>
+        <div class="p-6 space-y-4">
+          <div class="h-8 bg-white/10 rounded w-4/5"></div>
+          <div class="h-4 bg-white/10 rounded w-full"></div>
+        </div>
+      `;
+      return card;
+    }
+
+    function renderVideos(videos) {
+      videos.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'card shadow-2xl cursor-pointer';
+
+        card.innerHTML = `
+          <div class="aspect-video relative overflow-hidden rounded-t-2xl">
+            <img src="${item.thumbnail}" alt="${item.title}" loading="lazy" class="thumbnail-img w-full h-full object-cover">
+            <div class="absolute inset-0 flex items-center justify-center bg-black/30">
+              <i class="fas fa-play-circle play-icon text-8xl drop-shadow-2xl"></i>
+            </div>
+            <div class="absolute bottom-4 right-4 bg-black/70 px-3 py-2 rounded-lg text-lg font-bold">
+              ${mockDuration()}
+            </div>
+            <a href="${item.iframeUrl}" target="_blank" class="absolute top-4 right-4 bg-black/70 p-3 rounded-xl hover:bg-pink-600 transition" title="Open in new tab">
+              <i class="fas fa-external-link-alt text-xl"></i>
+            </a>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold line-clamp-2 mb-4">${item.title}</h3>
+            <div class="flex justify-between text-sm opacity-70">
+              <span>${mockViews()}</span>
+              <span>${mockDate()}</span>
+            </div>
+          </div>
+        `;
+
+        card.addEventListener('click', (e) => {
+          if (e.target.closest('a')) return;
+          currentVideo = item;
+          videoFrame.src = item.iframeUrl;
+          modal.classList.remove('hidden');
+          modal.classList.add('flex');
+          renderRelated();
+          document.querySelectorAll('.share-btn').forEach(btn => {
+            btn.onclick = () => shareVideo(item.iframeUrl, item.title, btn.dataset.type);
+          });
+        });
+
+        grid.appendChild(card);
+      });
+    }
+
+    function renderRelated() {
+      relatedGrid.innerHTML = '';
+      const related = allVideos
+        .filter(v => v.iframeUrl !== currentVideo?.iframeUrl)
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 6);
+
+      related.forEach(item => {
+        const relCard = document.createElement('div');
+        relCard.className = 'cursor-pointer rounded-2xl overflow-hidden shadow-xl border border-white/10';
+        relCard.innerHTML = `
+          <img src="${item.thumbnail}" loading="lazy" class="w-full h-40 object-cover">
+          <div class="p-4 bg-black/50">
+            <p class="text-sm font-medium line-clamp-2">${item.title}</p>
+          </div>
+        `;
+        relCard.onclick = () => {
+          currentVideo = item;
+          videoFrame.src = item.iframeUrl;
+          renderRelated();
+          document.querySelectorAll('.share-btn').forEach(btn => {
+            btn.onclick = () => shareVideo(item.iframeUrl, item.title, btn.dataset.type);
+          });
+        };
+        relatedGrid.appendChild(relCard);
+      });
+    }
+
+    function shareVideo(url, title, platform) {
+      const text = encodeURIComponent(`Watch: ${title}`);
+      const shareUrl = encodeURIComponent(url);
+      let link = '';
+      switch(platform) {
+        case 'copy':
+          navigator.clipboard.writeText(url);
+          alert('Link copied!');
+          return;
+        case 'whatsapp':
+          link = `https://wa.me/?text=${text}%20${shareUrl}`;
+          break;
+        case 'twitter':
+          link = `https://twitter.com/intent/tweet?text=${text}&url=${shareUrl}`;
+          break;
+        case 'facebook':
+          link = `https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`;
+          break;
+      }
+      window.open(link, '_blank');
+    }
+
+    async function loadVideos() {
+      if (loadingData || !hasMore) return;
+      loadingData = true;
+      loading.classList.remove('hidden');
+
+      for (let i = 0; i < 6; i++) grid.appendChild(createSkeleton());
+
+      try {
+        const response = await fetch(`${API_BASE}?page=${page}`);
+        const data = await response.json();
+
+        document.querySelectorAll('.card').forEach(card => {
+          if (card.querySelector('.bg-white\\/10')) card.remove();
+        });
+
+        if (data.results && data.results.length > 0) {
+          allVideos = allVideos.concat(data.results);
+          renderVideos(data.results);
+          videoCount.textContent = `Showing ${allVideos.length} videos`;
+          page++;
+        } else {
+          hasMore = false;
+          end.classList.remove('hidden');
+        }
+      } catch (err) {
+        console.error(err);
+        end.innerHTML = '<p class="text-red-400 text-3xl">Error loading — refresh page</p>';
+        end.classList.remove('hidden');
+      }
+
+      loading.classList.add('hidden');
+      loadingData = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 1000) loadVideos();
+      backToTop.classList.toggle('hidden', window.scrollY < 600);
+    });
+
+    backToTop.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    randomBtn.onclick = () => {
+      if (allVideos.length > 0) {
+        const random = allVideos[Math.floor(Math.random() * allVideos.length)];
+        currentVideo = random;
+        videoFrame.src = random.iframeUrl;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        renderRelated();
+      }
+    };
+
+    modal.onclick = closeModal.onclick = (e) => {
+      if (e.target === modal || e.target === closeModal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        videoFrame.src = '';
+      }
+    };
+
+    loadVideos();
+  </script>
+</body>
+  </html>      </div>
       <div class="flex justify-center gap-4 flex-wrap">
         <button class="share-btn px-5 py-3 bg-blue-600 hover:bg-blue-700 rounded-lg text-white flex items-center gap-2" data-type="copy">
           <i class="fas fa-link"></i> Copy Link
