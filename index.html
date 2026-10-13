@@ -6,6 +6,7 @@
 <title>therabyte — Heal with care, grow with nature</title>
 <meta name="author" content="LvDiagnostech">
 <meta name="description" content="Booking and intake for bodywork practitioners. Heal with care, grow with nature.">
+<meta name="theme-color" content="#2E7D32">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%231B5E20'/%3E%3Cstop offset='50%25' stop-color='%234CAF50'/%3E%3Cstop offset='100%25' stop-color='%238BC34A'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='url(%23g)' stroke-width='3.5'/%3E%3Ccircle cx='50' cy='31' r='9.5' fill='url(%23g)'/%3E%3Cpath d='M 32 62 C 32 46 40 42 50 42 C 60 42 68 46 68 62 L 68 73 L 32 73 Z' fill='url(%23g)'/%3E%3Cpath d='M 20 76 C 18 70 22 63 30 63 L 36 67 L 42 65 L 46 69 L 44 76 C 38 80 26 80 20 76 Z' fill='url(%23g)'/%3E%3Cpath d='M 80 76 C 82 70 78 63 70 63 L 64 67 L 58 65 L 54 69 L 56 76 C 62 80 74 80 80 76 Z' fill='url(%23g)'/%3E%3Cpath d='M 82 30 Q 92 20 102 28 Q 100 42 88 42 Q 80 38 82 30 Z' fill='%232E7D32'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -56,12 +57,22 @@ tailwind.config = {
 * { border-color: rgb(var(--border)); }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
-  background: rgb(var(--bg)); color: rgb(var(--fg));
+  color: rgb(var(--fg));
   -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
   font-family: 'Inter', system-ui, sans-serif;
   font-feature-settings: 'cv02','cv03','cv04','cv11','tnum','ss01','cv09';
   overflow-x: hidden;
   font-size: 15px; line-height: 1.6;
+  background-color: rgb(var(--bg));
+  background-image:
+    radial-gradient(circle at 100% 0%, rgba(76,175,80,0.035) 0%, transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(139,195,74,0.03) 0%, transparent 45%);
+  background-attachment: fixed;
+}
+.dark body {
+  background-image:
+    radial-gradient(circle at 100% 0%, rgba(76,175,80,0.08) 0%, transparent 45%),
+    radial-gradient(circle at 0% 100%, rgba(139,195,74,0.05) 0%, transparent 45%);
 }
 .surface { background: rgb(var(--surface)); border: 1px solid rgb(var(--border)); }
 .surface-2 { background: rgb(var(--surface-2)); }
@@ -75,7 +86,7 @@ body {
 ::selection { background: rgba(76,175,80,0.25); color: rgb(var(--fg)); }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; } }
 
-/* ---------- Typography scale ---------- */
+/* ---------- Typography ---------- */
 h1, h2, h3, h4, h5 { font-family: 'Poppins', 'Inter', system-ui, sans-serif; letter-spacing: -0.022em; }
 .type-display { font-family: 'Poppins', sans-serif; font-weight: 800; letter-spacing: -0.038em; line-height: 1.02; }
 .type-h1 { font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: -0.028em; line-height: 1.1; }
@@ -89,10 +100,10 @@ h1, h2, h3, h4, h5 { font-family: 'Poppins', 'Inter', system-ui, sans-serif; let
 /* ---------- Nav ---------- */
 .nav-item { display: flex; align-items: center; gap: 11px; padding: 0 10px; min-height: 36px; border-radius: 7px; font-size: 13.5px; font-weight: 500; color: rgb(var(--muted)); transition: all .22s var(--ease-out-expo); cursor: pointer; text-decoration: none; position: relative; }
 .nav-item:hover { background: rgb(var(--surface-2)); color: rgb(var(--fg)); transform: translateX(2px); }
-.nav-item.active { background: rgba(46,125,50,0.10); color: rgb(var(--brand)); font-weight: 600; }
+.nav-item.active { background: linear-gradient(90deg, rgba(46,125,50,0.14) 0%, rgba(46,125,50,0.04) 100%); color: rgb(var(--brand)); font-weight: 600; }
 .nav-item::before { content: ''; position: absolute; left: 0; top: 50%; width: 3px; height: 0; border-radius: 3px; background: linear-gradient(180deg,#8BC34A,#2E7D32); transform: translateY(-50%); transition: height .3s var(--ease-out-expo); }
-.nav-item.active::before { height: 18px; }
-.dark .nav-item.active { background: rgba(129,199,132,0.15); color: rgb(180,204,169); }
+.nav-item.active::before { height: 20px; }
+.dark .nav-item.active { background: linear-gradient(90deg, rgba(129,199,132,0.20) 0%, rgba(129,199,132,0.05) 100%); color: rgb(180,204,169); }
 
 /* ---------- Buttons ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 13.5px; letter-spacing: -0.005em; border-radius: 8px; transition: transform .2s var(--ease-out-expo), box-shadow .25s ease, background .2s ease, color .2s ease, border-color .2s ease; cursor: pointer; white-space: nowrap; border: none; min-height: 38px; padding: 0 14px; position: relative; overflow: hidden; }
@@ -121,9 +132,7 @@ textarea.input { height: auto; padding: 10px 12px; resize: vertical; min-height:
 select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236E767C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; }
 @media (max-width: 640px) {
   .input, input.input, select.input, textarea.input { font-size: 16px; }
-  .type-display { font-size: clamp(2rem, 9vw, 3rem); }
   .btn-lg { min-height: 48px; padding: 0 20px; }
-  .list-row, .list-row-static { padding: 14px 16px; }
 }
 
 /* ---------- Cards ---------- */
@@ -142,7 +151,7 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .list-row-static { padding: 16px 18px; }
 .list-row-static + .list-row-static { border-top: 1px solid rgb(var(--border)); }
 
-/* ---------- Badges and chips ---------- */
+/* ---------- Badges / chips / tabs ---------- */
 .badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; letter-spacing: 0.005em; }
 .chip { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; padding: 0 12px; border-radius: 999px; font-size: 12.5px; font-weight: 500; cursor: pointer; transition: all .22s var(--ease-out-expo); white-space: nowrap; border: 1px solid transparent; }
 .chip:hover { transform: translateY(-1px); }
@@ -216,7 +225,7 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .svc-status.off { background: rgb(var(--surface-2)); color: rgb(var(--muted)); }
 
 .auth-panel { position: relative; background: linear-gradient(145deg, #2E7D32 0%, #1B5E20 60%, #0F2A12 100%); overflow: hidden; }
-.auth-panel::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 15% 15%, rgba(129,199,132,0.35) 0%, transparent 50%), radial-gradient(circle at 85% 85%, rgba(165,214,167,0.20) 0%, transparent 50%); }
+.auth-panel::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 15% 15%, rgba(129,199,132,0.40) 0%, transparent 50%), radial-gradient(circle at 85% 85%, rgba(165,214,167,0.25) 0%, transparent 50%); }
 .auth-panel::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
 
 .guide-step { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid rgb(var(--border)); }
@@ -252,10 +261,21 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .dark .group-credit-badge { background: rgba(129,199,132,0.12); color: rgb(165,214,167); border-color: rgba(129,199,132,0.22); }
 .dark .group-credit-badge:hover { background: rgba(129,199,132,0.22); }
 
+/* Credit icon (compact, sidebar header) */
+.credit-icon {
+  width: 30px; height: 30px; border-radius: 999px;
+  display: grid; place-items: center;
+  background: rgba(46,125,50,0.10); color: rgb(var(--brand));
+  transition: all .25s var(--ease-out-expo);
+  text-decoration: none;
+}
+.credit-icon:hover { background: rgba(46,125,50,0.20); transform: translateY(-1px) rotate(-8deg); box-shadow: 0 4px 12px -2px rgba(46,125,50,0.30); }
+.dark .credit-icon { background: rgba(129,199,132,0.15); color: rgb(165,214,167); }
+.dark .credit-icon:hover { background: rgba(129,199,132,0.28); }
+
 .trust-bar { display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap; }
 .trust-item { display: inline-flex; align-items: center; gap: 8px; color: rgb(var(--muted)); font-size: 12px; font-weight: 600; letter-spacing: -0.005em; opacity: 0.7; transition: opacity .25s ease; }
 .trust-item:hover { opacity: 1; }
-.trust-item svg { opacity: 0.9; }
 
 .demo-notice { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(250,204,21,0.10); color: #A16207; font-size: 11px; font-weight: 600; border: 1px solid rgba(250,204,21,0.25); }
 .dark .demo-notice { background: rgba(250,204,21,0.08); color: #FCD34D; border-color: rgba(250,204,21,0.20); }
@@ -269,8 +289,8 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .tb-logo-wordmark-lg { font-size: 18px; }
 
 .hero-mesh { position: relative; overflow: hidden; }
-.hero-mesh::before { content: ''; position: absolute; top: -20%; right: -10%; width: 60%; height: 80%; background: radial-gradient(circle, rgba(76,175,80,0.14) 0%, transparent 65%); pointer-events: none; animation: floatSlow 14s ease-in-out infinite; }
-.hero-mesh::after { content: ''; position: absolute; bottom: -20%; left: -10%; width: 50%; height: 70%; background: radial-gradient(circle, rgba(139,195,74,0.10) 0%, transparent 65%); pointer-events: none; animation: floatSlow 18s ease-in-out infinite reverse; }
+.hero-mesh::before { content: ''; position: absolute; top: -20%; right: -10%; width: 60%; height: 80%; background: radial-gradient(circle, rgba(76,175,80,0.16) 0%, transparent 65%); pointer-events: none; animation: floatSlow 14s ease-in-out infinite; }
+.hero-mesh::after { content: ''; position: absolute; bottom: -20%; left: -10%; width: 50%; height: 70%; background: radial-gradient(circle, rgba(139,195,74,0.12) 0%, transparent 65%); pointer-events: none; animation: floatSlow 18s ease-in-out infinite reverse; }
 @keyframes floatSlow { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(-20px, 20px); } }
 
 .prose-p { font-size: 15px; line-height: 1.75; color: rgb(var(--fg) / 0.78); }
@@ -279,34 +299,85 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .prose-list li { display: flex; gap: 12px; align-items: flex-start; color: rgb(var(--fg) / 0.78); }
 .prose-list li::before { content: ''; flex-shrink: 0; width: 5px; height: 5px; border-radius: 50%; background: #4CAF50; margin-top: 11px; }
 
-/* ---------- ENHANCEMENTS: page transitions & reveals ---------- */
+/* ---------- Stat tiles with gradient accent ---------- */
+.stat-tile { position: relative; overflow: hidden; isolation: isolate; }
+.stat-tile::after {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, #4CAF50 40%, #8BC34A 60%, transparent);
+  opacity: 0; transition: opacity .35s ease;
+}
+.stat-tile:hover::after { opacity: .85; }
+
+/* ---------- Page transitions & reveals ---------- */
 @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 #root.page-enter > * { animation: pageIn .4s var(--ease-out-expo) both; }
 
 [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .75s var(--ease-out-expo), transform .75s var(--ease-out-expo); will-change: opacity, transform; }
 [data-reveal].revealed { opacity: 1; transform: translateY(0); }
+
+/* Staggered children */
+@keyframes staggerIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+[data-stagger] > * { opacity: 0; animation: staggerIn .55s var(--ease-out-expo) forwards; }
+[data-stagger] > *:nth-child(1) { animation-delay: .04s; }
+[data-stagger] > *:nth-child(2) { animation-delay: .09s; }
+[data-stagger] > *:nth-child(3) { animation-delay: .14s; }
+[data-stagger] > *:nth-child(4) { animation-delay: .19s; }
+[data-stagger] > *:nth-child(5) { animation-delay: .24s; }
+[data-stagger] > *:nth-child(6) { animation-delay: .29s; }
+[data-stagger] > *:nth-child(7) { animation-delay: .34s; }
+[data-stagger] > *:nth-child(8) { animation-delay: .39s; }
+[data-stagger] > *:nth-child(9) { animation-delay: .44s; }
+[data-stagger] > *:nth-child(10) { animation-delay: .49s; }
+[data-stagger] > *:nth-child(n+11) { animation-delay: .54s; }
+
 @media (prefers-reduced-motion: reduce) {
   [data-reveal] { opacity: 1 !important; transform: none !important; }
+  [data-stagger] > * { opacity: 1 !important; animation: none !important; }
   #root.page-enter > * { animation: none !important; }
 }
 
-/* Modal entrance already uses animate-fadeUp; strengthen close and backdrop blur */
 #modal-root .absolute.inset-0 { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 
-/* Sticky header shadow */
 header.sticky { transition: box-shadow .35s ease, background-color .35s ease; }
 body.scrolled header.sticky { box-shadow: 0 6px 24px -10px rgba(20,23,25,0.10); }
 
-/* Hero mock subtle float */
 .card.shadow-lift { animation: cardFloat 6s ease-in-out infinite; }
 @keyframes cardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 @media (prefers-reduced-motion: reduce) { .card.shadow-lift { animation: none; } }
 
-/* Chevron auto-anim */
-.list-row:hover .lucide-chevron-right,
-a.card:hover .lucide-arrow-right,
-button.card:hover .lucide-arrow-right { transform: translateX(3px); }
-.lucide-arrow-right { transition: transform .3s var(--ease-out-expo); }
+/* ---------- Sidebar ---------- */
+.app-sidebar { width: 256px; }
+
+/* Tablet rail: 768–1023px */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .app-sidebar { width: 68px !important; }
+  .app-sidebar .sb-hide { display: none !important; }
+  .app-sidebar .nav-item { justify-content: center; padding: 0 !important; gap: 0; }
+  .app-sidebar .nav-item::before { display: none; }
+  .app-sidebar .nav-item:hover { transform: none; }
+  .app-sidebar .sidebar-footer .sidebar-user-btn { justify-content: center; padding: 8px 0; }
+  .app-sidebar .sidebar-footer .logout-btn { justify-content: center; padding: 8px 0; }
+  .app-sidebar .sidebar-header { padding: 0 12px !important; justify-content: center; }
+  .app-sidebar .sidebar-header .sb-hide { display: none !important; }
+  .app-sidebar .sb-rail-only { display: inline-flex !important; }
+}
+.app-sidebar .sb-rail-only { display: none; }
+
+/* Messages container responsiveness */
+.messages-container {
+  height: calc(100dvh - 3.5rem - 72px);
+  max-height: calc(100dvh - 3.5rem - 72px);
+}
+@media (min-width: 768px) {
+  .messages-container {
+    height: calc(100dvh - 3.5rem);
+    max-height: calc(100dvh - 3.5rem);
+  }
+}
+.messages-thread { scroll-behavior: smooth; scrollbar-width: thin; }
+
+/* Error boundary */
+.error-boundary { max-width: 520px; margin: 80px auto; text-align: center; }
 
 @media print { .no-print { display: none !important; } body { background: white; } }
 </style>
@@ -327,11 +398,11 @@ const STORAGE_KEYS = {
   REVIEWS:'tb-reviews-v1', AVAILABILITY:'tb-availability-v1', INVOICES:'tb-invoices-v1',
   TIME_OFF:'tb-timeoff-v1', AVATAR:'tb-avatar-v1', THEME:'tb-theme', USER_SESSION:'tb-session-v1',
 };
-function persist(k, d) { try { localStorage.setItem(k, JSON.stringify(d)); } catch(e){} }
+function persist(k, d) { try { localStorage.setItem(k, JSON.stringify(d)); } catch(e){ if (e && e.name === 'QuotaExceededError') console.warn('[therabyte] storage quota exceeded for', k); } }
 function load(k, f) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : f; } catch(e) { return f; } }
 
 /* ============================================================
-   CREDIT CONFIG — LvDiagnostech
+   CREDIT CONFIG
    ============================================================ */
 const CREDIT = {
   name: 'LvDiagnostech',
@@ -394,6 +465,12 @@ function rerenderKeepingFocus(selector) {
     if (next) { next.focus(); try { next.setSelectionRange(start, end); } catch(e) {} }
   }
 }
+/* Debounced re-render for search inputs — 180ms */
+const _searchTimers = {};
+function debouncedRerender(selector, delay = 180) {
+  clearTimeout(_searchTimers[selector]);
+  _searchTimers[selector] = setTimeout(() => rerenderKeepingFocus(selector), delay);
+}
 function avatar(u, size=40){
   const isMe = State.user && State.user.id === u.id;
   const mySaved = isMe && State.savedAvatar && State.savedAvatar.userId === u.id ? State.savedAvatar.dataUrl : null;
@@ -408,6 +485,54 @@ function isDateInTimeOff(ds) { const d = startOfDay(new Date(ds)); return State.
 function getClientUpcoming() { if (!State.user) return null; const now = new Date(); return APPOINTMENTS.filter(a => a.client === State.user.id && a.status !== 'cancelled' && a.status !== 'completed' && a.status !== 'no-show' && new Date(a.start) > now).sort((a,b) => new Date(a.start) - new Date(b.start))[0] || null; }
 const AREA_PRICING = { head:50, neck:50, shoulders:100, 'upper-back':100, arms:75, hands:50, 'lower-back':100, glutes:75, thighs:75, calves:50, feet:50 };
 function areaAddOn(id) { return AREA_PRICING[id] || 50; }
+
+/* ============================================================
+   MOCK API LAYER
+   Mirrors the shape of a real backend. Swap the bodies for
+   fetch() calls and the rest of the app doesn't change.
+   ============================================================ */
+const API = {
+  async createAppointment(payload) {
+    const collide = APPOINTMENTS.some(a => {
+      if (a.status === 'cancelled' || a.status === 'no-show') return false;
+      if (a.practitioner !== payload.practitioner) return false;
+      const aStart = new Date(a.start);
+      const aEnd = new Date(aStart.getTime() + (a.duration || 60) * 60000);
+      const pStart = new Date(payload.start);
+      const pEnd = new Date(pStart.getTime() + (payload.duration || 60) * 60000);
+      return pStart < aEnd && pEnd > aStart;
+    });
+    if (collide) throw new Error('SLOT_CONFLICT');
+    const appt = { id: 'ap' + Date.now(), ...payload };
+    APPOINTMENTS.push(appt);
+    saveAll();
+    return appt;
+  },
+  async updateAppointment(id, patch) {
+    const a = getAppt(id);
+    if (!a) throw new Error('NOT_FOUND');
+    Object.assign(a, patch);
+    saveAll();
+    return a;
+  },
+  async sendMessage(convoId, fromId, text) {
+    let c = CONVERSATIONS.find(x => x.id === convoId);
+    if (!c) throw new Error('NOT_FOUND');
+    const msg = { id: 'm' + Date.now(), from: fromId, text, at: new Date().toISOString(), read: false };
+    c.messages.push(msg);
+    c.lastAt = msg.at;
+    c.unread = 0;
+    persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS);
+    return msg;
+  },
+  async markComplete(id) {
+    const a = getAppt(id);
+    if (!a) throw new Error('NOT_FOUND');
+    a.status = 'completed';
+    saveAll();
+    return a;
+  },
+};
 
 /* ============================================================
    SEED DATA
@@ -632,14 +757,19 @@ function renderThemeToggle() {
   $$('[data-theme-toggle]').forEach(s => { s.innerHTML = html; });
   iconEl();
 }
+
+/* ---------- Toast (capped at 3 visible) ---------- */
 function toast(msg, kind='success') {
-  const k = { success:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'}, error:{bg:'#B91C1C',ic:'alert-circle'}, info:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'info'}, warning:{bg:'#A16207',ic:'alert-triangle'} }[kind] || {bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'};
+  const k = { success:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'}, error:{bg:'#B91C1C',ic:'alert-circle'}, info:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'info'}, warning:{bg:'#A16207',ic:'alert-triangle'} }[kind] || { success:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'} }[kind] || {bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'};
+  const root = $('#toast-root');
+  // Cap: if 3+ toasts, remove the oldest
+  while (root.children.length >= 3) root.removeChild(root.firstElementChild);
   const el = document.createElement('div');
   el.className = 'pointer-events-auto surface shadow-lift rounded-xl px-4 py-3 flex items-center gap-3';
   el.style.animation = 'fadeUp .35s cubic-bezier(0.16,1,0.3,1) both';
   el.setAttribute('role', kind === 'error' ? 'alert' : 'status');
   el.innerHTML = `<div class="w-7 h-7 rounded-full grid place-items-center text-white shrink-0" style="background:${k.bg}">${icon(k.ic, 14)}</div><div class="text-sm font-medium flex-1">${esc(msg)}</div>`;
-  $('#toast-root').appendChild(el); iconEl();
+  root.appendChild(el); iconEl();
   setTimeout(() => { el.style.transition='all .35s cubic-bezier(0.16,1,0.3,1)'; el.style.opacity='0'; el.style.transform='translateX(24px) scale(.96)'; setTimeout(() => el.remove(), 350); }, 3000);
 }
 
@@ -693,10 +823,10 @@ function modalKeydown(e) {
 }
 
 /* ============================================================
-   BRAND LOGO
+   BRAND LOGO — supports icon-only mode
    ============================================================ */
 let _logoCounter = 0;
-function LogoMark(small) {
+function LogoMark(small, iconOnly) {
   _logoCounter++;
   const size = small ? 30 : 34;
   const uid = 'tbLg' + _logoCounter;
@@ -719,7 +849,7 @@ function LogoMark(small) {
         <path d="M 86 32 Q 94 30 98 30" stroke="#A3E635" stroke-width="1" fill="none" stroke-linecap="round"/>
       </svg>
     </span>
-    <span class="tb-logo-wordmark ${small ? 'tb-logo-wordmark-sm' : 'tb-logo-wordmark-lg'}">therabyte</span>
+    ${iconOnly ? '' : `<span class="tb-logo-wordmark ${small ? 'tb-logo-wordmark-sm' : 'tb-logo-wordmark-lg'}">therabyte</span>`}
   </a>`;
 }
 
@@ -810,7 +940,7 @@ function SectionHeader({ title, subtitle, action }) {
 
 function StatTile({ label, value, hint, iconName, tone = 'brand' }) {
   return `
-  <div class="card p-5">
+  <div class="stat-tile card p-5">
     <div class="flex items-start justify-between gap-3">
       <div class="text-[10px] font-bold tracking-[0.14em] uppercase muted">${esc(label)}</div>
       <div class="w-7 h-7 rounded-md grid place-items-center bg-${tone}-500/12 text-${tone}-600 shrink-0">${icon(iconName, 12)}</div>
@@ -935,7 +1065,7 @@ function ContentSection({ title, children }) {
 function P(text) { return `<p class="prose-p">${text}</p>`; }
 function UL(items) { return `<ul class="prose-list space-y-2">${items.map(i => `<li><span>${i}</span></li>`).join('')}</ul>`; }
 
-/* ---------- About ---------- */
+/* ---------- Static pages (unchanged content) ---------- */
 function PageAbout() {
   return StaticPageLayout({
     active: 'about',
@@ -974,7 +1104,6 @@ function PageAbout() {
   });
 }
 
-/* ---------- Privacy ---------- */
 function PagePrivacy() {
   return StaticPageLayout({
     active: 'privacy',
@@ -1033,7 +1162,6 @@ function PagePrivacy() {
   });
 }
 
-/* ---------- Terms ---------- */
 function PageTerms() {
   return StaticPageLayout({
     active: 'terms',
@@ -1106,7 +1234,6 @@ function PageTerms() {
   });
 }
 
-/* ---------- Help Center ---------- */
 function PageHelp() {
   const cats = [
     { title:'Getting started', items:[
@@ -1548,49 +1675,62 @@ function AppShell(page) {
   const unreadMsgs = CONVERSATIONS.filter(c => c.participants.includes(u.id) && c.unread).length;
   return `
   <div class="min-h-screen flex relative">
-    <aside class="hidden lg:flex flex-col w-60 border-r border-[rgb(var(--border))] bg-[rgb(var(--surface))] sticky top-0 h-screen shrink-0 relative z-10 no-print">
-      <div class="px-4 h-14 flex items-center justify-between border-b border-[rgb(var(--border))] gap-2">
-        <a href="#/app/dashboard">${LogoMark(true)}</a>
-        ${GroupCreditBadge()}
+    <aside class="app-sidebar hidden md:flex flex-col border-r border-[rgb(var(--border))] bg-[rgb(var(--surface))] sticky top-0 h-screen shrink-0 relative z-10 no-print">
+      <div class="sidebar-header px-3 h-14 flex items-center justify-between gap-2 border-b border-[rgb(var(--border))]">
+        <a href="#/app/dashboard" class="min-w-0 flex-1 flex items-center justify-center lg:justify-start">
+          <span class="lg:hidden">${LogoMark(true, true)}</span>
+          <span class="hidden lg:inline-flex">${LogoMark(true)}</span>
+        </a>
+        <a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer" class="credit-icon hidden lg:grid shrink-0" title="Built by ${esc(CREDIT.name)}" aria-label="Built by ${esc(CREDIT.name)}">
+          ${icon('zap', 12)}
+        </a>
       </div>
       <nav class="flex-1 overflow-y-auto px-2.5 py-4 space-y-0.5 no-scrollbar">
         ${nav.map(n => {
           const active = path === 'app/' + n.route || path.startsWith('app/' + n.route + '/');
-          return `<a href="#/app/${n.route}" class="nav-item ${active?'active':''}">${icon(n.icon, 16)}<span>${n.label}</span>${n.route === 'messages' && unreadMsgs ? `<span class="ml-auto text-[10px] font-bold text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${unreadMsgs}</span>` : ''}</a>`;
+          return `<a href="#/app/${n.route}" class="nav-item ${active?'active':''}" title="${esc(n.label)}">${icon(n.icon, 16)}<span class="sb-hide">${n.label}</span>${n.route === 'messages' && unreadMsgs ? `<span class="sb-hide ml-auto text-[10px] font-bold text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${unreadMsgs}</span>` : ''}${n.route === 'messages' && unreadMsgs ? `<span class="sb-rail-only absolute top-1 right-1 w-1.5 h-1.5 rounded-full" style="background:#4CAF50"></span>` : ''}</a>`;
         }).join('')}
         <div class="divider my-3"></div>
-        <a href="#/help" class="nav-item">${icon('help-circle', 16)}<span>Help Center</span></a>
-        <a href="#/about" class="nav-item">${icon('info', 16)}<span>About</span></a>
+        <a href="#/help" class="nav-item" title="Help Center">${icon('help-circle', 16)}<span class="sb-hide">Help Center</span></a>
+        <a href="#/about" class="nav-item" title="About">${icon('info', 16)}<span class="sb-hide">About</span></a>
       </nav>
-      <div class="p-2.5 border-t border-[rgb(var(--border))]">
-        <button onclick="navigate('/app/settings')" class="w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-[rgb(var(--surface-2))] transition text-left">
+      <div class="px-3 py-2 border-t border-[rgb(var(--border))] sb-hide">
+        <div class="flex items-center justify-between text-[10px] muted">
+          <span>Built by</span>
+          <a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer" class="font-semibold text-brand-600 hover:underline inline-flex items-center gap-0.5">
+            ${esc(CREDIT.name)}${icon('arrow-up-right', 8)}
+          </a>
+        </div>
+      </div>
+      <div class="sidebar-footer p-2.5 border-t border-[rgb(var(--border))] space-y-1">
+        <button onclick="navigate('/app/settings')" class="sidebar-user-btn w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-[rgb(var(--surface-2))] transition text-left" title="${esc(u.name)}">
           ${avatar(u, 32)}
-          <div class="min-w-0 flex-1">
+          <div class="sb-hide min-w-0 flex-1">
             <div class="text-[13px] font-semibold truncate">${esc(u.name)}</div>
             <div class="text-[11px] muted truncate flex items-center gap-1.5">${roleLabel}${u.verified ? `<span class="text-brand-600">· ${icon('badge-check', 9)}</span>` : ''}</div>
           </div>
         </button>
-        <button onclick="logout()" class="w-full mt-1 flex items-center gap-2.5 p-2 rounded-lg hover:bg-[rgb(var(--surface-2))] transition text-left muted hover:text-[rgb(var(--fg))]">
+        <button onclick="logout()" class="logout-btn w-full flex items-center gap-2.5 p-2 rounded-lg hover:bg-[rgb(var(--surface-2))] transition text-left muted hover:text-[rgb(var(--fg))]" title="Sign out">
           ${icon('log-out', 14)}
-          <span class="text-[13px] font-medium">Sign out</span>
+          <span class="sb-hide text-[13px] font-medium">Sign out</span>
         </button>
       </div>
     </aside>
     <div class="flex-1 min-w-0 flex flex-col">
       <header class="sticky top-0 z-30 backdrop-blur-xl bg-[rgb(var(--bg))]/85 border-b border-[rgb(var(--border))] no-print">
         <div class="h-14 px-4 sm:px-6 flex items-center gap-2">
-          <a href="#/app/dashboard" class="lg:hidden">${LogoMark(true)}</a>
+          <a href="#/app/dashboard" class="md:hidden">${LogoMark(true)}</a>
           <div class="ml-auto flex items-center gap-1 sm:gap-2">
-            <div class="lg:hidden">${GroupCreditBadge()}</div>
+            <div class="md:hidden">${GroupCreditBadge()}</div>
             <div data-theme-toggle class="hidden sm:block"></div>
             <a href="#/app/notifications" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Notifications">${icon('bell', 17)}${unreadNotifs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose2-500"></span>' : ''}</a>
             <a href="#/app/messages" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Messages">${icon('message-circle', 17)}${unreadMsgs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style="background:#4CAF50"></span>' : ''}</a>
           </div>
         </div>
       </header>
-      <main class="flex-1 pb-24 lg:pb-8">${page}</main>
+      <main class="flex-1 pb-24 md:pb-8">${page}</main>
     </div>
-    <nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 backdrop-blur-xl bg-[rgb(var(--surface))]/95 border-t border-[rgb(var(--border))] no-print">
+    <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 backdrop-blur-xl bg-[rgb(var(--surface))]/95 border-t border-[rgb(var(--border))] no-print">
       <div class="px-1 grid grid-cols-5 items-end" style="height:72px">${mobileNavItems(u, path)}</div>
     </nav>
   </div>`;
@@ -1657,7 +1797,7 @@ function PageDashboard() {
   return `
   <div class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
     ${PageHeader({ eyebrow:`${greeting}, ${u.first}`, title: fmtDate(today, {weekday:'long', month:'long', day:'numeric'}), description: todaysAppts.length ? `${todaysAppts.length} appointment${todaysAppts.length === 1 ? '' : 's'} on your books today.` : 'Nothing on the books today.', action: `<a href="#/app/calendar" class="btn btn-sm btn-outline">${icon('calendar', 13)} Calendar</a>` })}
-    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8">
+    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-8" data-stagger>
       ${StatTile({ label:'Today', value: todaysAppts.length, hint:`appointment${todaysAppts.length === 1 ? '' : 's'}`, iconName:'calendar-check' })}
       ${StatTile({ label:'This month', value: fmtMoney(revenue), hint:'earned', iconName:'wallet' })}
       ${StatTile({ label:'Active clients', value: clientCount, hint:'total', iconName:'users' })}
@@ -1666,7 +1806,7 @@ function PageDashboard() {
     <div class="mb-8">
       ${SectionHeader({ title:'Today', subtitle: `${todaysAppts.length} appointment${todaysAppts.length === 1 ? '' : 's'}` })}
       ${todaysAppts.length ? `
-        <div class="list-container">
+        <div class="list-container" data-stagger>
           ${todaysAppts.map(a => {
             const c = getUser(a.client); const s = getService(a.service);
             const areas = (a.areas || []).map(x => getArea(x)).filter(Boolean);
@@ -1690,14 +1830,14 @@ function PageDashboard() {
     ${areaRanked.length ? `
       <div class="card p-6 mb-8">
         <div class="flex items-center justify-between mb-5 flex-wrap gap-2"><div><div class="type-h3 text-[15px]">What your clients ask for</div><div class="text-xs muted mt-0.5">Across your last ${recent.length} sessions</div></div><a href="#/app/reports" class="text-xs font-semibold text-brand-600 hover:underline flex items-center gap-1">Full report ${icon('arrow-right', 12)}</a></div>
-        <div class="space-y-4">${areaRanked.map(([k, v]) => { const area = getArea(k); if (!area) return ''; return `<div><div class="flex items-center justify-between mb-1.5 type-small"><span class="font-medium">${esc(area.label)}</span><span class="muted text-xs">${v} session${v > 1 ? 's' : ''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full" style="width:${(v/maxCount)*100}%;background:linear-gradient(90deg,#8BC34A,#2E7D32)"></div></div></div>`; }).join('')}</div>
+        <div class="space-y-4">${areaRanked.map(([k, v]) => { const area = getArea(k); if (!area) return ''; return `<div><div class="flex items-center justify-between mb-1.5 type-small"><span class="font-medium">${esc(area.label)}</span><span class="muted text-xs">${v} session${v > 1 ? 's' : ''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full chart-bar" style="width:${(v/maxCount)*100}%;background:linear-gradient(90deg,#8BC34A,#2E7D32)"></div></div></div>`; }).join('')}</div>
       </div>
     ` : ''}
 
     ${upcoming.length ? `
       <div>
         ${SectionHeader({ title:'Coming up', action: `<a href="#/app/appointments" class="text-xs font-semibold text-brand-600 hover:underline flex items-center gap-1">See all ${icon('arrow-right', 12)}</a>` })}
-        <div class="list-container">
+        <div class="list-container" data-stagger>
           ${upcoming.map(a => { const c = getUser(a.client); const s = getService(a.service); return `<div class="list-row" onclick="navigate('/app/appointments/${a.id}')"><div class="flex items-center gap-3">${avatar(c, 34)}<div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${esc(c.name)}</div><div class="text-xs muted truncate mt-0.5">${esc(s?.name || '')} · ${fmtDateTime(a.start)}</div></div>${icon('chevron-right', 14, 'muted shrink-0')}</div></div>`; }).join('')}
         </div>
       </div>
@@ -1726,7 +1866,7 @@ function PageClientDashboard() {
     ${next ? (() => {
       const pr = getUser(next.practitioner); const s = getService(next.service);
       const areas = (next.areas || []).map(x => getArea(x)?.label).filter(Boolean);
-      return `<div class="card p-6 border-l-4 !border-l-brand-500 mb-8">
+      return `<div class="card p-6 border-l-4 !border-l-brand-500 mb-8" data-stagger>
         <div class="flex flex-wrap items-center gap-4">
           <div class="w-12 h-12 rounded-xl grid place-items-center shrink-0 text-white" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${icon('calendar-check', 22)}</div>
           <div class="flex-1 min-w-0">
@@ -1882,7 +2022,7 @@ function groupByDateLocal(items, getDate, opts = {}) {
     if (!list.length) return;
     if (key === 'past') list.reverse();
     out += `<div class="flex items-center gap-3 mt-7 mb-3"><div class="text-[11px] font-bold uppercase tracking-wider muted">${labels[key]}</div><div class="text-[11px] muted">·</div><div class="text-[11px] muted">${list.length}</div><div class="flex-1 h-px bg-[rgb(var(--border))]"></div></div>`;
-    out += `<div class="list-container">${list.map(opts.render).join('')}</div>`;
+    out += `<div class="list-container" data-stagger>${list.map(opts.render).join('')}</div>`;
   });
   return out || opts.empty || '';
 }
@@ -1904,7 +2044,7 @@ function PageAppointments() {
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
     ${PageHeader({ title: u.role === 'client' ? 'Sessions' : 'Appointments', description: `${list.length} total`, action: u.role === 'client' && !getClientUpcoming() ? `<a href="#/app/book" class="btn btn-sm btn-primary">${icon('plus', 13)} Book</a>` : '' })}
     <div class="flex flex-wrap gap-3 mb-4">
-      <div class="relative flex-1 max-w-md">${icon('search', 14, 'absolute left-3 top-1/2 -translate-y-1/2 muted')}<input id="appt-search" value="${esc(State.apptQuery)}" oninput="State.apptQuery=this.value;rerenderKeepingFocus('#appt-search')" placeholder="Search…" class="input !pl-9"></div>
+      <div class="relative flex-1 max-w-md">${icon('search', 14, 'absolute left-3 top-1/2 -translate-y-1/2 muted')}<input id="appt-search" value="${esc(State.apptQuery)}" oninput="State.apptQuery=this.value;debouncedRerender('#appt-search')" placeholder="Search…" class="input !pl-9"></div>
       <select onchange="State.apptSort=this.value;render()" class="input !h-10 !w-auto !pr-9 !text-sm" style="max-width:170px"><option value="upcoming" ${sort==='upcoming'?'selected':''}>Upcoming first</option><option value="recent" ${sort==='recent'?'selected':''}>Most recent</option></select>
     </div>
     <div class="flex gap-2 overflow-x-auto pb-2 mb-4 no-scrollbar">${['all','confirmed','pending','completed','cancelled','no-show'].map(f => `<button onclick="State.apptFilter='${f}';render()" class="chip ${State.apptFilter===f?'chip-on':'chip-off'} capitalize">${f === 'no-show' ? 'No-show' : f}</button>`).join('')}</div>
@@ -1986,7 +2126,7 @@ function PageAppointmentDetail(id) {
     </div>
   </div>`;
 }
-function markComplete(id) { const a = getAppt(id); if (a) { a.status = 'completed'; } saveAll(); toast('Marked as completed'); render(); }
+function markComplete(id) { API.markComplete(id).then(() => { toast('Marked as completed'); render(); }).catch(() => toast('Could not mark complete', 'error')); }
 
 function openReschedule(id) {
   const a = getAppt(id);
@@ -2155,7 +2295,7 @@ function PageMessages(convoId) {
   const active = convoId ? convos.find(c => c.id === convoId) : convos[0];
   return `
   <div class="max-w-7xl mx-auto px-0 sm:px-6 py-0 sm:py-6">
-    <div class="card !rounded-none sm:!rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-[300px_1fr]" style="height:calc(100dvh - 3.5rem);max-height:calc(100dvh - 3.5rem)">
+    <div class="card !rounded-none sm:!rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-[300px_1fr] messages-container">
       <div class="border-r border-[rgb(var(--border))] flex flex-col min-h-0 ${convoId ? 'hidden md:flex' : 'flex'}">
         <div class="p-4 border-b border-[rgb(var(--border))] h-14 flex items-center"><div class="type-h3 text-[14px]">Messages</div></div>
         <div class="flex-1 overflow-y-auto">${convos.length ? convos.map(c => { const other = getUser(c.participants.find(p => p !== u.id)); const last = c.messages[c.messages.length-1]; const isActive = active?.id === c.id; return `<a href="#/app/messages/${c.id}" class="block p-3 flex items-center gap-3 transition ${isActive?'bg-brand-500/5':'hover:bg-[rgb(var(--surface-2))]'}">${avatar(other, 40)}<div class="min-w-0 flex-1"><div class="flex items-center gap-2"><span class="type-small font-semibold truncate">${esc(other.name)}</span><span class="ml-auto text-[11px] muted">${relTime(c.lastAt)}</span></div><div class="text-xs muted truncate mt-0.5">${esc(last?.text || '')}</div></div>${c.unread ? `<span class="badge !text-white" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${c.unread}</span>` : ''}</a>`; }).join('') : `<div class="p-6 text-center muted type-small">No conversations yet.</div>`}</div>
@@ -2164,21 +2304,39 @@ function PageMessages(convoId) {
         const other = getUser(active.participants.find(p => p !== u.id));
         return `<div class="flex flex-col min-h-0">
           <div class="p-3 sm:p-4 border-b border-[rgb(var(--border))] flex items-center gap-3 h-14"><a href="#/app/messages" class="md:hidden btn btn-sm btn-ghost !px-2" aria-label="Back">${icon('arrow-left', 16)}</a>${avatar(other, 34)}<div class="min-w-0 flex-1"><div class="type-small font-semibold truncate">${esc(other.name)}</div><div class="text-xs muted truncate">${other.title || other.email}</div></div></div>
-          <div class="flex-1 overflow-y-auto p-4 space-y-3">${active.messages.map(m => { const me = m.from === u.id; return `<div class="flex ${me?'justify-end':'justify-start'}" style="animation:fadeUp .3s cubic-bezier(0.16,1,0.3,1) both">${!me ? avatar(other, 26) : ''}<div class="ml-2 max-w-[75%] px-3.5 py-2 rounded-2xl type-small leading-relaxed ${me?'text-white rounded-br-md':'surface rounded-bl-md'}" ${me?'style="background:linear-gradient(135deg,#4CAF50,#2E7D32)"':''}>${esc(m.text)}<div class="text-[10px] mt-1 ${me?'text-white/70':'muted'} flex items-center gap-1.5 justify-end">${fmtTime(m.at)}${me && m.read ? ` · ${icon('check-check', 9)} Seen` : ''}</div></div></div>`; }).join('')}</div>
+          <div class="messages-thread flex-1 overflow-y-auto p-4 space-y-3" data-thread>${active.messages.map(m => { const me = m.from === u.id; return `<div class="flex ${me?'justify-end':'justify-start'}" style="animation:fadeUp .3s cubic-bezier(0.16,1,0.3,1) both">${!me ? avatar(other, 26) : ''}<div class="ml-2 max-w-[75%] px-3.5 py-2 rounded-2xl type-small leading-relaxed ${me?'text-white rounded-br-md':'surface rounded-bl-md'}" ${me?'style="background:linear-gradient(135deg,#4CAF50,#2E7D32)"':''}>${esc(m.text)}<div class="text-[10px] mt-1 ${me?'text-white/70':'muted'} flex items-center gap-1.5 justify-end">${fmtTime(m.at)}${me && m.read ? ` · ${icon('check-check', 9)} Seen` : ''}</div></div></div>`; }).join('')}</div>
           <form onsubmit="event.preventDefault();sendMessage(this,'${active.id}')" class="p-3 border-t border-[rgb(var(--border))] flex items-center gap-2"><input id="msg-input" placeholder="Type a message…" class="input !h-11 flex-1" autocomplete="off"><button type="submit" class="w-11 h-11 rounded-lg text-white grid place-items-center hover:opacity-90 transition shrink-0 active:scale-95" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)" aria-label="Send">${icon('send', 16)}</button></form>
         </div>`;
       })() : `<div class="grid place-items-center"><div class="text-center p-6"><div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center mx-auto mb-3">${icon('message-square', 22)}</div><div class="type-small font-semibold">Select a conversation</div></div></div>`}
     </div>
   </div>`;
 }
-function sendMessage(form, convoId) {
+async function sendMessage(form, convoId) {
   const input = form.querySelector('input');
   const text = input.value.trim();
   if (!text) return;
   const c = CONVERSATIONS.find(x => x.id === convoId);
-  if (c) { c.messages.push({ id:'m'+Date.now(), from: State.user.id, text, at: new Date().toISOString(), read: false }); c.lastAt = new Date().toISOString(); c.unread = 0; }
+  if (!c) return;
+  // Optimistic: append locally first
+  const optimistic = { id:'m'+Date.now(), from: State.user.id, text, at: new Date().toISOString(), read: false, _pending: true };
+  c.messages.push(optimistic);
+  c.lastAt = optimistic.at;
+  c.unread = 0;
   persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS);
-  input.value = ''; toast('Message sent'); render();
+  input.value = '';
+  // Render immediately (optimistic UI)
+  render();
+  // Then reconcile
+  try {
+    await API.sendMessage(convoId, State.user.id, text);
+  } catch (e) {
+    toast('Message failed to send', 'error');
+    // Roll back the optimistic message
+    const cc = CONVERSATIONS.find(x => x.id === convoId);
+    if (cc) cc.messages = cc.messages.filter(m => m.id !== optimistic.id);
+    persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS);
+    render();
+  }
 }
 
 /* ============================================================
@@ -2192,9 +2350,9 @@ function PageClients() {
   return `
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
     ${PageHeader({ title:'Clients', description: `${list.length} client${list.length === 1 ? '' : 's'}` })}
-    <div class="relative mb-4 max-w-md">${icon('search', 14, 'absolute left-3 top-1/2 -translate-y-1/2 muted')}<input id="client-search" value="${esc(State.clientQuery)}" oninput="State.clientQuery=this.value;rerenderKeepingFocus('#client-search')" placeholder="Search by name…" class="input !pl-9"></div>
+    <div class="relative mb-4 max-w-md">${icon('search', 14, 'absolute left-3 top-1/2 -translate-y-1/2 muted')}<input id="client-search" value="${esc(State.clientQuery)}" oninput="State.clientQuery=this.value;debouncedRerender('#client-search')" placeholder="Search by name…" class="input !pl-9"></div>
     ${list.length === 0 ? EmptyState({ icon:'users', title:'No clients yet', description:'Clients appear here after their first booking with you.' }) : `
-      <div class="list-container">
+      <div class="list-container" data-stagger>
         ${list.map(c => {
           const appts = APPOINTMENTS.filter(a => a.client === c.id && a.practitioner === u.id).sort((a,b)=>new Date(b.start)-new Date(a.start));
           const completed = appts.filter(a => a.status === 'completed');
@@ -2230,14 +2388,14 @@ function PageClientDetail(id) {
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
     ${PageHeader({ backHref:'#/app/clients', backLabel:'Clients', title: c.name, description:`Client since ${fmtDate(c.joined, {month:'long', year:'numeric'})}`, action: `<a href="#/app/messages" class="btn btn-sm btn-outline">${icon('message-circle', 13)} Message</a>` })}
 
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6" data-stagger>
       ${StatTile({ label:'Sessions', value: completed, iconName:'check-circle' })}
       ${StatTile({ label:'Last visit', value: appts[0] ? fmtDate(appts[0].start, {month:'short', day:'numeric'}) : '—', iconName:'history' })}
       ${StatTile({ label:'Next', value: upcoming ? fmtDate(upcoming.start, {month:'short', day:'numeric'}) : 'None', iconName:'calendar' })}
       ${StatTile({ label:'Reviews', value: clientReviews.length, iconName:'star' })}
     </div>
 
-    ${areaRanked.length ? `<div class="card p-6 mb-6"><div class="type-h3 text-[15px]">Focus areas</div><div class="text-xs muted mt-0.5 mb-5">What we have worked on across all sessions</div><div class="space-y-4">${areaRanked.slice(0, 6).map(([k,v]) => { const area = getArea(k); if (!area) return ''; return `<div><div class="flex items-center justify-between type-small mb-1.5"><span class="font-medium">${esc(area.label)}</span><span class="muted text-xs">${v} session${v>1?'s':''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full" style="width:${(v/maxCount)*100}%;background:#2E7D32"></div></div></div>`; }).join('')}</div></div>` : ''}
+    ${areaRanked.length ? `<div class="card p-6 mb-6"><div class="type-h3 text-[15px]">Focus areas</div><div class="text-xs muted mt-0.5 mb-5">What we have worked on across all sessions</div><div class="space-y-4">${areaRanked.slice(0, 6).map(([k,v]) => { const area = getArea(k); if (!area) return ''; return `<div><div class="flex items-center justify-between type-small mb-1.5"><span class="font-medium">${esc(area.label)}</span><span class="muted text-xs">${v} session${v>1?'s':''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full chart-bar" style="width:${(v/maxCount)*100}%;background:#2E7D32"></div></div></div>`; }).join('')}</div></div>` : ''}
 
     ${clientReviews.length ? `<div class="card p-6 mb-6"><div class="type-h3 text-[15px]">Reviews from this client</div><div class="text-xs muted mt-0.5 mb-5">Their feedback on your sessions together</div><div class="space-y-4">${clientReviews.slice(0, 3).map(r => { const a = getAppt(r.appt); return `<div class="p-4 rounded-xl surface-2"><div class="flex items-center gap-3 mb-2">${StarsDisplay(r.rating, 13)}<span class="text-xs muted">${fmtDate(r.date, {month:'short', day:'numeric'})}</span></div><p class="type-small leading-relaxed">"${esc(r.comment)}"</p>${a ? `<div class="text-xs muted mt-2">${esc(getService(a.service)?.name || '')}</div>` : ''}</div>`; }).join('')}</div></div>` : ''}
 
@@ -2261,7 +2419,7 @@ function PageGuides(areaId) {
       ${PageHeader({ backHref:'#/self-care', backLabel:'All guides', eyebrow:'Between sessions', title: g.title, description: g.intro })}
       <div class="flex items-center gap-4 -mt-4 mb-6 text-xs muted"><span class="flex items-center gap-1.5">${icon('clock', 11)} ${esc(g.duration)}</span><span class="flex items-center gap-1.5">${icon('map-pin', 11)} ${esc(area?.label || '')}</span></div>
       <div class="card p-5 flex justify-center mb-5">${BodyMapSVG([areaId])}</div>
-      <div class="card p-5 mb-5">${g.steps.map((s, i) => `<div class="guide-step"><div class="guide-num">${i+1}</div><div class="flex-1"><div class="type-small font-semibold">${esc(s.t)}</div><p class="type-small muted mt-1 leading-relaxed">${esc(s.d)}</p></div></div>`).join('')}</div>
+      <div class="card p-5 mb-5" data-stagger>${g.steps.map((s, i) => `<div class="guide-step"><div class="guide-num">${i+1}</div><div class="flex-1"><div class="type-small font-semibold">${esc(s.t)}</div><p class="type-small muted mt-1 leading-relaxed">${esc(s.d)}</p></div></div>`).join('')}</div>
       <div class="p-3 rounded-lg surface-2 text-xs muted flex items-start gap-2 mb-5">${icon('info', 11)}<span>General wellness routines. If pain persists or worsens, please see a qualified professional.</span></div>
       ${State.user && State.user.role === 'client' && !getClientUpcoming() ? `<a href="#/app/book" class="btn btn-primary w-full">Book a session with a practitioner</a>` : ''}
     </div>`;
@@ -2270,7 +2428,7 @@ function PageGuides(areaId) {
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
     ${PageHeader({ backHref: State.user ? '#/app/dashboard' : '#/', backLabel: State.user ? 'Back' : 'Home', eyebrow:'Between sessions', title:'Self-care guides', description:'Short routines for common trouble spots. Written by practitioners.' })}
     ${areaId ? `<div class="mb-4 p-3 rounded-lg surface-2 text-xs muted flex items-start gap-2">${icon('info', 11)}<span>That guide wasn't found — here are all the available routines.</span></div>` : ''}
-    <div class="grid sm:grid-cols-2 gap-3 mb-5">${GUIDE_AREAS.map(id => { const g = GUIDES[id]; return `<a href="#/self-care/${id}" class="card card-hover p-5 flex items-center gap-4"><div class="w-11 h-11 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('hand-heart', 20)}</div><div class="flex-1 min-w-0"><div class="font-semibold">${esc(g.title)}</div><div class="text-xs muted mt-0.5">${esc(g.duration)} · ${esc(g.intro)}</div></div>${icon('arrow-right', 15, 'muted')}</a>`; }).join('')}</div>
+    <div class="grid sm:grid-cols-2 gap-3 mb-5" data-stagger>${GUIDE_AREAS.map(id => { const g = GUIDES[id]; return `<a href="#/self-care/${id}" class="card card-hover p-5 flex items-center gap-4"><div class="w-11 h-11 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('hand-heart', 20)}</div><div class="flex-1 min-w-0"><div class="font-semibold">${esc(g.title)}</div><div class="text-xs muted mt-0.5">${esc(g.duration)} · ${esc(g.intro)}</div></div>${icon('arrow-right', 15, 'muted')}</a>`; }).join('')}</div>
     <div class="p-3 rounded-lg surface-2 text-xs muted flex items-start gap-2">${icon('info', 11)}<span>For general wellness only. Not a substitute for professional care.</span></div>
   </div>`;
 }
@@ -2286,7 +2444,7 @@ function PageServices() {
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
     ${PageHeader({ backHref:'#/app/settings', backLabel:'Settings', title:'Services', description:`${mine.length} total · ${activeCount} active`, action:`<button onclick="openServiceModal()" class="btn btn-sm btn-primary">${icon('plus', 13)} Add service</button>` })}
     ${mine.length === 0 ? EmptyState({ icon:'sparkles', title:'No services yet', description:'Add your first service so clients can book.', action:`<button onclick="openServiceModal()" class="btn btn-primary">Add service</button>` }) : `
-      <div class="grid sm:grid-cols-2 gap-3">${mine.map(s => `<div class="card p-5 ${s.active === false ? 'opacity-60' : ''}">
+      <div class="grid sm:grid-cols-2 gap-3" data-stagger>${mine.map(s => `<div class="card p-5 ${s.active === false ? 'opacity-60' : ''}">
         <div class="flex items-start justify-between gap-2 mb-3"><div class="w-9 h-9 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center">${icon('sparkles', 16)}</div><button onclick="toggleServiceActive('${s.id}')" class="svc-status ${s.active !== false ? 'on' : 'off'}">${icon(s.active !== false ? 'eye' : 'eye-off', 10)} ${s.active !== false ? 'Active' : 'Hidden'}</button></div>
         <div class="type-h3 text-[15px]">${esc(s.name)}</div>
         <div class="text-xs muted mt-0.5">${esc(s.category)} · ${s.duration} min</div>
@@ -2334,7 +2492,7 @@ function PageAvailability() {
     </div>
     <div class="card p-6">
       <div class="flex items-center justify-between mb-5 flex-wrap gap-2"><div><div class="type-h3 text-[15px]">Time off</div><div class="text-xs muted mt-0.5">Block dates for vacation or personal days</div></div><button onclick="openAddTimeOff()" class="btn btn-sm btn-primary">${icon('plus', 13)} Add</button></div>
-      ${State.timeOff.length === 0 ? `<div class="text-center py-6 rounded-xl border border-dashed border-[rgb(var(--border))]"><div class="type-small muted">No blocked dates</div></div>` : `<div class="space-y-2">${State.timeOff.map(t => { const start = new Date(t.start), end = new Date(t.end); const sameRange = sameDay(start, end); const range = sameRange ? fmtDate(start, {weekday:'short', month:'short', day:'numeric', year:'numeric'}) : `${fmtDate(start, {month:'short', day:'numeric'})} – ${fmtDate(end, {month:'short', day:'numeric', year:'numeric'})}`; const days = Math.round((end - start) / (1000*60*60*24)) + 1; return `<div class="flex items-center gap-3 p-3 rounded-xl surface-2"><div class="w-9 h-9 rounded-lg bg-rose2-400/20 text-rose2-700 grid place-items-center shrink-0">${icon('calendar-x', 14)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${esc(t.reason || 'Time off')}</div><div class="text-xs muted mt-0.5">${range} · ${days} day${days>1?'s':''}</div></div><button onclick="removeTimeOff('${t.id}')" class="w-8 h-8 rounded-lg grid place-items-center muted hover:bg-red-500/10 hover:text-red-600" aria-label="Remove">${icon('x', 14)}</button></div>`; }).join('')}</div>`}
+      ${State.timeOff.length === 0 ? `<div class="text-center py-6 rounded-xl border border-dashed border-[rgb(var(--border))]"><div class="type-small muted">No blocked dates</div></div>` : `<div class="space-y-2" data-stagger>${State.timeOff.map(t => { const start = new Date(t.start), end = new Date(t.end); const sameRange = sameDay(start, end); const range = sameRange ? fmtDate(start, {weekday:'short', month:'short', day:'numeric', year:'numeric'}) : `${fmtDate(start, {month:'short', day:'numeric'})} – ${fmtDate(end, {month:'short', day:'numeric', year:'numeric'})}`; const days = Math.round((end - start) / (1000*60*60*24)) + 1; return `<div class="flex items-center gap-3 p-3 rounded-xl surface-2"><div class="w-9 h-9 rounded-lg bg-rose2-400/20 text-rose2-700 grid place-items-center shrink-0">${icon('calendar-x', 14)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${esc(t.reason || 'Time off')}</div><div class="text-xs muted mt-0.5">${range} · ${days} day${days>1?'s':''}</div></div><button onclick="removeTimeOff('${t.id}')" class="w-8 h-8 rounded-lg grid place-items-center muted hover:bg-red-500/10 hover:text-red-600" aria-label="Remove">${icon('x', 14)}</button></div>`; }).join('')}</div>`}
     </div>
   </div>`;
 }
@@ -2374,7 +2532,7 @@ function PageAnalytics() {
   return `
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
     ${PageHeader({ backHref:'#/app/settings', backLabel:'Settings', title:'Reports', description:'How your practice is performing' })}
-    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6" data-stagger>
       ${StatTile({ label:'Completed', value: completed, iconName:'check-circle' })}
       ${StatTile({ label:'Avg. rating', value: avgRating, iconName:'star', tone:'amber' })}
       ${StatTile({ label:'No-show rate', value: noShowRate + '%', iconName:'user-x', tone:'rose2' })}
@@ -2382,7 +2540,7 @@ function PageAnalytics() {
     </div>
     <div class="card p-6 mb-5">
       <div class="flex items-center gap-3 mb-1"><div class="w-8 h-8 rounded-lg bg-brand-500/12 text-brand-600 grid place-items-center">${icon('sparkles', 14)}</div><div><div class="type-h3 text-[14px]">Popular focus areas</div><div class="text-xs muted">Which body areas your clients flag most</div></div></div>
-      <div class="mt-5 space-y-4">${areaStats.length ? areaStats.slice(0,8).map(([k,v]) => { const a = getArea(k); if (!a) return ''; return `<div><div class="flex items-center justify-between mb-1.5 type-small"><span class="font-medium">${esc(a.label)}</span><span class="muted text-xs">${v} session${v>1?'s':''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full" style="width:${(v/maxCount)*100}%;background:#2E7D32"></div></div></div>`; }).join('') : `<div class="type-small muted">No data yet.</div>`}</div>
+      <div class="mt-5 space-y-4">${areaStats.length ? areaStats.slice(0,8).map(([k,v]) => { const a = getArea(k); if (!a) return ''; return `<div><div class="flex items-center justify-between mb-1.5 type-small"><span class="font-medium">${esc(a.label)}</span><span class="muted text-xs">${v} session${v>1?'s':''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full chart-bar" style="width:${(v/maxCount)*100}%;background:#2E7D32"></div></div></div>`; }).join('') : `<div class="type-small muted">No data yet.</div>`}</div>
     </div>
     <div class="card p-6">
       <div class="type-h3 text-[14px] mb-5">Appointments this week</div>
@@ -2423,7 +2581,7 @@ function PageInvoices() {
     ${PageHeader({ backHref: u.role === 'client' ? '#/app/dashboard' : '#/app/settings', backLabel:'Back', title:'Invoices', description: `${all.length} total` })}
     <div class="flex gap-1.5 overflow-x-auto pb-2 mb-4 no-scrollbar">${[['all','All',counts.all],['paid','Paid',counts.paid],['pending','Pending',counts.pending],['overdue','Overdue',counts.overdue]].map(([k,l,c]) => `<button onclick="State.invoiceFilter='${k}';render()" class="chip ${filter===k?'chip-on':'chip-off'} chip-sm">${l} <span class="${filter===k?'opacity-80':'muted'} text-[11px]">${c}</span></button>`).join('')}</div>
     ${list.length === 0 ? EmptyState({ icon:'receipt', title:'No invoices here', description:'Invoices appear here after sessions.' }) : `
-      <div class="list-container">${list.map(i => { const c = getUser(i.client); return `<div class="list-row" onclick="openInvoice('${i.id}')"><div class="flex items-center gap-3 flex-wrap"><div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-small font-semibold type-mono">${esc(i.id)}</div>${statusBadge(i.status)}</div><div class="text-xs muted mt-0.5">${esc(c.name)} · ${fmtDate(i.issued)}</div></div><div class="text-right flex items-center gap-3"><div class="font-bold">${fmtMoney(i.amount)}</div>${icon('chevron-right', 14, 'muted')}</div></div></div>`; }).join('')}</div>`}
+      <div class="list-container" data-stagger>${list.map(i => { const c = getUser(i.client); return `<div class="list-row" onclick="openInvoice('${i.id}')"><div class="flex items-center gap-3 flex-wrap"><div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-small font-semibold type-mono">${esc(i.id)}</div>${statusBadge(i.status)}</div><div class="text-xs muted mt-0.5">${esc(c.name)} · ${fmtDate(i.issued)}</div></div><div class="text-right flex items-center gap-3"><div class="font-bold">${fmtMoney(i.amount)}</div>${icon('chevron-right', 14, 'muted')}</div></div></div>`; }).join('')}</div>`}
   </div>`;
 }
 function openInvoice(id) {
@@ -2546,7 +2704,7 @@ function PageSettings() {
         </div>
       </div>`;
     if (tab === 'practice' && isPractitioner) return `
-      <div class="space-y-3">
+      <div class="space-y-3" data-stagger>
         <a href="#/app/services" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('sparkles', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Services</div><div class="text-xs muted mt-0.5">${SERVICES.filter(s => s.practitioner === u.id && s.active !== false).length} active</div></div>${icon('chevron-right', 15, 'muted')}</a>
         <a href="#/app/availability" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('clock', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Hours & time off</div><div class="text-xs muted mt-0.5">Weekly schedule, vacation days</div></div>${icon('chevron-right', 15, 'muted')}</a>
         <a href="#/app/reports" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('bar-chart-3', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Reports</div><div class="text-xs muted mt-0.5">Focus areas, revenue, appointments</div></div>${icon('chevron-right', 15, 'muted')}</a>
@@ -2700,7 +2858,7 @@ function BookStep1() {
     <div class="grid lg:grid-cols-[1fr_280px] gap-6">
       <div class="space-y-4">
         <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar"><button onclick="bookCat='';render()" class="chip ${!bookCat ? 'chip-on' : 'chip-off'} chip-sm">All</button>${cats.map(c => `<button onclick="bookCat='${c}';render()" class="chip ${bookCat === c ? 'chip-on' : 'chip-off'} chip-sm">${c}</button>`).join('')}</div>
-        <div class="space-y-3">${services.filter(s => !bookCat || s.category === bookCat).map(s => { const p = getUser(s.practitioner); const isLast = lastAppt && s.practitioner === lastAppt.practitioner; return `<button onclick="selectService('${s.id}')" class="w-full card card-hover p-5 text-left ${isLast ? '!border-brand-500/40 !ring-1 !ring-brand-500/20' : ''}"><div class="flex items-start gap-4">${avatar(p, 44)}<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-h3 text-[15px]">${esc(s.name)}</div>${isLast ? `<span class="text-[10px] px-1.5 py-0.5 rounded-md text-white font-semibold" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">Last time</span>` : ''}</div><div class="text-xs muted mt-0.5">with <span class="font-medium text-[rgb(var(--fg))]">${esc(p.name)}</span></div><p class="type-small muted mt-2 leading-relaxed">${esc(s.description)}</p><div class="mt-3 flex flex-wrap items-center gap-3 text-xs muted"><span class="flex items-center gap-1">${icon('clock', 11)} ${s.duration} min</span><span class="flex items-center gap-1">${icon('map-pin', 11)} ${esc((p.location || '').split(',')[0])}</span></div></div><div class="text-right shrink-0"><div class="font-display font-bold text-base">${fmtMoney(s.price)}</div><div class="text-[10px] muted mt-0.5">base + areas</div><div class="text-[11px] mt-1.5 flex items-center gap-1 justify-end font-semibold text-brand-600">Choose ${icon('arrow-right', 10)}</div></div></div></button>`; }).join('')}</div>
+        <div class="space-y-3" data-stagger>${services.filter(s => !bookCat || s.category === bookCat).map(s => { const p = getUser(s.practitioner); const isLast = lastAppt && s.practitioner === lastAppt.practitioner; return `<button onclick="selectService('${s.id}')" class="w-full card card-hover p-5 text-left ${isLast ? '!border-brand-500/40 !ring-1 !ring-brand-500/20' : ''}"><div class="flex items-start gap-4">${avatar(p, 44)}<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-h3 text-[15px]">${esc(s.name)}</div>${isLast ? `<span class="text-[10px] px-1.5 py-0.5 rounded-md text-white font-semibold" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">Last time</span>` : ''}</div><div class="text-xs muted mt-0.5">with <span class="font-medium text-[rgb(var(--fg))]">${esc(p.name)}</span></div><p class="type-small muted mt-2 leading-relaxed">${esc(s.description)}</p><div class="mt-3 flex flex-wrap items-center gap-3 text-xs muted"><span class="flex items-center gap-1">${icon('clock', 11)} ${s.duration} min</span><span class="flex items-center gap-1">${icon('map-pin', 11)} ${esc((p.location || '').split(',')[0])}</span></div></div><div class="text-right shrink-0"><div class="font-display font-bold text-base">${fmtMoney(s.price)}</div><div class="text-[10px] muted mt-0.5">base + areas</div><div class="text-[11px] mt-1.5 flex items-center gap-1 justify-end font-semibold text-brand-600">Choose ${icon('arrow-right', 10)}</div></div></div></button>`; }).join('')}</div>
       </div>
       <div class="hidden lg:block">${BookingSummaryPanel()}</div>
     </div>
@@ -2878,7 +3036,7 @@ function selectService(id) {
   bookStep = 1;
   render(); window.scrollTo({top:0});
 }
-function confirmBooking() {
+async function confirmBooking() {
   if (bookState._submitting) return;
   if (getClientUpcoming()) { toast('You already have an upcoming session.', 'warning'); return; }
   const p = getUser(bookState.practitioner);
@@ -2890,22 +3048,23 @@ function confirmBooking() {
   if (ampm === 'PM' && h !== 12) h += 12;
   if (ampm === 'AM' && h === 12) h = 0;
   d.setHours(h, m, 0, 0);
-  const slotEnd = new Date(d.getTime() + s.duration * 60000);
-  const collide = APPOINTMENTS.some(a => {
-    if (a.status === 'cancelled' || a.status === 'no-show') return false;
-    if (a.practitioner !== p.id) return false;
-    const aStart = new Date(a.start);
-    const aEnd = new Date(aStart.getTime() + (a.duration || 60) * 60000);
-    return d < aEnd && slotEnd > aStart;
-  });
-  if (collide) { toast('That time is no longer available. Please pick another.', 'error'); bookStep = 1; render(); return; }
-  bookState._submitting = true;
   const ref = 'TB-' + new Date().getFullYear().toString().slice(2) + '01-' + Math.floor(1000 + Math.random()*9000);
   const newId = 'ap' + Date.now();
-  APPOINTMENTS.push({ id: newId, client: State.user.id, practitioner: p.id, service: s.id, start: d.toISOString(), duration: s.duration, status: 'pending', mode: p.consultation, location: p.location, areas: [...(bookState.areas || [])], ref });
-  NOTIFICATIONS.push({ id: 'n' + Date.now(), type: 'appointment', title: 'New appointment request', body: `${State.user.name} · ${s.name} · ${fmtDate(d, {weekday:'short', month:'short', day:'numeric'})} at ${bookState.time}`, at: new Date().toISOString(), read: false, action: 'view', actionLabel: 'View', link: '#/app/appointments/' + newId });
-  bookState.ref = ref;
-  saveAll(); bookStep = 3; toast('Booked'); render();
+  bookState._submitting = true;
+  try {
+    await API.createAppointment({
+      client: State.user.id, practitioner: p.id, service: s.id,
+      start: d.toISOString(), duration: s.duration, status: 'pending',
+      mode: p.consultation, location: p.location, areas: [...(bookState.areas || [])], ref,
+    });
+    NOTIFICATIONS.push({ id: 'n' + Date.now(), type: 'appointment', title: 'New appointment request', body: `${State.user.name} · ${s.name} · ${fmtDate(d, {weekday:'short', month:'short', day:'numeric'})} at ${bookState.time}`, at: new Date().toISOString(), read: false, action: 'view', actionLabel: 'View', link: '#/app/appointments/' + newId });
+    saveAll();
+    bookState.ref = ref; bookStep = 3; toast('Booked'); render();
+  } catch (e) {
+    bookState._submitting = false;
+    if (e.message === 'SLOT_CONFLICT') { toast('That time is no longer available. Please pick another.', 'error'); bookStep = 1; render(); }
+    else { toast('Something went wrong. Please try again.', 'error'); }
+  }
 }
 
 /* ============================================================
@@ -2924,62 +3083,95 @@ function Page404() { return `<div class="min-h-screen flex flex-col">
 </div>`; }
 
 /* ============================================================
+   ERROR BOUNDARY
+   ============================================================ */
+function renderError(err) {
+  console.error('[therabyte] render error:', err);
+  const root = $('#root');
+  if (!root) return;
+  root.innerHTML = `<div class="error-boundary px-5">
+    <div class="card p-8 text-center">
+      <div class="w-14 h-14 rounded-2xl bg-red-500/10 text-red-600 grid place-items-center mx-auto mb-4">${icon('alert-triangle', 26)}</div>
+      <h1 class="type-h2 text-2xl mb-2">Something broke</h1>
+      <p class="type-small muted mb-6 leading-relaxed max-w-md mx-auto">We hit an unexpected error while rendering this page. Nothing you did — try refreshing or returning home.</p>
+      <div class="flex flex-wrap justify-center gap-2">
+        <button onclick="location.reload()" class="btn btn-primary">Reload</button>
+        <a href="#/" onclick="setTimeout(()=>location.reload(),50)" class="btn btn-outline">Go home</a>
+      </div>
+      <details class="mt-6 text-left">
+        <summary class="text-xs muted cursor-pointer">Technical details</summary>
+        <pre class="mt-3 p-3 rounded-lg surface-2 text-[11px] type-mono overflow-auto max-h-40">${esc(err && err.stack || err && err.message || String(err))}</pre>
+      </details>
+    </div>
+  </div>`;
+  iconEl();
+}
+
+/* ============================================================
    RENDER
    ============================================================ */
 function render() {
-  const root = $('#root');
-  const { path, parts } = getRoute();
-  const top = parts[0] || '';
-  const sub = parts.slice(1);
-  _logoCounter = 0;
+  try {
+    const root = $('#root');
+    if (!root) return;
+    const { path, parts } = getRoute();
+    const top = parts[0] || '';
+    const sub = parts.slice(1);
+    _logoCounter = 0;
 
-  if (!path || path === '') root.innerHTML = Landing();
-  else if (top === 'login') root.innerHTML = LoginPage();
-  else if (top === 'register') root.innerHTML = RegisterPage();
-  else if (top === 'forgot') root.innerHTML = ForgotPage();
-  else if (top === 'about') root.innerHTML = PageAbout();
-  else if (top === 'privacy') root.innerHTML = PagePrivacy();
-  else if (top === 'terms') root.innerHTML = PageTerms();
-  else if (top === 'help') root.innerHTML = PageHelp();
-  else if (top === 'onboard') root.innerHTML = OnboardingPage();
-  else if (top === 'self-care') root.innerHTML = PageGuides(sub[0] || null);
-  else if (!State.user) root.innerHTML = LoginPage();
-  else if (top === 'app') {
-    let page = '';
-    const u = State.user;
-    if (sub.length === 0 || sub[0] === 'dashboard') page = PageDashboard();
-    else if (sub[0] === 'calendar' && u.role === 'practitioner') page = PageCalendar();
-    else if (sub[0] === 'appointments') page = sub[1] ? PageAppointmentDetail(sub[1]) : PageAppointments();
-    else if (sub[0] === 'clients' && u.role === 'practitioner') page = sub[1] ? PageClientDetail(sub[1]) : PageClients();
-    else if (sub[0] === 'services' && u.role === 'practitioner') page = PageServices();
-    else if (sub[0] === 'availability' && u.role === 'practitioner') page = PageAvailability();
-    else if (sub[0] === 'reports' && u.role === 'practitioner') page = PageAnalytics();
-    else if (sub[0] === 'verification' && u.role === 'practitioner') page = PageVerification();
-    else if (sub[0] === 'invoices') page = PageInvoices();
-    else if (sub[0] === 'notifications') page = PageNotifications();
-    else if (sub[0] === 'messages') {
-      const convoId = sub[1];
-      const convos = CONVERSATIONS.filter(c => c.participants.includes(u.id));
-      const target = convoId ? convos.find(c => c.id === convoId) : convos[0];
-      if (target && target.unread) { target.unread = 0; persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS); }
-      page = PageMessages(convoId);
+    if (!path || path === '') root.innerHTML = Landing();
+    else if (top === 'login') root.innerHTML = LoginPage();
+    else if (top === 'register') root.innerHTML = RegisterPage();
+    else if (top === 'forgot') root.innerHTML = ForgotPage();
+    else if (top === 'about') root.innerHTML = PageAbout();
+    else if (top === 'privacy') root.innerHTML = PagePrivacy();
+    else if (top === 'terms') root.innerHTML = PageTerms();
+    else if (top === 'help') root.innerHTML = PageHelp();
+    else if (top === 'onboard') root.innerHTML = OnboardingPage();
+    else if (top === 'self-care') root.innerHTML = PageGuides(sub[0] || null);
+    else if (!State.user) root.innerHTML = LoginPage();
+    else if (top === 'app') {
+      let page = '';
+      const u = State.user;
+      if (sub.length === 0 || sub[0] === 'dashboard') page = PageDashboard();
+      else if (sub[0] === 'calendar' && u.role === 'practitioner') page = PageCalendar();
+      else if (sub[0] === 'appointments') page = sub[1] ? PageAppointmentDetail(sub[1]) : PageAppointments();
+      else if (sub[0] === 'clients' && u.role === 'practitioner') page = sub[1] ? PageClientDetail(sub[1]) : PageClients();
+      else if (sub[0] === 'services' && u.role === 'practitioner') page = PageServices();
+      else if (sub[0] === 'availability' && u.role === 'practitioner') page = PageAvailability();
+      else if (sub[0] === 'reports' && u.role === 'practitioner') page = PageAnalytics();
+      else if (sub[0] === 'verification' && u.role === 'practitioner') page = PageVerification();
+      else if (sub[0] === 'invoices') page = PageInvoices();
+      else if (sub[0] === 'notifications') page = PageNotifications();
+      else if (sub[0] === 'messages') {
+        const convoId = sub[1];
+        const convos = CONVERSATIONS.filter(c => c.participants.includes(u.id));
+        const target = convoId ? convos.find(c => c.id === convoId) : convos[0];
+        if (target && target.unread) { target.unread = 0; persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS); }
+        page = PageMessages(convoId);
+      }
+      else if (sub[0] === 'settings') page = PageSettings();
+      else if (sub[0] === 'book' && u.role === 'client') page = PageBook();
+      else if (sub[0] === 'self-care') page = PageGuides(sub[1] || null);
+      else page = Page404();
+      root.innerHTML = AppShell(page);
     }
-    else if (sub[0] === 'settings') page = PageSettings();
-    else if (sub[0] === 'book' && u.role === 'client') page = PageBook();
-    else if (sub[0] === 'self-care') page = PageGuides(sub[1] || null);
-    else page = Page404();
-    root.innerHTML = AppShell(page);
+    else root.innerHTML = Page404();
+    iconEl();
+    renderThemeToggle();
+    $$('.body-svg-interactive .body-zone').forEach(z => {
+      const fire = () => toggleArea(z.dataset.zone);
+      z.addEventListener('click', fire);
+      z.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fire(); } });
+    });
+    // Auto-scroll message thread to bottom
+    const thread = document.querySelector('[data-thread]');
+    if (thread) requestAnimationFrame(() => { thread.scrollTop = thread.scrollHeight; });
+    // Scroll reveal
+    requestAnimationFrame(setupReveals);
+  } catch (e) {
+    renderError(e);
   }
-  else root.innerHTML = Page404();
-  iconEl();
-  renderThemeToggle();
-  $$('.body-svg-interactive .body-zone').forEach(z => {
-    const fire = () => toggleArea(z.dataset.zone);
-    z.addEventListener('click', fire);
-    z.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fire(); } });
-  });
-  // Trigger scroll reveal for newly rendered elements
-  requestAnimationFrame(setupReveals);
 }
 
 /* ============================================================
@@ -3033,7 +3225,6 @@ window.addEventListener('hashchange', () => {
   prevRouteKey = key;
   render();
   window.scrollTo({top:0});
-  // Trigger page enter animation
   const root = document.getElementById('root');
   if (root) {
     root.classList.remove('page-enter');
@@ -3047,11 +3238,10 @@ prevRouteKey = currentRouteKey();
 render();
 setupScrollShadow();
 attachRippleTracking();
-// Trigger page enter on initial load
 requestAnimationFrame(() => {
   const root = document.getElementById('root');
   if (root) { root.classList.add('page-enter'); setTimeout(() => root.classList.remove('page-enter'), 500); }
 });
 </script>
 </body>
-</html>
+  </html>
