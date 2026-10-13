@@ -4,6 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>TheraByte — Know what to work on before they arrive</title>
+<meta name="author" content="LvDiagnostech">
+<meta name="description" content="Booking and intake for bodywork practitioners. Built by LvDiagnostech.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -103,6 +105,9 @@ h1, h2, h3, h4, h5 { font-family: 'Poppins', 'Inter', system-ui, sans-serif; let
 .input::placeholder { color: rgb(var(--muted)); }
 textarea.input { height: auto; padding: 10px 12px; resize: vertical; min-height: 80px; font-family: inherit; line-height: 1.6; }
 select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236E767C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; }
+@media (max-width: 640px) {
+  .input, input.input, select.input, textarea.input { font-size: 16px; }
+}
 
 /* ---------- Cards ---------- */
 .card { background: rgb(var(--surface)); border: 1px solid rgb(var(--border)); border-radius: 12px; }
@@ -140,6 +145,7 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .body-zone { fill: rgba(127,160,122,0.08); stroke: rgba(127,160,122,0.30); stroke-width: 1.2; transition: all 0.2s ease; }
 .body-svg-interactive .body-zone { cursor: pointer; }
 .body-svg-interactive .body-zone:hover { fill: rgba(127,160,122,0.20); }
+.body-svg-interactive .body-zone:focus-visible { outline: 2px solid rgb(74,103,68); outline-offset: 1px; }
 .body-zone.selected { fill: rgb(127,160,122); stroke: rgb(74,103,68); stroke-width: 1.8; }
 .body-label { fill: rgb(110,118,124); font-size: 9px; font-weight: 600; pointer-events: none; user-select: none; letter-spacing: 0.02em; }
 .dark .body-label { fill: rgb(145,152,158); }
@@ -219,6 +225,12 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .switch input:checked + .switch-slider { background: rgb(127,160,122); }
 .switch input:checked + .switch-slider::before { transform: translateX(16px); }
 
+/* ---------- Group Credit Badge ---------- */
+.group-credit-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: rgba(127,160,122,0.12); color: rgb(74,103,68); font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.15s ease; border: 1px solid rgba(127,160,122,0.20); }
+.group-credit-badge:hover { background: rgba(127,160,122,0.20); transform: translateY(-1px); }
+.dark .group-credit-badge { background: rgba(127,160,122,0.18); color: rgb(180,204,169); }
+.dark .group-credit-badge:hover { background: rgba(127,160,122,0.28); }
+
 /* ---------- Prose ---------- */
 .prose-p { font-size: 15px; line-height: 1.75; color: rgb(var(--fg) / 0.78); }
 .prose-lead { font-size: 17px; line-height: 1.65; color: rgb(var(--fg) / 0.78); letter-spacing: -0.005em; }
@@ -249,6 +261,14 @@ function persist(k, d) { try { localStorage.setItem(k, JSON.stringify(d)); } cat
 function load(k, f) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : f; } catch(e) { return f; } }
 
 /* ============================================================
+   CREDIT CONFIG — LvDiagnostech
+   ============================================================ */
+const CREDIT = {
+  name: 'LvDiagnostech',
+  url: 'https://jigeulei.github.io/diagnostech/',
+};
+
+/* ============================================================
    HELPERS
    ============================================================ */
 const $ = (s, el=document) => el.querySelector(s);
@@ -275,7 +295,40 @@ function startOfWeek(d){ const x=new Date(d); x.setDate(x.getDate()-x.getDay());
 function startOfDay(d){ const x = new Date(d); x.setHours(0,0,0,0); return x; }
 function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
 function isToday(d){ return sameDay(new Date(d), new Date()); }
-function avatar(u, size=40){ const src = (u.id === 'me-persisted' && State.savedAvatar) || u.avatar; return `<img src="${src}" alt="${esc(u.name)}" class="rounded-full object-cover shrink-0 bg-black/5" style="width:${size}px;height:${size}px" onerror="this.src='https://i.pravatar.cc/150?u=${u.id}'">`; }
+
+function hourLabel(h) {
+  if (h === 0) return '12 AM';
+  if (h === 12) return '12 PM';
+  return h > 12 ? (h - 12) + ' PM' : h + ' AM';
+}
+
+function parseLocalDate(str, h = 0, m = 0) {
+  if (!str) return null;
+  const [y, mo, da] = String(str).split('-').map(Number);
+  if (!y || !mo || !da) return new Date(str);
+  return new Date(y, mo - 1, da, h, m, 0, 0);
+}
+
+function rerenderKeepingFocus(selector) {
+  const el = document.querySelector(selector);
+  if (!el) { render(); return; }
+  const start = el.selectionStart, end = el.selectionEnd;
+  const hadFocus = document.activeElement === el;
+  render();
+  if (hadFocus) {
+    const next = document.querySelector(selector);
+    if (next) {
+      next.focus();
+      try { next.setSelectionRange(start, end); } catch(e) {}
+    }
+  }
+}
+
+function avatar(u, size=40){
+  const isMe = State.user && State.user.id === u.id;
+  const src = (isMe && State.savedAvatar) || u.avatar;
+  return `<img src="${src}" alt="${esc(u.name)}" class="rounded-full object-cover shrink-0 bg-black/5" style="width:${size}px;height:${size}px" onerror="this.src='https://i.pravatar.cc/150?u=${u.id}'">`;
+}
 function icon(n, s=18, c=''){ return `<i data-lucide="${n}" class="${c}" style="width:${s}px;height:${s}px"></i>`; }
 function iconEl(){ if (window.lucide) lucide.createIcons(); }
 function parseTime24(t) { const [h,m] = String(t).split(':').map(Number); return h*60+m; }
@@ -469,6 +522,9 @@ const GUIDES = {
 };
 const GUIDE_AREAS = Object.keys(GUIDES);
 
+const CAL_START_HOUR = 7;
+const CAL_END_HOUR = 20;
+
 /* ============================================================
    STATE
    ============================================================ */
@@ -477,9 +533,9 @@ const State = {
   theme: localStorage.getItem(STORAGE_KEYS.THEME) || 'system',
   calendarView: 'week', calendarDate: new Date(), settingsTab: 'profile',
   savedAvatar: localStorage.getItem(STORAGE_KEYS.AVATAR) || null,
-  timeOff: load(STORAGE_KEYS.TIME_OFF, [{ id:'to1', start:addDays(new Date(),14).toISOString(), end:addDays(new Date(),17).toISOString(), reason:'Holiday break' }]),
+  timeOff: (() => { const t = load(STORAGE_KEYS.TIME_OFF, [{ id:'to1', start:addDays(new Date(),14).toISOString(), end:addDays(new Date(),17).toISOString(), reason:'Holiday break' }]); return t.slice().sort((a,b) => new Date(a.start) - new Date(b.start)); })(),
   apptSort:'upcoming', invoiceFilter:'all', apptFilter:'all',
-  apptQuery:'', clientQuery:'', notesQuery:'', reviewOpen:null,
+  apptQuery:'', clientQuery:'', reviewOpen:null,
 };
 function persistSession() { persist(STORAGE_KEYS.USER_SESSION, State.user); }
 function saveTimeOff() { persist(STORAGE_KEYS.TIME_OFF, State.timeOff); }
@@ -506,29 +562,61 @@ function toast(msg, kind='success') {
   const k = { success:{bg:'rgb(20 23 25)',ic:'check'}, error:{bg:'#B91C1C',ic:'alert-circle'}, info:{bg:'#3B5668',ic:'info'}, warning:{bg:'#A16207',ic:'alert-triangle'} }[kind] || {bg:'rgb(20 23 25)',ic:'check'};
   const el = document.createElement('div');
   el.className = 'pointer-events-auto surface shadow-lift rounded-xl px-4 py-3 flex items-center gap-3 animate-slideIn';
+  el.setAttribute('role', kind === 'error' ? 'alert' : 'status');
   el.innerHTML = `<div class="w-7 h-7 rounded-full grid place-items-center text-white shrink-0" style="background:${k.bg}">${icon(k.ic, 14)}</div><div class="text-sm font-medium flex-1">${esc(msg)}</div>`;
   $('#toast-root').appendChild(el); iconEl();
   setTimeout(() => { el.style.transition='all 0.3s'; el.style.opacity='0'; el.style.transform='translateX(20px)'; setTimeout(() => el.remove(), 300); }, 3000);
 }
+
+/* -------- Modal -------- */
+let modalKeydownAttached = false;
+let lastFocusedEl = null;
 function modal({ title, body, actions=[], size='md' }) {
   const sizes = { sm:'max-w-md', md:'max-w-lg', lg:'max-w-2xl', xl:'max-w-4xl' };
+  lastFocusedEl = document.activeElement;
   $('#modal-root').innerHTML = `
     <div class="fixed inset-0 z-[80] flex items-end sm:items-center justify-center p-0 sm:p-4">
-      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade" onclick="closeModal()"></div>
-      <div class="relative w-full ${sizes[size]} surface rounded-t-2xl sm:rounded-2xl shadow-lift animate-fadeUp max-h-[92dvh] flex flex-col">
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm animate-fade" onclick="closeModal()" aria-hidden="true"></div>
+      <div role="dialog" aria-modal="true" aria-labelledby="modal-title" class="relative w-full ${sizes[size]} surface rounded-t-2xl sm:rounded-2xl shadow-lift animate-fadeUp max-h-[92dvh] flex flex-col">
         <div class="flex items-center justify-between p-5 border-b border-[rgb(var(--border))]">
-          <h3 class="type-h3 text-base">${esc(title)}</h3>
-          <button onclick="closeModal()" class="w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] muted" aria-label="Close">${icon('x', 16)}</button>
+          <h3 id="modal-title" class="type-h3 text-base">${esc(title)}</h3>
+          <button type="button" onclick="closeModal()" class="w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] muted" aria-label="Close">${icon('x', 16)}</button>
         </div>
         <div class="p-5 overflow-y-auto flex-1">${body}</div>
-        ${actions.length ? `<div class="p-4 border-t border-[rgb(var(--border))] flex flex-wrap gap-2 justify-end">${actions.map(a => `<button onclick="${a.onclick}" class="btn ${a.variant==='primary'?'btn-primary':a.variant==='danger'?'btn-primary !bg-red-600 hover:!bg-red-700':a.variant==='ghost'?'btn-ghost':'btn-outline'}">${a.label}</button>`).join('')}</div>` : ''}
+        ${actions.length ? `<div class="p-4 border-t border-[rgb(var(--border))] flex flex-wrap gap-2 justify-end">${actions.map(a => `<button type="button" onclick="${a.onclick}" class="btn ${a.variant==='primary'?'btn-primary':a.variant==='danger'?'btn-primary !bg-red-600 hover:!bg-red-700':a.variant==='ghost'?'btn-ghost':'btn-outline'}">${a.label}</button>`).join('')}</div>` : ''}
       </div>
     </div>`;
   iconEl();
-  document.addEventListener('keydown', escClose);
+  if (!modalKeydownAttached) { document.addEventListener('keydown', modalKeydown, true); modalKeydownAttached = true; }
+  setTimeout(() => {
+    const root = $('#modal-root');
+    if (!root) return;
+    const preferred = root.querySelector('input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled])');
+    if (preferred) { preferred.focus(); return; }
+    const buttons = [...root.querySelectorAll('button:not([disabled])')].filter(b => b.getAttribute('aria-label') !== 'Close');
+    if (buttons.length) buttons[0].focus();
+  }, 20);
 }
-function closeModal() { $('#modal-root').innerHTML=''; document.removeEventListener('keydown', escClose); }
-function escClose(e) { if (e.key === 'Escape') closeModal(); }
+function closeModal() {
+  $('#modal-root').innerHTML='';
+  if (modalKeydownAttached) { document.removeEventListener('keydown', modalKeydown, true); modalKeydownAttached = false; }
+  if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') { try { lastFocusedEl.focus(); } catch(e){} }
+  lastFocusedEl = null;
+}
+function modalKeydown(e) {
+  const root = $('#modal-root');
+  if (!root || !root.firstElementChild) return;
+  if (e.key === 'Escape') { e.preventDefault(); closeModal(); return; }
+  if (e.key !== 'Tab') return;
+  const focusables = [...root.querySelectorAll('input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled]), button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')]
+    .filter(el => el.offsetParent !== null && el.getAttribute('aria-hidden') !== 'true');
+  if (focusables.length === 0) return;
+  const first = focusables[0], last = focusables[focusables.length - 1];
+  const active = document.activeElement;
+  if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+  else if (!root.contains(active)) { e.preventDefault(); first.focus(); }
+}
 
 /* ============================================================
    SHARED UI
@@ -542,6 +630,25 @@ function LogoMark(small) {
       </svg>
     </div>
     <div class="font-display font-bold tracking-tight ${small ? 'text-[15px]' : 'text-lg'}">TheraByte</div>
+  </a>`;
+}
+
+/* Small LvDiagnostech credit pill — clickable, opens in new tab */
+function GroupCreditBadge() {
+  return `<a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer"
+    class="group-credit-badge"
+    title="Built by ${esc(CREDIT.name)}">
+    ${icon('zap', 10)}
+    <span>${esc(CREDIT.name)}</span>
+    ${icon('arrow-up-right', 9)}
+  </a>`;
+}
+
+/* Inline footer credit line */
+function GroupCreditLine() {
+  return `<a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer"
+    class="text-sage-600 hover:underline font-semibold inline-flex items-center gap-1">
+    ${esc(CREDIT.name)} ${icon('arrow-up-right', 10)}
   </a>`;
 }
 
@@ -562,34 +669,35 @@ function statusBadge(k) {
 
 function BodyMapSVG(selected = [], interactive = false, large = false) {
   const sel = z => selected.includes(z) ? 'selected' : '';
+  const zoneAttrs = z => interactive ? `tabindex="0" role="button" aria-pressed="${selected.includes(z)}" aria-label="${esc(getArea(z)?.label || z)}"` : '';
   return `
   <svg viewBox="0 0 200 480" class="body-svg ${large?'body-svg-lg':''} ${interactive?'body-svg-interactive':''}" role="img" aria-label="Body diagram">
-    <ellipse data-zone="head" cx="100" cy="42" rx="30" ry="34" class="body-zone ${sel('head')}"/>
+    <ellipse data-zone="head" cx="100" cy="42" rx="30" ry="34" class="body-zone ${sel('head')}" ${zoneAttrs('head')}/>
     <text x="100" y="46" text-anchor="middle" class="body-label">Head</text>
-    <rect data-zone="neck" x="86" y="72" width="28" height="24" rx="8" class="body-zone ${sel('neck')}"/>
+    <rect data-zone="neck" x="86" y="72" width="28" height="24" rx="8" class="body-zone ${sel('neck')}" ${zoneAttrs('neck')}/>
     <text x="100" y="88" text-anchor="middle" class="body-label" style="font-size:8px">Neck</text>
-    <path data-zone="shoulders" d="M 40 118 Q 40 96 68 96 L 132 96 Q 160 96 160 118 L 160 140 L 40 140 Z" class="body-zone ${sel('shoulders')}"/>
+    <path data-zone="shoulders" d="M 40 118 Q 40 96 68 96 L 132 96 Q 160 96 160 118 L 160 140 L 40 140 Z" class="body-zone ${sel('shoulders')}" ${zoneAttrs('shoulders')}/>
     <text x="100" y="122" text-anchor="middle" class="body-label">Shoulders</text>
-    <rect data-zone="upper-back" x="62" y="140" width="76" height="55" rx="14" class="body-zone ${sel('upper-back')}"/>
+    <rect data-zone="upper-back" x="62" y="140" width="76" height="55" rx="14" class="body-zone ${sel('upper-back')}" ${zoneAttrs('upper-back')}/>
     <text x="100" y="172" text-anchor="middle" class="body-label">Upper back</text>
-    <rect data-zone="arms" x="24" y="118" width="28" height="130" rx="14" class="body-zone ${sel('arms')}"/>
+    <rect data-zone="arms" x="24" y="118" width="28" height="130" rx="14" class="body-zone ${sel('arms')}" ${zoneAttrs('arms')}/>
     <text x="38" y="188" text-anchor="middle" class="body-label" style="font-size:8px">Arm</text>
-    <rect data-zone="arms" x="148" y="118" width="28" height="130" rx="14" class="body-zone ${sel('arms')}"/>
+    <rect data-zone="arms" x="148" y="118" width="28" height="130" rx="14" class="body-zone ${sel('arms')}" ${zoneAttrs('arms')}/>
     <text x="162" y="188" text-anchor="middle" class="body-label" style="font-size:8px">Arm</text>
-    <ellipse data-zone="hands" cx="38" cy="268" rx="16" ry="20" class="body-zone ${sel('hands')}"/>
-    <ellipse data-zone="hands" cx="162" cy="268" rx="16" ry="20" class="body-zone ${sel('hands')}"/>
-    <rect data-zone="lower-back" x="66" y="196" width="68" height="50" rx="14" class="body-zone ${sel('lower-back')}"/>
+    <ellipse data-zone="hands" cx="38" cy="268" rx="16" ry="20" class="body-zone ${sel('hands')}" ${zoneAttrs('hands')}/>
+    <ellipse data-zone="hands" cx="162" cy="268" rx="16" ry="20" class="body-zone ${sel('hands')}" ${zoneAttrs('hands')}/>
+    <rect data-zone="lower-back" x="66" y="196" width="68" height="50" rx="14" class="body-zone ${sel('lower-back')}" ${zoneAttrs('lower-back')}/>
     <text x="100" y="226" text-anchor="middle" class="body-label" style="font-size:9px">Lower back</text>
-    <rect data-zone="glutes" x="60" y="248" width="80" height="46" rx="20" class="body-zone ${sel('glutes')}"/>
+    <rect data-zone="glutes" x="60" y="248" width="80" height="46" rx="20" class="body-zone ${sel('glutes')}" ${zoneAttrs('glutes')}/>
     <text x="100" y="277" text-anchor="middle" class="body-label" style="font-size:9px">Hips</text>
-    <rect data-zone="thighs" x="64" y="296" width="32" height="76" rx="16" class="body-zone ${sel('thighs')}"/>
-    <rect data-zone="thighs" x="104" y="296" width="32" height="76" rx="16" class="body-zone ${sel('thighs')}"/>
+    <rect data-zone="thighs" x="64" y="296" width="32" height="76" rx="16" class="body-zone ${sel('thighs')}" ${zoneAttrs('thighs')}/>
+    <rect data-zone="thighs" x="104" y="296" width="32" height="76" rx="16" class="body-zone ${sel('thighs')}" ${zoneAttrs('thighs')}/>
     <text x="100" y="336" text-anchor="middle" class="body-label" style="font-size:9px">Thighs</text>
-    <rect data-zone="calves" x="68" y="374" width="24" height="62" rx="12" class="body-zone ${sel('calves')}"/>
-    <rect data-zone="calves" x="108" y="374" width="24" height="62" rx="12" class="body-zone ${sel('calves')}"/>
+    <rect data-zone="calves" x="68" y="374" width="24" height="62" rx="12" class="body-zone ${sel('calves')}" ${zoneAttrs('calves')}/>
+    <rect data-zone="calves" x="108" y="374" width="24" height="62" rx="12" class="body-zone ${sel('calves')}" ${zoneAttrs('calves')}/>
     <text x="100" y="408" text-anchor="middle" class="body-label" style="font-size:9px">Calves</text>
-    <ellipse data-zone="feet" cx="80" cy="450" rx="18" ry="10" class="body-zone ${sel('feet')}"/>
-    <ellipse data-zone="feet" cx="120" cy="450" rx="18" ry="10" class="body-zone ${sel('feet')}"/>
+    <ellipse data-zone="feet" cx="80" cy="450" rx="18" ry="10" class="body-zone ${sel('feet')}" ${zoneAttrs('feet')}/>
+    <ellipse data-zone="feet" cx="120" cy="450" rx="18" ry="10" class="body-zone ${sel('feet')}" ${zoneAttrs('feet')}/>
     <text x="100" y="472" text-anchor="middle" class="body-label" style="font-size:9px">Feet</text>
   </svg>`;
 }
@@ -683,7 +791,7 @@ function StaticFooter() {
         </div>
       </div>
       <div class="pt-8 border-t border-[rgb(var(--border))] flex flex-wrap items-center justify-between gap-4 text-xs muted">
-        <span>© ${new Date().getFullYear()} TheraByte. All rights reserved.</span>
+        <span>© ${new Date().getFullYear()} TheraByte · Crafted by ${GroupCreditLine()}</span>
         <span class="flex items-center gap-1.5">${icon('shield', 11)} Privacy-first by default</span>
       </div>
     </div>
@@ -703,6 +811,7 @@ function StaticPageLayout({ active, eyebrow, title, description, lastUpdated, ch
       <div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between gap-3">
         <a href="#/">${LogoMark()}</a>
         <div class="flex items-center gap-3">
+          ${GroupCreditBadge()}
           <div data-theme-toggle class="hidden sm:block"></div>
           <a href="${State.user ? '#/app/dashboard' : '#/login'}" class="btn btn-sm ${State.user ? 'btn-outline' : 'btn-primary'}">${State.user ? 'Back to app' : 'Sign in'}</a>
         </div>
@@ -975,7 +1084,8 @@ function Landing() {
           <a href="#self-care" class="muted hover:text-[rgb(var(--fg))] transition">Self-care</a>
           <a href="#faq" class="muted hover:text-[rgb(var(--fg))] transition">FAQ</a>
         </nav>
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-3">
+          ${GroupCreditBadge()}
           <div data-theme-toggle class="hidden sm:block"></div>
           <a href="#/login" class="hidden sm:inline type-small font-medium muted hover:text-[rgb(var(--fg))] transition">Sign in</a>
           <a href="#/register" class="btn btn-sm btn-primary">Get started</a>
@@ -1142,7 +1252,7 @@ function Landing() {
           <div><div class="text-[11px] font-bold tracking-[0.14em] uppercase muted mb-4">Contact</div><ul class="space-y-2.5 type-small"><li><a href="mailto:hello@therabyte.example" class="muted hover:text-[rgb(var(--fg))] transition">hello@therabyte.example</a></li><li><a href="mailto:privacy@therabyte.example" class="muted hover:text-[rgb(var(--fg))] transition">privacy@therabyte.example</a></li></ul></div>
         </div>
         <div class="pt-8 border-t border-[rgb(var(--border))] flex flex-wrap items-center justify-between gap-4 text-xs muted">
-          <span>© ${new Date().getFullYear()} TheraByte. All rights reserved.</span>
+          <span>© ${new Date().getFullYear()} TheraByte · Crafted by ${GroupCreditLine()}</span>
           <div class="flex items-center gap-5">
             <a href="#/privacy" class="hover:text-[rgb(var(--fg))] transition">Privacy</a>
             <a href="#/terms" class="hover:text-[rgb(var(--fg))] transition">Terms</a>
@@ -1175,13 +1285,13 @@ function AuthLayout(children) {
       </div>
       <div class="relative z-10 text-xs text-white/60 flex items-center justify-between">
         <span>© ${new Date().getFullYear()} TheraByte</span>
-        <span class="flex items-center gap-1.5">${icon('shield', 11)} Privacy-first</span>
+        <a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-white/80 hover:text-white transition font-semibold">${icon('zap', 11)} ${esc(CREDIT.name)}</a>
       </div>
     </div>
     <div class="flex flex-col relative overflow-hidden">
       <div class="lg:hidden p-4 flex items-center justify-between border-b border-[rgb(var(--border))]">
         <a href="#/">${LogoMark(true)}</a>
-        <div data-theme-toggle></div>
+        <div class="flex items-center gap-2">${GroupCreditBadge()}<div data-theme-toggle></div></div>
       </div>
       <div class="flex-1 grid place-items-center p-5 sm:p-10"><div class="w-full max-w-md animate-fadeUp">${children}</div></div>
       <div class="hidden lg:flex items-center justify-end p-5"><div data-theme-toggle></div></div>
@@ -1193,12 +1303,12 @@ function LoginPage() {
     <div class="mb-8"><h1 class="type-h1 text-3xl">Welcome back</h1><p class="type-small muted mt-2">Log in to continue with TheraByte.</p></div>
     <div class="mb-6">
       <div class="text-[11px] font-bold uppercase tracking-wider muted mb-3">Try a demo</div>
-      <div class="space-y-2">${[['p1','Sarah Chen','Practitioner'],['c1','Alex Rivera','Client']].map(([id,name,role]) => `<button onclick="demoLogin('${id}')" class="w-full flex items-center gap-3 p-3 rounded-xl border border-[rgb(var(--border))] hover:border-[rgb(var(--border-strong))] hover:bg-[rgb(var(--surface-2))] transition text-left">${avatar(getUser(id), 38)}<div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${name}</div><div class="text-xs muted">${role}</div></div>${icon('chevron-right', 15, 'muted')}</button>`).join('')}</div>
+      <div class="space-y-2">${[['p1','Sarah Chen','Practitioner'],['c1','Alex Rivera','Client']].map(([id,name,role]) => `<button type="button" onclick="demoLogin('${id}')" class="w-full flex items-center gap-3 p-3 rounded-xl border border-[rgb(var(--border))] hover:border-[rgb(var(--border-strong))] hover:bg-[rgb(var(--surface-2))] transition text-left">${avatar(getUser(id), 38)}<div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${name}</div><div class="text-xs muted">${role}</div></div>${icon('chevron-right', 15, 'muted')}</button>`).join('')}</div>
     </div>
     <div class="my-6 relative"><div class="divider"></div><div class="absolute inset-0 flex justify-center -top-2.5"><span class="bg-[rgb(var(--bg))] px-3 text-xs muted">or use your email</span></div></div>
     <form onsubmit="event.preventDefault();handleLogin(this)" class="space-y-4">
-      <div><label class="type-small font-medium mb-1.5 block">Email</label><input type="email" name="email" required class="input" placeholder="you@example.com"></div>
-      <div><div class="flex items-center justify-between mb-1.5"><label class="type-small font-medium">Password</label><a href="#/forgot" class="text-xs text-sage-600 hover:underline font-medium">Forgot?</a></div><input type="password" name="password" required class="input" placeholder="••••••••"></div>
+      <div><label class="type-small font-medium mb-1.5 block">Email</label><input type="email" name="email" required class="input" placeholder="you@example.com" autocomplete="email"></div>
+      <div><div class="flex items-center justify-between mb-1.5"><label class="type-small font-medium">Password</label><a href="#/forgot" class="text-xs text-sage-600 hover:underline font-medium">Forgot?</a></div><input type="password" name="password" required class="input" placeholder="••••••••" autocomplete="current-password"></div>
       <button type="submit" class="btn btn-lg btn-primary w-full">Log in</button>
     </form>
     <p class="mt-6 text-center type-small muted">New to TheraByte? <a href="#/register" class="text-sage-600 font-semibold hover:underline">Create an account</a></p>
@@ -1212,9 +1322,9 @@ function RegisterPage() {
         <label class="cursor-pointer"><input type="radio" name="role" value="practitioner" class="peer hidden" checked><div class="p-4 rounded-xl border border-[rgb(var(--border))] peer-checked:border-[rgb(var(--fg))] peer-checked:bg-[rgb(var(--surface-2))] transition"><div class="w-9 h-9 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center mb-2.5">${icon('stethoscope', 16)}</div><div class="type-small font-semibold">Practitioner</div><div class="text-xs muted mt-0.5">Manage my practice</div></div></label>
         <label class="cursor-pointer"><input type="radio" name="role" value="client" class="peer hidden"><div class="p-4 rounded-xl border border-[rgb(var(--border))] peer-checked:border-[rgb(var(--fg))] peer-checked:bg-[rgb(var(--surface-2))] transition"><div class="w-9 h-9 rounded-lg bg-[rgb(var(--surface-2))] text-sky2-700 grid place-items-center mb-2.5">${icon('user', 16)}</div><div class="type-small font-semibold">Client</div><div class="text-xs muted mt-0.5">Book appointments</div></div></label>
       </div>
-      <div><label class="type-small font-medium mb-1.5 block">Full name</label><input type="text" name="name" required class="input" placeholder="Jane Doe"></div>
-      <div><label class="type-small font-medium mb-1.5 block">Email</label><input type="email" name="email" required class="input" placeholder="you@example.com"></div>
-      <div><label class="type-small font-medium mb-1.5 block">Password</label><input type="password" name="password" required minlength="8" class="input" placeholder="At least 8 characters" oninput="updatePwStrength(this.value)"><div class="flex gap-1 mt-2">${[1,2,3].map(i => `<div id="pw-seg-${i}" class="flex-1 h-0.5 rounded-full bg-[rgb(var(--border))] transition-colors"></div>`).join('')}</div><div class="help-text" id="pw-label">${icon('info',11)} Use 8+ characters with letters and numbers.</div></div>
+      <div><label class="type-small font-medium mb-1.5 block">Full name</label><input type="text" name="name" required class="input" placeholder="Jane Doe" autocomplete="name"></div>
+      <div><label class="type-small font-medium mb-1.5 block">Email</label><input type="email" name="email" required class="input" placeholder="you@example.com" autocomplete="email"></div>
+      <div><label class="type-small font-medium mb-1.5 block">Password</label><input type="password" name="password" required minlength="8" class="input" placeholder="At least 8 characters" autocomplete="new-password" oninput="updatePwStrength(this.value)"><div class="flex gap-1 mt-2">${[1,2,3].map(i => `<div id="pw-seg-${i}" class="flex-1 h-0.5 rounded-full bg-[rgb(var(--border))] transition-colors"></div>`).join('')}</div><div class="help-text" id="pw-label">${icon('info',11)} Use 8+ characters with letters and numbers.</div></div>
       <button type="submit" class="btn btn-lg btn-primary w-full">Create account</button>
       <p class="text-xs muted text-center leading-relaxed">By creating an account you agree to our <a href="#/terms" class="text-sage-600 hover:underline">Terms</a> and <a href="#/privacy" class="text-sage-600 hover:underline">Privacy Policy</a>.</p>
     </form>
@@ -1240,25 +1350,35 @@ function updatePwStrength(val) {
 function ForgotPage() {
   return AuthLayout(`
     <div class="mb-8"><h1 class="type-h1 text-3xl">Reset password</h1><p class="type-small muted mt-2">We'll send you a reset link.</p></div>
-    <form onsubmit="event.preventDefault();toast('Reset link sent to your email');navigate('/login')" class="space-y-4"><div><label class="type-small font-medium mb-1.5 block">Email</label><input type="email" required class="input" placeholder="you@example.com"></div><button type="submit" class="btn btn-lg btn-primary w-full">Send reset link</button></form>
+    <form onsubmit="event.preventDefault();toast('Reset link sent to your email');navigate('/login')" class="space-y-4"><div><label class="type-small font-medium mb-1.5 block">Email</label><input type="email" required class="input" placeholder="you@example.com" autocomplete="email"></div><button type="submit" class="btn btn-lg btn-primary w-full">Send reset link</button></form>
     <p class="mt-6 text-center type-small muted"><a href="#/login" class="text-sage-600 font-semibold hover:underline">Back to log in</a></p>
   `);
+}
+function resetBookingFlow() {
+  bookStep = 0;
+  bookState = { practitioner:null, service:null, areas:[], date:null, time:null, ref:null, _submitting:false };
+  bookViewMonth = null;
 }
 function handleLogin(form) {
   const email = form.email.value.trim();
   const user = USERS.find(u => u.email === email);
   if (!user) { toast('No demo account with that email', 'error'); return; }
-  if (State.savedAvatar && user.id === 'me-persisted') user.avatar = State.savedAvatar;
+  resetBookingFlow();
   set({ user }); persistSession(); toast(`Welcome back, ${user.first}`); navigate('/app/dashboard');
 }
-function demoLogin(id) { const u = getUser(id); set({ user: u }); persistSession(); toast(`Signed in as ${u.name}`); navigate('/app/dashboard'); }
+function demoLogin(id) { const u = getUser(id); resetBookingFlow(); set({ user: u }); persistSession(); toast(`Signed in as ${u.name}`); navigate('/app/dashboard'); }
 function handleRegister(form) {
   const name = form.name.value.trim(); const role = form.role.value; const email = form.email.value.trim();
+  if (!name || !email) { toast('Name and email are required', 'error'); return; }
+  if (USERS.some(u => u.email === email)) { toast('An account with that email already exists', 'error'); return; }
   const u = { id:'me-'+Date.now(), role, name, first:name.split(' ')[0], email, avatar:`https://i.pravatar.cc/150?u=${encodeURIComponent(email)}`, title:role==='practitioner'?'Practitioner':undefined, verified:false, joined:new Date().toISOString().slice(0,10), notifications:{ reminders:true, messages:true, focusAreas: role==='practitioner', product:false }, twoFactorEnabled:false };
-  USERS.push(u); saveAll(); set({ user: u }); persistSession(); toast(`Welcome, ${u.first}`);
+  USERS.push(u); saveAll(); resetBookingFlow(); set({ user: u }); persistSession(); toast(`Welcome, ${u.first}`);
   navigate(role === 'practitioner' ? '/onboard' : '/app/dashboard');
 }
-function logout() { set({ user: null }); persistSession(); toast('Signed out'); navigate('/'); }
+function logout() {
+  resetBookingFlow();
+  set({ user: null }); persistSession(); toast('Signed out'); navigate('/');
+}
 
 /* ============================================================
    ONBOARDING
@@ -1274,7 +1394,7 @@ function OnboardingPage() {
   }
   return `
   <div class="min-h-screen flex flex-col">
-    <header class="border-b border-[rgb(var(--border))]"><div class="max-w-2xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">${LogoMark(true)}<div data-theme-toggle></div></div></header>
+    <header class="border-b border-[rgb(var(--border))]"><div class="max-w-2xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">${LogoMark(true)}<div class="flex items-center gap-2">${GroupCreditBadge()}<div data-theme-toggle></div></div></div></header>
     <div class="max-w-2xl w-full mx-auto px-4 sm:px-6 py-10 flex-1">
       <div class="mb-6"><div class="section-eyebrow mb-1">Step ${onboardStep+1} of ${steps.length}</div><h1 class="type-h2 text-2xl sm:text-3xl">${steps[onboardStep][0]}</h1><p class="type-small muted mt-1">${steps[onboardStep][1]}</p></div>
       <div class="flex items-center gap-1.5 mb-6">${steps.map((_,i) => `<div class="flex-1 h-1 rounded-full ${i<=onboardStep?'bg-[rgb(var(--fg))]':'bg-[rgb(var(--border))]'} transition-colors"></div>`).join('')}</div>
@@ -1323,8 +1443,9 @@ function AppShell(page) {
   return `
   <div class="min-h-screen flex relative">
     <aside class="hidden lg:flex flex-col w-60 border-r border-[rgb(var(--border))] bg-[rgb(var(--surface))] sticky top-0 h-screen shrink-0 relative z-10 no-print">
-      <div class="px-4 h-14 flex items-center border-b border-[rgb(var(--border))]">
+      <div class="px-4 h-14 flex items-center justify-between border-b border-[rgb(var(--border))] gap-2">
         <a href="#/app/dashboard">${LogoMark(true)}</a>
+        ${GroupCreditBadge()}
       </div>
       <nav class="flex-1 overflow-y-auto px-2.5 py-4 space-y-0.5 no-scrollbar">
         ${nav.map(n => {
@@ -1354,6 +1475,7 @@ function AppShell(page) {
         <div class="h-14 px-4 sm:px-6 flex items-center gap-2">
           <a href="#/app/dashboard" class="lg:hidden">${LogoMark(true)}</a>
           <div class="ml-auto flex items-center gap-1 sm:gap-2">
+            <div class="lg:hidden">${GroupCreditBadge()}</div>
             <div data-theme-toggle class="hidden sm:block"></div>
             <a href="#/app/notifications" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Notifications">${icon('bell', 17)}${unreadNotifs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose2-500"></span>' : ''}</a>
             <a href="#/app/messages" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Messages">${icon('message-circle', 17)}${unreadMsgs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-sage-500"></span>' : ''}</a>
@@ -1543,7 +1665,7 @@ function PageClientDashboard() {
     ${topAreas.length ? `<div class="card p-6 mt-8"><div class="type-h3 text-[15px]">Your care areas</div><div class="text-xs muted mt-0.5 mb-4">What we have been focusing on together</div><div class="flex flex-wrap gap-1.5">${topAreas.map(([k,v]) => `<span class="chip chip-on !min-h-0 !py-1.5 !px-3 !text-xs">${getArea(k)?.label || k} · ${v}</span>`).join('')}</div></div>` : ''}
   </div>`;
 }
-function rebook(apptId) { const a = getAppt(apptId); if (!a) return; bookState = { practitioner: a.practitioner, service: a.service, areas: [...(a.areas||[])], date: null, time: null }; bookStep = 1; navigate('/app/book'); toast('Pre-filled from your last session'); }
+function rebook(apptId) { const a = getAppt(apptId); if (!a) return; resetBookingFlow(); bookState = { practitioner: a.practitioner, service: a.service, areas: [...(a.areas||[])], date: null, time: null, ref: null, _submitting:false }; bookStep = 1; navigate('/app/book'); toast('Pre-filled from your last session'); }
 
 /* ============================================================
    CALENDAR
@@ -1571,17 +1693,19 @@ function PageCalendar() {
     </div>
   </div>`;
 }
-function jumpToDate(iso) { if (!iso) return; set({ calendarDate: new Date(iso) }); }
+function jumpToDate(iso) { if (!iso) return; const parsed = parseLocalDate(iso); if (parsed) set({ calendarDate: parsed }); }
 function createApptAt(dateStr, hour, minute = 0) {
   const d = new Date(dateStr); d.setHours(hour, minute, 0, 0);
   const u = State.user; const clientList = getClients();
   if (!clientList.length) { toast('No clients yet', 'warning'); return; }
+  const myActive = getActiveServices().filter(s => s.practitioner === u.id);
+  if (!myActive.length) { toast('Add a service first', 'warning'); return; }
   modal({
     title: 'New appointment',
     body: `<div class="space-y-4">
       <div class="p-3 rounded-xl surface-2 flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-sage-500/12 text-sage-600 grid place-items-center shrink-0">${icon('calendar-plus', 14)}</div><div class="min-w-0"><div class="text-xs muted">When</div><div class="type-small font-semibold">${fmtDate(d, {weekday:'long', month:'long', day:'numeric'})} · ${fmtTime(d)}</div></div></div>
       <div><label class="type-small font-medium mb-1.5 block">Client</label><select id="ca-client" class="input">${clientList.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
-      <div><label class="type-small font-medium mb-1.5 block">Service</label><select id="ca-service" class="input">${getActiveServices().filter(s => s.practitioner === u.id).map(s => `<option value="${s.id}">${esc(s.name)} · ${s.duration}min · ${fmtMoney(s.price)}</option>`).join('')}</select></div>
+      <div><label class="type-small font-medium mb-1.5 block">Service</label><select id="ca-service" class="input">${myActive.map(s => `<option value="${s.id}">${esc(s.name)} · ${s.duration}min · ${fmtMoney(s.price)}</option>`).join('')}</select></div>
     </div>`,
     actions: [{ label:'Cancel', variant:'outline', onclick:'closeModal()' }, { label:'Create', variant:'primary', onclick:`submitApptFromCalendar('${d.toISOString()}')` }]
   });
@@ -1589,6 +1713,16 @@ function createApptAt(dateStr, hour, minute = 0) {
 function submitApptFromCalendar(iso) {
   const clientId = $('#ca-client').value, serviceId = $('#ca-service').value;
   const service = getService(serviceId), d = new Date(iso);
+  if (!service) { toast('Please choose a service', 'error'); return; }
+  const end = new Date(d.getTime() + service.duration * 60000);
+  const collide = APPOINTMENTS.some(a => {
+    if (a.status === 'cancelled' || a.status === 'no-show') return false;
+    if (a.practitioner !== State.user.id) return false;
+    const aStart = new Date(a.start);
+    const aEnd = new Date(aStart.getTime() + (a.duration || 60) * 60000);
+    return d < aEnd && end > aStart;
+  });
+  if (collide) { toast('That slot overlaps another appointment', 'error'); return; }
   const ref = 'TB-' + new Date().getFullYear().toString().slice(2) + '01-' + Math.floor(1000 + Math.random()*9000);
   APPOINTMENTS.push({ id: 'ap' + Date.now(), client: clientId, practitioner: State.user.id, service: serviceId, start: d.toISOString(), duration: service.duration, status: 'confirmed', mode: 'In-person', location: State.user.location || 'Studio', areas: [], ref });
   saveAll(); closeModal(); toast('Appointment created'); render();
@@ -1596,22 +1730,24 @@ function submitApptFromCalendar(iso) {
 function WeekView(date, appts) {
   const start = startOfWeek(date);
   const days = Array.from({length:7}, (_,i) => addDays(start, i));
-  const hours = Array.from({length:11}, (_,i) => i + 8);
+  const hours = Array.from({length: CAL_END_HOUR - CAL_START_HOUR}, (_,i) => i + CAL_START_HOUR);
+  const HOUR_PX = 64;
   return `<div class="overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0"><div class="min-w-[720px]">
     <div class="grid grid-cols-[52px_repeat(7,1fr)] border-b border-[rgb(var(--border))] pb-2"><div></div>${days.map(d => `<div class="text-center py-2 ${isToday(d)?'bg-[rgb(var(--surface-2))] rounded-lg':''}"><div class="text-[10px] muted uppercase tracking-wider">${fmtDate(d,{weekday:'short'})}</div><div class="font-display font-bold text-sm mt-0.5 ${isToday(d)?'text-sage-600':''}">${d.getDate()}</div></div>`).join('')}</div>
     <div class="grid grid-cols-[52px_repeat(7,1fr)] relative">
-      <div class="flex flex-col">${hours.map(h => `<div class="h-16 text-[10px] muted text-right pr-2 -mt-2">${h>12?h-12+' PM':h+' AM'}</div>`).join('')}</div>
-      ${days.map(d => { const dayAppts = appts.filter(a => sameDay(new Date(a.start), d)); return `<div class="relative border-l border-[rgb(var(--border))]">${hours.map(h => `<div class="cal-cell h-16 border-b border-[rgb(var(--border))]/50" onclick="createApptAt('${d.toISOString()}',${h})"><div class="cal-cell-add">${icon('plus', 11)}</div></div>`).join('')}${dayAppts.map(a => { const c = getUser(a.client); const startH = new Date(a.start).getHours() + new Date(a.start).getMinutes()/60; const top = (startH - 8) * 64; const height = (a.duration/60) * 64 - 3; const s = STATUS_STYLE[a.status] || STATUS_STYLE.pending; return `<div onclick="event.stopPropagation();navigate('/app/appointments/${a.id}')" class="absolute left-1 right-1 rounded-md px-1.5 py-1 text-xs cursor-pointer hover:scale-[1.02] transition overflow-hidden" style="top:${top}px;height:${height}px;background:${s.bg};border-left:2px solid ${s.color}"><div class="font-semibold truncate text-[11px]" style="color:${s.color}">${esc(c.name.split(' ')[0])}</div><div class="truncate text-[9px] muted">${esc(getService(a.service)?.name?.split(' ')[0] || '')}</div></div>`; }).join('')}</div>`; }).join('')}
+      <div class="flex flex-col">${hours.map(h => `<div class="h-16 text-[10px] muted text-right pr-2 -mt-2">${hourLabel(h)}</div>`).join('')}</div>
+      ${days.map(d => { const dayAppts = appts.filter(a => sameDay(new Date(a.start), d)); return `<div class="relative border-l border-[rgb(var(--border))]">${hours.map(h => `<div class="cal-cell h-16 border-b border-[rgb(var(--border))]/50" onclick="createApptAt('${d.toISOString()}',${h})"><div class="cal-cell-add">${icon('plus', 11)}</div></div>`).join('')}${dayAppts.map(a => { const c = getUser(a.client); const startH = new Date(a.start).getHours() + new Date(a.start).getMinutes()/60; const top = Math.max(0, (startH - CAL_START_HOUR) * HOUR_PX); const rawHeight = (a.duration/60) * HOUR_PX - 3; const maxHeight = (CAL_END_HOUR - CAL_START_HOUR) * HOUR_PX - top - 3; const height = Math.min(rawHeight, maxHeight); const s = STATUS_STYLE[a.status] || STATUS_STYLE.pending; return `<div onclick="event.stopPropagation();navigate('/app/appointments/${a.id}')" class="absolute left-1 right-1 rounded-md px-1.5 py-1 text-xs cursor-pointer hover:scale-[1.02] transition overflow-hidden" style="top:${top}px;height:${height}px;background:${s.bg};border-left:2px solid ${s.color}"><div class="font-semibold truncate text-[11px]" style="color:${s.color}">${esc(c.name.split(' ')[0])}</div><div class="truncate text-[9px] muted">${esc(getService(a.service)?.name?.split(' ')[0] || '')}</div></div>`; }).join('')}</div>`; }).join('')}
     </div>
   </div></div>`;
 }
 function DayView(date, appts) {
   const dayAppts = appts.filter(a => sameDay(new Date(a.start), date)).sort((a,b)=>new Date(a.start)-new Date(b.start));
-  const hours = Array.from({length:11}, (_,i) => i + 8);
+  const hours = Array.from({length: CAL_END_HOUR - CAL_START_HOUR}, (_,i) => i + CAL_START_HOUR);
+  const HOUR_PX = 80;
   return `<div>
     <div class="flex items-center justify-between mb-3 flex-wrap gap-2"><div class="type-h3 text-[15px]">${fmtDate(date,{weekday:'long', month:'long', day:'numeric'})}</div><div class="type-small muted">${dayAppts.length} appointment${dayAppts.length===1?'':'s'}</div></div>
-    <div class="grid grid-cols-[52px_1fr] relative"><div class="flex flex-col">${hours.map(h => `<div class="h-20 text-[10px] muted text-right pr-2 -mt-2">${h>12?h-12+' PM':h+' AM'}</div>`).join('')}</div>
-      <div class="relative border-l border-[rgb(var(--border))]">${hours.map(h => `<div class="cal-cell h-20 border-b border-[rgb(var(--border))]/50" onclick="createApptAt('${new Date(date).toISOString()}',${h})"><div class="cal-cell-add">${icon('plus', 11)}</div></div>`).join('')}${dayAppts.map(a => { const c = getUser(a.client); const s = STATUS_STYLE[a.status] || STATUS_STYLE.pending; const startH = new Date(a.start).getHours() + new Date(a.start).getMinutes()/60; const top = (startH - 8) * 80; const height = (a.duration/60) * 80 - 3; const areas = (a.areas || []).slice(0,2).map(x => getArea(x)?.label).filter(Boolean); return `<div onclick="event.stopPropagation();navigate('/app/appointments/${a.id}')" class="absolute left-2 right-2 rounded-lg px-3 py-2 cursor-pointer hover:scale-[1.01] transition overflow-hidden" style="top:${top}px;height:${height}px;background:${s.bg};border-left:3px solid ${s.color}"><div class="flex items-center gap-2">${avatar(c, 24)}<div class="min-w-0 flex-1"><div class="font-semibold text-sm truncate" style="color:${s.color}">${esc(c.name)}</div><div class="text-xs muted truncate">${fmtTime(a.start)} · ${esc(getService(a.service)?.name || '')}</div>${areas.length ? `<div class="text-[10px] muted truncate mt-0.5">${areas.join(' · ')}</div>` : ''}</div></div></div>`; }).join('')}</div>
+    <div class="grid grid-cols-[52px_1fr] relative"><div class="flex flex-col">${hours.map(h => `<div class="h-20 text-[10px] muted text-right pr-2 -mt-2">${hourLabel(h)}</div>`).join('')}</div>
+      <div class="relative border-l border-[rgb(var(--border))]">${hours.map(h => `<div class="cal-cell h-20 border-b border-[rgb(var(--border))]/50" onclick="createApptAt('${new Date(date).toISOString()}',${h})"><div class="cal-cell-add">${icon('plus', 11)}</div></div>`).join('')}${dayAppts.map(a => { const c = getUser(a.client); const s = STATUS_STYLE[a.status] || STATUS_STYLE.pending; const startH = new Date(a.start).getHours() + new Date(a.start).getMinutes()/60; const top = Math.max(0, (startH - CAL_START_HOUR) * HOUR_PX); const rawHeight = (a.duration/60) * HOUR_PX - 3; const maxHeight = (CAL_END_HOUR - CAL_START_HOUR) * HOUR_PX - top - 3; const height = Math.min(rawHeight, maxHeight); const areas = (a.areas || []).slice(0,2).map(x => getArea(x)?.label).filter(Boolean); return `<div onclick="event.stopPropagation();navigate('/app/appointments/${a.id}')" class="absolute left-2 right-2 rounded-lg px-3 py-2 cursor-pointer hover:scale-[1.01] transition overflow-hidden" style="top:${top}px;height:${height}px;background:${s.bg};border-left:3px solid ${s.color}"><div class="flex items-center gap-2">${avatar(c, 24)}<div class="min-w-0 flex-1"><div class="font-semibold text-sm truncate" style="color:${s.color}">${esc(c.name)}</div><div class="text-xs muted truncate">${fmtTime(a.start)} · ${esc(getService(a.service)?.name || '')}</div>${areas.length ? `<div class="text-[10px] muted truncate mt-0.5">${areas.join(' · ')}</div>` : ''}</div></div></div>`; }).join('')}</div>
     </div>
   </div>`;
 }
@@ -1661,7 +1797,7 @@ function PageAppointments() {
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
     ${PageHeader({ title: u.role === 'client' ? 'Sessions' : 'Appointments', description: `${list.length} total`, action: u.role === 'client' && !getClientUpcoming() ? `<a href="#/app/book" class="btn btn-sm btn-primary">${icon('plus', 13)} Book</a>` : '' })}
     <div class="flex flex-wrap gap-3 mb-4">
-      <div class="relative flex-1 max-w-md">${icon('search', 14, 'absolute left-3 top-1/2 -translate-y-1/2 muted')}<input value="${esc(State.apptQuery)}" oninput="State.apptQuery=this.value;render()" placeholder="Search…" class="input !pl-9"></div>
+      <div class="relative flex-1 max-w-md">${icon('search', 14, 'absolute left-3 top-1/2 -translate-y-1/2 muted')}<input id="appt-search" value="${esc(State.apptQuery)}" oninput="State.apptQuery=this.value;rerenderKeepingFocus('#appt-search')" placeholder="Search…" class="input !pl-9"></div>
       <select onchange="State.apptSort=this.value;render()" class="input !h-10 !w-auto !pr-9 !text-sm" style="max-width:170px"><option value="upcoming" ${sort==='upcoming'?'selected':''}>Upcoming first</option><option value="recent" ${sort==='recent'?'selected':''}>Most recent</option></select>
     </div>
     <div class="flex gap-2 overflow-x-auto pb-2 mb-4 no-scrollbar">${['all','confirmed','pending','completed','cancelled','no-show'].map(f => `<button onclick="State.apptFilter='${f}';render()" class="chip ${State.apptFilter===f?'chip-on':'chip-off'} capitalize">${f === 'no-show' ? 'No-show' : f}</button>`).join('')}</div>
@@ -1708,6 +1844,7 @@ function PageAppointmentDetail(id) {
 
     <div class="grid md:grid-cols-3 gap-5">
       <div class="md:col-span-2 space-y-5">
+        ${a.rescheduleReason ? `<div class="card p-5 border-l-4 !border-l-amber-500"><div class="flex items-start gap-3"><div class="w-8 h-8 rounded-lg bg-amber-500/15 text-amber-600 grid place-items-center shrink-0">${icon('alert-circle', 14)}</div><div class="flex-1"><div class="type-h3 text-[14px]">Reschedule reason</div><div class="type-small muted mt-1 leading-relaxed">${esc(a.rescheduleReason)}</div><div class="text-xs muted mt-1.5">By ${esc(getUser(a.rescheduledBy)?.name || 'Unknown')} · ${a.rescheduledAt ? relTime(a.rescheduledAt) : ''}</div></div></div></div>` : ''}
         ${canManage && (lastSession || priorAreas.length) ? `<div class="card p-5 border-l-4 !border-l-sky2-500">
           <div class="flex items-center gap-2.5 mb-4"><div class="w-8 h-8 rounded-lg bg-sky2-500/15 text-sky2-700 grid place-items-center">${icon('history', 14)}</div><div><div class="type-h3 text-[14px]">Preparation</div><div class="text-xs muted">Context from previous sessions</div></div></div>
           ${lastSession ? (() => { const ls = getService(lastSession.service); const lsAreas = (lastSession.areas || []).map(x => getArea(x)?.label).filter(Boolean); return `<div class="p-3 rounded-xl surface-2 mb-3"><div class="flex items-center justify-between mb-2 flex-wrap gap-2"><div class="text-xs muted">Last session</div><div class="text-xs muted">${fmtDate(lastSession.start, {weekday:'short', month:'short', day:'numeric'})}</div></div><div class="type-small font-semibold">${esc(ls?.name || '')}</div>${lsAreas.length ? `<div class="flex flex-wrap gap-1 mt-2">${lsAreas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-sage-500/12 text-sage-700 dark:text-sage-300">${x}</span>`).join('')}</div>` : ''}</div>`; })() : ''}
@@ -1754,6 +1891,7 @@ function openReschedule(id) {
       <div class="p-3 rounded-xl surface-2 flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-sage-500/12 text-sage-600 grid place-items-center shrink-0">${icon('calendar-clock', 14)}</div><div><div class="text-xs muted">Currently</div><div class="type-small font-semibold">${fmtDate(currentDate, {weekday:'long', month:'long', day:'numeric'})} · ${fmtTime(currentDate)}</div></div></div>
       <div><label class="type-small font-medium mb-1.5 block">New date</label><input id="rs-date" type="date" class="input" value="${currentDate.toISOString().slice(0,10)}"></div>
       <div><label class="type-small font-medium mb-1.5 block">New time</label><div class="grid grid-cols-3 gap-2" id="rs-times">${['9:00 AM','10:00 AM','11:00 AM','1:00 PM','2:00 PM','3:00 PM'].map((t, i) => `<button type="button" data-time="${t}" class="chip ${i === 0 ? 'chip-on' : 'chip-off'} rs-time" onclick="selectRescheduleTime(this)">${t}</button>`).join('')}</div></div>
+      <div><label class="type-small font-medium mb-1.5 block">Reason for rescheduling <span class="text-red-600">*</span></label><textarea id="rs-reason" class="input" rows="2" placeholder="e.g., Emergency, schedule conflict, etc." required></textarea></div>
     </div>`,
     actions: [{ label:'Cancel', variant:'outline', onclick:'closeModal()' }, { label:'Save new time', variant:'primary', onclick:`confirmReschedule('${id}')` }]
   });
@@ -1764,13 +1902,18 @@ function confirmReschedule(id) {
   if (!a) return;
   const dateVal = document.getElementById('rs-date').value;
   const selected = document.querySelector('.rs-time.chip-on');
+  const reason = (document.getElementById('rs-reason')?.value || '').trim();
   if (!dateVal || !selected) { toast('Pick a date and time', 'error'); return; }
+  if (!reason) { toast('Please provide a reason for rescheduling', 'error'); return; }
   const [time, ampm] = selected.dataset.time.split(' ');
   let [h, m] = time.split(':').map(Number);
   if (ampm === 'PM' && h !== 12) h += 12;
   if (ampm === 'AM' && h === 12) h = 0;
-  const d = new Date(dateVal); d.setHours(h, m, 0, 0);
+  const d = parseLocalDate(dateVal, h, m);
   a.start = d.toISOString();
+  a.rescheduleReason = reason;
+  a.rescheduledBy = State.user.id;
+  a.rescheduledAt = new Date().toISOString();
   saveAll(); closeModal(); toast('Appointment rescheduled'); render();
 }
 function openApptRequest(id, type) {
@@ -1778,7 +1921,7 @@ function openApptRequest(id, type) {
   modal({
     title: isCancel ? 'Cancel this appointment?' : 'Request a new time',
     body: isCancel ? `<div class="space-y-4"><div class="p-4 rounded-xl bg-red-500/8 border border-red-500/20 type-small flex items-start gap-3">${icon('alert-triangle', 14, 'text-red-600 shrink-0 mt-0.5')}<div><div class="font-medium">This will cancel your appointment.</div><div class="text-xs muted mt-1">Free cancellation up to 24 hours before. Late cancellations may incur a fee.</div></div></div><div><label class="type-small font-medium mb-1.5 block">Reason (optional)</label><textarea id="cancel-reason" class="input" rows="3" placeholder="Let them know why…"></textarea></div></div>`
-      : `<div class="space-y-3"><div class="p-3 rounded-xl surface-2 type-small flex items-start gap-2">${icon('info', 13)}<span class="muted">Your practitioner will review this request.</span></div><div><label class="type-small font-medium mb-1.5 block">Reason (optional)</label><textarea class="input" rows="3" placeholder="Let them know why…"></textarea></div></div>`,
+      : `<div class="space-y-4"><div class="p-3 rounded-xl surface-2 type-small flex items-start gap-2">${icon('info', 13)}<span class="muted">Your practitioner will review this request.</span></div><div><label class="type-small font-medium mb-1.5 block">Preferred new date <span class="muted font-normal">(optional)</span></label><input id="resched-date" type="date" class="input"></div><div><label class="type-small font-medium mb-1.5 block">Reason for rescheduling <span class="text-red-600">*</span></label><textarea id="resched-reason" class="input" rows="3" placeholder="e.g., Schedule conflict, feeling unwell, etc." required></textarea></div></div>`,
     actions: [
       { label: isCancel ? 'Keep appointment' : 'Cancel', variant:'outline', onclick:'closeModal()' },
       { label: isCancel ? 'Cancel appointment' : 'Send request', variant: isCancel ? 'danger' : 'primary', onclick: isCancel ? `confirmCancelAppt('${id}')` : `sendRescheduleRequest('${id}')` }
@@ -1788,18 +1931,37 @@ function openApptRequest(id, type) {
 function confirmCancelAppt(id) {
   const a = getAppt(id);
   if (!a) return;
+  if (a.status === 'cancelled') { closeModal(); return; }
   a.status = 'cancelled';
   const reason = document.getElementById('cancel-reason')?.value?.trim();
-  if (reason && CONVERSATIONS.length) {
-    const c = CONVERSATIONS.find(x => x.participants.includes(a.client) && x.participants.includes(a.practitioner));
-    if (c) { c.messages.push({ id:'m'+Date.now(), from: a.client, text: `Cancellation note: ${reason}`, at: new Date().toISOString(), read:false }); c.lastAt = new Date().toISOString(); c.unread = (c.unread || 0) + 1; persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS); }
+  if (reason) {
+    let c = CONVERSATIONS.find(x => x.participants.includes(a.client) && x.participants.includes(a.practitioner));
+    if (!c) {
+      c = { id:'cv'+Date.now(), participants:[a.client, a.practitioner], lastAt: new Date().toISOString(), unread:0, messages:[] };
+      CONVERSATIONS.push(c);
+    }
+    c.messages.push({ id:'m'+Date.now(), from: a.client, text: `Cancellation note: ${reason}`, at: new Date().toISOString(), read:false });
+    c.lastAt = new Date().toISOString();
+    c.unread = (c.unread || 0) + 1;
   }
   saveAll(); closeModal(); toast('Appointment cancelled'); render();
 }
 function sendRescheduleRequest(id) {
   const a = getAppt(id);
   if (!a) return;
-  NOTIFICATIONS.push({ id: 'n' + Date.now(), type:'appointment', title:'Reschedule request', body:`${getUser(a.client).first} requested a new time.`, at:new Date().toISOString(), read:false });
+  const reason = (document.getElementById('resched-reason')?.value || '').trim();
+  const preferredDate = document.getElementById('resched-date')?.value;
+  if (!reason) { toast('Please provide a reason for rescheduling', 'error'); return; }
+  a.rescheduleReason = reason;
+  a.rescheduledBy = State.user.id;
+  a.rescheduledAt = new Date().toISOString();
+  if (preferredDate) a.preferredDate = parseLocalDate(preferredDate).toISOString();
+  NOTIFICATIONS.push({ id: 'n' + Date.now(), type:'appointment', title:'Reschedule request', body:`${getUser(a.client).first} requested a new time. Reason: ${reason}`, at:new Date().toISOString(), read:false, apptId: id, link:'#/app/appointments/' + id, action:'view', actionLabel:'View' });
+  let c = CONVERSATIONS.find(x => x.participants.includes(a.client) && x.participants.includes(a.practitioner));
+  if (!c) { c = { id:'cv'+Date.now(), participants:[a.client, a.practitioner], lastAt: new Date().toISOString(), unread:0, messages:[] }; CONVERSATIONS.push(c); }
+  c.messages.push({ id:'m'+Date.now(), from: a.client, text: `Reschedule request${preferredDate ? ' for ' + fmtDate(preferredDate) : ''}: ${reason}`, at: new Date().toISOString(), read:false });
+  c.lastAt = new Date().toISOString();
+  c.unread = (c.unread || 0) + 1;
   saveAll(); closeModal(); toast('Request sent'); render();
 }
 function sendReminder(apptId) {
@@ -1821,7 +1983,7 @@ function openReviewModal(apptId) {
     title: 'Write a review',
     body: `<div class="space-y-4">
       <div class="flex items-center gap-3">${avatar(p, 44)}<div><div class="type-small font-semibold">${esc(p.name)}</div><div class="text-xs muted">${esc(getService(a.service)?.name || '')} · ${fmtDate(a.start)}</div></div></div>
-      <div><label class="type-small font-medium mb-2 block">Your rating</label><div class="flex gap-1" id="review-stars">${[1,2,3,4,5].map(n => `<button onclick="setReviewRating(${n})" data-star="${n}" class="star-btn w-9 h-9 rounded-lg grid place-items-center transition" aria-label="${n} star${n>1?'s':''}"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>`).join('')}</div></div>
+      <div><label class="type-small font-medium mb-2 block">Your rating</label><div class="flex gap-1" id="review-stars">${[1,2,3,4,5].map(n => `<button type="button" onclick="setReviewRating(${n})" data-star="${n}" class="star-btn w-9 h-9 rounded-lg grid place-items-center transition" aria-label="${n} star${n>1?'s':''}"><svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></button>`).join('')}</div></div>
       <div><label class="type-small font-medium mb-1.5 block">Your review (optional)</label><textarea id="review-comment" class="input" rows="4" placeholder="What stood out about your session?"></textarea></div>
       <div class="text-xs muted">Reviews are visible to the practitioner and can help other clients. Be kind.</div>
     </div>`,
@@ -1854,9 +2016,9 @@ function renderNoteEditor(apptId, note) {
   const tpl = NOTE_TEMPLATES[current.template] || NOTE_TEMPLATES.free;
   const saved = current.updatedAt ? relTime(current.updatedAt) : null;
   return `<div class="space-y-3">
-    <div class="flex flex-wrap gap-2">${Object.entries(NOTE_TEMPLATES).map(([key, t]) => `<button onclick="setNoteTemplate('${apptId}','${key}', this)" class="note-tpl ${current.template === key ? 'active' : ''}">${icon(t.icon, 11)} ${t.label}</button>`).join('')}</div>
+    <div class="flex flex-wrap gap-2">${Object.entries(NOTE_TEMPLATES).map(([key, t]) => `<button type="button" onclick="setNoteTemplate('${apptId}','${key}', this)" class="note-tpl ${current.template === key ? 'active' : ''}">${icon(t.icon, 11)} ${t.label}</button>`).join('')}</div>
     <textarea id="note-${apptId}" class="input" rows="6" placeholder="${esc(tpl.placeholder)}" oninput="onNoteInput('${apptId}', this.value)">${esc(current.content || tpl.starter)}</textarea>
-    <div class="flex items-center justify-between"><div class="autosave" id="autosave-${apptId}">${saved ? `<span class="autosave-dot"></span> Saved ${saved}` : `<span class="muted">Draft not saved</span>`}</div><button onclick="saveNoteNow('${apptId}')" class="btn btn-sm btn-primary">Save note</button></div>
+    <div class="flex items-center justify-between"><div class="autosave" id="autosave-${apptId}">${saved ? `<span class="autosave-dot"></span> Saved ${saved}` : `<span class="muted">Draft not saved</span>`}</div><button type="button" onclick="saveNoteNow('${apptId}')" class="btn btn-sm btn-primary">Save note</button></div>
   </div>`;
 }
 function setNoteTemplate(apptId, key, btn) {
@@ -1893,14 +2055,14 @@ function PageMessages(convoId) {
     <div class="card !rounded-none sm:!rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-[300px_1fr]" style="height:calc(100dvh - 3.5rem);max-height:calc(100dvh - 3.5rem)">
       <div class="border-r border-[rgb(var(--border))] flex flex-col min-h-0 ${convoId ? 'hidden md:flex' : 'flex'}">
         <div class="p-4 border-b border-[rgb(var(--border))] h-14 flex items-center"><div class="type-h3 text-[14px]">Messages</div></div>
-        <div class="flex-1 overflow-y-auto">${convos.length ? convos.map(c => { const other = getUser(c.participants.find(p => p !== u.id)); const last = c.messages[c.messages.length-1]; const isActive = active?.id === c.id; return `<a href="#/app/messages/${c.id}" class="block p-3 flex items-center gap-3 transition ${isActive?'bg-[rgb(var(--surface-2))]':'hover:bg-[rgb(var(--surface-2))]'}">${avatar(other, 40)}<div class="min-w-0 flex-1"><div class="flex items-center gap-2"><span class="type-small font-semibold truncate">${esc(other.name)}</span><span class="ml-auto text-[11px] muted">${relTime(c.lastAt)}</span></div><div class="text-xs muted truncate mt-0.5">${esc(last.text)}</div></div>${c.unread ? `<span class="badge !bg-sage-500 !text-white">${c.unread}</span>` : ''}</a>`; }).join('') : `<div class="p-6 text-center muted type-small">No conversations yet.</div>`}</div>
+        <div class="flex-1 overflow-y-auto">${convos.length ? convos.map(c => { const other = getUser(c.participants.find(p => p !== u.id)); const last = c.messages[c.messages.length-1]; const isActive = active?.id === c.id; return `<a href="#/app/messages/${c.id}" class="block p-3 flex items-center gap-3 transition ${isActive?'bg-[rgb(var(--surface-2))]':'hover:bg-[rgb(var(--surface-2))]'}">${avatar(other, 40)}<div class="min-w-0 flex-1"><div class="flex items-center gap-2"><span class="type-small font-semibold truncate">${esc(other.name)}</span><span class="ml-auto text-[11px] muted">${relTime(c.lastAt)}</span></div><div class="text-xs muted truncate mt-0.5">${esc(last?.text || '')}</div></div>${c.unread ? `<span class="badge !bg-sage-500 !text-white">${c.unread}</span>` : ''}</a>`; }).join('') : `<div class="p-6 text-center muted type-small">No conversations yet.</div>`}</div>
       </div>
       ${active ? (() => {
         const other = getUser(active.participants.find(p => p !== u.id));
         return `<div class="flex flex-col min-h-0">
-          <div class="p-3 sm:p-4 border-b border-[rgb(var(--border))] flex items-center gap-3 h-14"><a href="#/app/messages" class="md:hidden btn btn-sm btn-ghost !px-2">${icon('arrow-left', 16)}</a>${avatar(other, 34)}<div class="min-w-0 flex-1"><div class="type-small font-semibold truncate">${esc(other.name)}</div><div class="text-xs muted truncate">${other.title || other.email}</div></div></div>
+          <div class="p-3 sm:p-4 border-b border-[rgb(var(--border))] flex items-center gap-3 h-14"><a href="#/app/messages" class="md:hidden btn btn-sm btn-ghost !px-2" aria-label="Back">${icon('arrow-left', 16)}</a>${avatar(other, 34)}<div class="min-w-0 flex-1"><div class="type-small font-semibold truncate">${esc(other.name)}</div><div class="text-xs muted truncate">${other.title || other.email}</div></div></div>
           <div class="flex-1 overflow-y-auto p-4 space-y-3">${active.messages.map(m => { const me = m.from === u.id; return `<div class="flex ${me?'justify-end':'justify-start'}">${!me ? avatar(other, 26) : ''}<div class="ml-2 max-w-[75%] px-3.5 py-2 rounded-2xl type-small leading-relaxed ${me?'bg-[rgb(var(--fg))] text-[rgb(var(--surface))] rounded-br-md':'surface rounded-bl-md'}">${esc(m.text)}<div class="text-[10px] mt-1 ${me?'text-white/60':'muted'} flex items-center gap-1.5 justify-end">${fmtTime(m.at)}${me && m.read ? ` · ${icon('check-check', 9)} Seen` : ''}</div></div></div>`; }).join('')}</div>
-          <form onsubmit="event.preventDefault();sendMessage(this,'${active.id}')" class="p-3 border-t border-[rgb(var(--border))] flex items-center gap-2"><input id="msg-input" placeholder="Type a message…" class="input !h-11 flex-1"><button type="submit" class="w-11 h-11 rounded-lg bg-[rgb(var(--fg))] text-[rgb(var(--surface))] grid place-items-center hover:opacity-90 transition shrink-0" aria-label="Send">${icon('send', 16)}</button></form>
+          <form onsubmit="event.preventDefault();sendMessage(this,'${active.id}')" class="p-3 border-t border-[rgb(var(--border))] flex items-center gap-2"><input id="msg-input" placeholder="Type a message…" class="input !h-11 flex-1" autocomplete="off"><button type="submit" class="w-11 h-11 rounded-lg bg-[rgb(var(--fg))] text-[rgb(var(--surface))] grid place-items-center hover:opacity-90 transition shrink-0" aria-label="Send">${icon('send', 16)}</button></form>
         </div>`;
       })() : `<div class="grid place-items-center"><div class="text-center p-6"><div class="w-12 h-12 rounded-xl bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))] grid place-items-center mx-auto mb-3">${icon('message-square', 22)}</div><div class="type-small font-semibold">Select a conversation</div></div></div>`}
     </div>
@@ -1927,7 +2089,7 @@ function PageClients() {
   return `
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
     ${PageHeader({ title:'Clients', description: `${list.length} client${list.length === 1 ? '' : 's'}` })}
-    <div class="relative mb-4 max-w-md">${icon('search', 14, 'absolute left-3 top-1/2 -translate-y-1/2 muted')}<input value="${esc(State.clientQuery)}" oninput="State.clientQuery=this.value;render()" placeholder="Search by name…" class="input !pl-9"></div>
+    <div class="relative mb-4 max-w-md">${icon('search', 14, 'absolute left-3 top-1/2 -translate-y-1/2 muted')}<input id="client-search" value="${esc(State.clientQuery)}" oninput="State.clientQuery=this.value;rerenderKeepingFocus('#client-search')" placeholder="Search by name…" class="input !pl-9"></div>
     ${list.length === 0 ? EmptyState({ icon:'users', title:'No clients yet', description:'Clients appear here after their first booking with you.' }) : `
       <div class="list-container">
         ${list.map(c => {
@@ -1959,7 +2121,7 @@ function PageClientDetail(id) {
   const maxCount = areaRanked[0]?.[1] || 1;
   const completed = appts.filter(a => a.status === 'completed').length;
   const upcoming = appts.filter(a => new Date(a.start) > new Date() && a.status !== 'cancelled')[0];
-  const clientReviews = REVIEWS.filter(r => r.client === id);
+  const clientReviews = REVIEWS.filter(r => r.client === id && r.practitioner === u.id);
 
   return `
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
@@ -1974,7 +2136,7 @@ function PageClientDetail(id) {
 
     ${areaRanked.length ? `<div class="card p-6 mb-6"><div class="type-h3 text-[15px]">Focus areas</div><div class="text-xs muted mt-0.5 mb-5">What we have worked on across all sessions</div><div class="space-y-4">${areaRanked.slice(0, 6).map(([k,v]) => { const area = getArea(k); if (!area) return ''; return `<div><div class="flex items-center justify-between type-small mb-1.5"><span class="font-medium">${esc(area.label)}</span><span class="muted text-xs">${v} session${v>1?'s':''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full bg-sage-500" style="width:${(v/maxCount)*100}%"></div></div></div>`; }).join('')}</div></div>` : ''}
 
-    ${clientReviews.length ? `<div class="card p-6 mb-6"><div class="type-h3 text-[15px]">Reviews from this client</div><div class="text-xs muted mt-0.5 mb-5">Their feedback on past sessions</div><div class="space-y-4">${clientReviews.slice(0, 3).map(r => { const a = getAppt(r.appt); return `<div class="p-4 rounded-xl surface-2"><div class="flex items-center gap-3 mb-2">${StarsDisplay(r.rating, 13)}<span class="text-xs muted">${fmtDate(r.date, {month:'short', day:'numeric'})}</span></div><p class="type-small leading-relaxed">"${esc(r.comment)}"</p>${a ? `<div class="text-xs muted mt-2">${esc(getService(a.service)?.name || '')}</div>` : ''}</div>`; }).join('')}</div></div>` : ''}
+    ${clientReviews.length ? `<div class="card p-6 mb-6"><div class="type-h3 text-[15px]">Reviews from this client</div><div class="text-xs muted mt-0.5 mb-5">Their feedback on your sessions together</div><div class="space-y-4">${clientReviews.slice(0, 3).map(r => { const a = getAppt(r.appt); return `<div class="p-4 rounded-xl surface-2"><div class="flex items-center gap-3 mb-2">${StarsDisplay(r.rating, 13)}<span class="text-xs muted">${fmtDate(r.date, {month:'short', day:'numeric'})}</span></div><p class="type-small leading-relaxed">"${esc(r.comment)}"</p>${a ? `<div class="text-xs muted mt-2">${esc(getService(a.service)?.name || '')}</div>` : ''}</div>`; }).join('')}</div></div>` : ''}
 
     <div class="card p-6">
       <div class="type-h3 text-[15px]">Care history</div>
@@ -2001,9 +2163,11 @@ function PageGuides(areaId) {
       ${State.user && State.user.role === 'client' && !getClientUpcoming() ? `<a href="#/app/book" class="btn btn-primary w-full">Book a session with a practitioner</a>` : ''}
     </div>`;
   }
+  // If a bad areaId was provided, fall through to the index so users aren't stuck on a 404.
   return `
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
     ${PageHeader({ backHref: State.user ? '#/app/dashboard' : '#/', backLabel: State.user ? 'Back' : 'Home', eyebrow:'Between sessions', title:'Self-care guides', description:'Short routines for common trouble spots. Written by practitioners.' })}
+    ${areaId ? `<div class="mb-4 p-3 rounded-lg surface-2 text-xs muted flex items-start gap-2">${icon('info', 11)}<span>That guide wasn't found — here are all the available routines.</span></div>` : ''}
     <div class="grid sm:grid-cols-2 gap-3 mb-5">${GUIDE_AREAS.map(id => { const g = GUIDES[id]; return `<a href="#/self-care/${id}" class="card card-hover p-5 flex items-center gap-4"><div class="w-11 h-11 rounded-xl bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('hand-heart', 20)}</div><div class="flex-1 min-w-0"><div class="font-semibold">${esc(g.title)}</div><div class="text-xs muted mt-0.5">${esc(g.duration)} · ${esc(g.intro)}</div></div>${icon('arrow-right', 15, 'muted')}</a>`; }).join('')}</div>
     <div class="p-3 rounded-lg surface-2 text-xs muted flex items-start gap-2">${icon('info', 11)}<span>For general wellness only. Not a substitute for professional care.</span></div>
   </div>`;
@@ -2025,7 +2189,7 @@ function PageServices() {
         <div class="type-h3 text-[15px]">${esc(s.name)}</div>
         <div class="text-xs muted mt-0.5">${esc(s.category)} · ${s.duration} min</div>
         <p class="type-small muted mt-2 line-clamp-2 leading-relaxed">${esc(s.description)}</p>
-        <div class="mt-4 flex items-center justify-between"><div class="font-bold">${fmtMoney(s.price)}</div><div class="flex gap-1"><button onclick="duplicateService('${s.id}')" class="w-8 h-8 rounded-lg grid place-items-center muted hover:bg-[rgb(var(--surface-2))]" title="Duplicate">${icon('copy', 12)}</button><button onclick="openServiceModal('${s.id}')" class="btn btn-sm btn-outline">Edit</button></div></div>
+        <div class="mt-4 flex items-center justify-between"><div class="font-bold">${fmtMoney(s.price)}</div><div class="flex gap-1"><button onclick="duplicateService('${s.id}')" class="w-8 h-8 rounded-lg grid place-items-center muted hover:bg-[rgb(var(--surface-2))]" title="Duplicate" aria-label="Duplicate">${icon('copy', 12)}</button><button onclick="openServiceModal('${s.id}')" class="btn btn-sm btn-outline">Edit</button></div></div>
       </div>`).join('')}</div>`}
   </div>`;
 }
@@ -2068,17 +2232,18 @@ function PageAvailability() {
     </div>
     <div class="card p-6">
       <div class="flex items-center justify-between mb-5 flex-wrap gap-2"><div><div class="type-h3 text-[15px]">Time off</div><div class="text-xs muted mt-0.5">Block dates for vacation or personal days</div></div><button onclick="openAddTimeOff()" class="btn btn-sm btn-primary">${icon('plus', 13)} Add</button></div>
-      ${State.timeOff.length === 0 ? `<div class="text-center py-6 rounded-xl border border-dashed border-[rgb(var(--border))]"><div class="type-small muted">No blocked dates</div></div>` : `<div class="space-y-2">${State.timeOff.map(t => { const start = new Date(t.start), end = new Date(t.end); const sameRange = sameDay(start, end); const range = sameRange ? fmtDate(start, {weekday:'short', month:'short', day:'numeric', year:'numeric'}) : `${fmtDate(start, {month:'short', day:'numeric'})} – ${fmtDate(end, {month:'short', day:'numeric', year:'numeric'})}`; const days = Math.round((end - start) / (1000*60*60*24)) + 1; return `<div class="flex items-center gap-3 p-3 rounded-xl surface-2"><div class="w-9 h-9 rounded-lg bg-rose2-400/20 text-rose2-700 grid place-items-center shrink-0">${icon('calendar-x', 14)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${esc(t.reason || 'Time off')}</div><div class="text-xs muted mt-0.5">${range} · ${days} day${days>1?'s':''}</div></div><button onclick="removeTimeOff('${t.id}')" class="w-8 h-8 rounded-lg grid place-items-center muted hover:bg-red-500/10 hover:text-red-600">${icon('x', 14)}</button></div>`; }).join('')}</div>`}
+      ${State.timeOff.length === 0 ? `<div class="text-center py-6 rounded-xl border border-dashed border-[rgb(var(--border))]"><div class="type-small muted">No blocked dates</div></div>` : `<div class="space-y-2">${State.timeOff.map(t => { const start = new Date(t.start), end = new Date(t.end); const sameRange = sameDay(start, end); const range = sameRange ? fmtDate(start, {weekday:'short', month:'short', day:'numeric', year:'numeric'}) : `${fmtDate(start, {month:'short', day:'numeric'})} – ${fmtDate(end, {month:'short', day:'numeric', year:'numeric'})}`; const days = Math.round((end - start) / (1000*60*60*24)) + 1; return `<div class="flex items-center gap-3 p-3 rounded-xl surface-2"><div class="w-9 h-9 rounded-lg bg-rose2-400/20 text-rose2-700 grid place-items-center shrink-0">${icon('calendar-x', 14)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${esc(t.reason || 'Time off')}</div><div class="text-xs muted mt-0.5">${range} · ${days} day${days>1?'s':''}</div></div><button onclick="removeTimeOff('${t.id}')" class="w-8 h-8 rounded-lg grid place-items-center muted hover:bg-red-500/10 hover:text-red-600" aria-label="Remove">${icon('x', 14)}</button></div>`; }).join('')}</div>`}
     </div>
   </div>`;
 }
 function toggleDay(i, v) { AVAILABILITY[i].enabled = v; saveAll(); render(); }
 function openAddTimeOff() { modal({ title:'Add time off', body:`<div class="space-y-3"><div class="grid grid-cols-2 gap-3"><div><label class="type-small font-medium mb-1.5 block">Start</label><input id="to-start" type="date" class="input" value="${new Date().toISOString().slice(0,10)}"></div><div><label class="type-small font-medium mb-1.5 block">End</label><input id="to-end" type="date" class="input" value="${new Date().toISOString().slice(0,10)}"></div></div><div><label class="type-small font-medium mb-1.5 block">Reason (optional)</label><input id="to-reason" class="input" placeholder="e.g., Holiday break"></div></div>`, actions:[{label:'Cancel',variant:'outline',onclick:'closeModal()'},{label:'Add',variant:'primary',onclick:'submitTimeOff()'}] }); }
 function submitTimeOff() {
-  const start = document.getElementById('to-start').value, end = document.getElementById('to-end').value, reason = document.getElementById('to-reason').value.trim();
-  if (!start || !end) { toast('Please provide both dates', 'error'); return; }
-  if (new Date(end) < new Date(start)) { toast('End must be after start', 'error'); return; }
-  State.timeOff.push({ id:'to'+Date.now(), start: new Date(start).toISOString(), end: new Date(end).toISOString(), reason: reason || 'Time off' });
+  const startVal = document.getElementById('to-start').value, endVal = document.getElementById('to-end').value, reason = document.getElementById('to-reason').value.trim();
+  if (!startVal || !endVal) { toast('Please provide both dates', 'error'); return; }
+  const startD = parseLocalDate(startVal), endD = parseLocalDate(endVal);
+  if (endD < startD) { toast('End must be after start', 'error'); return; }
+  State.timeOff.push({ id:'to'+Date.now(), start: startD.toISOString(), end: endD.toISOString(), reason: reason || 'Time off' });
   State.timeOff.sort((a,b) => new Date(a.start) - new Date(b.start));
   saveTimeOff(); closeModal(); toast('Time off added'); render();
 }
@@ -2216,9 +2381,14 @@ function handleNotification(id, action) {
   const n = NOTIFICATIONS.find(x => x.id === id);
   if (!n) return;
   n.read = true;
-  if (action === 'confirm' && n.apptId) { const a = getAppt(n.apptId); if (a) { a.status = 'confirmed'; n.actionTaken = true; toast('Appointment confirmed'); } }
-  else if (action === 'reply') { toast('Opening conversation…'); saveAll(); navigate(n.link?.replace('#','') || '/app/messages'); render(); return; }
-  else if (action === 'view') { saveAll(); navigate(n.link?.replace('#','') || '/app/dashboard'); render(); return; }
+  if (action === 'confirm' && n.apptId) { const a = getAppt(n.apptId); if (a) { a.status = 'confirmed'; n.actionTaken = true; toast('Appointment confirmed'); } saveAll(); render(); return; }
+  if (action === 'reply' || action === 'view') {
+    saveAll();
+    const target = (n.link || '#/app/dashboard').replace('#','');
+    if (action === 'reply') toast('Opening conversation…');
+    navigate(target);
+    return;
+  }
   saveAll();
   render();
 }
@@ -2274,7 +2444,7 @@ function PageSettings() {
       </div>`;
     if (tab === 'practice' && isPractitioner) return `
       <div class="space-y-3">
-        <a href="#/app/services" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('sparkles', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Services</div><div class="text-xs muted mt-0.5">${getActiveServices().filter(s => s.practitioner === u.id).length} active</div></div>${icon('chevron-right', 15, 'muted')}</a>
+        <a href="#/app/services" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('sparkles', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Services</div><div class="text-xs muted mt-0.5">${SERVICES.filter(s => s.practitioner === u.id && s.active !== false).length} active</div></div>${icon('chevron-right', 15, 'muted')}</a>
         <a href="#/app/availability" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('clock', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Hours & time off</div><div class="text-xs muted mt-0.5">Weekly schedule, vacation days</div></div>${icon('chevron-right', 15, 'muted')}</a>
         <a href="#/app/reports" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('bar-chart-3', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Reports</div><div class="text-xs muted mt-0.5">Focus areas, revenue, appointments</div></div>${icon('chevron-right', 15, 'muted')}</a>
         <a href="#/app/verification" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('badge-check', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Verification</div><div class="text-xs muted mt-0.5">${u.verified ? 'Your credentials are verified' : u.verificationSubmitted ? 'Submitted, under review' : 'Add your credentials'}</div></div>${u.verified ? statusBadge('verified') : ''}${icon('chevron-right', 15, 'muted')}</a>
@@ -2326,14 +2496,24 @@ function PageSettings() {
 function toggleNotifPref(key, value) { if (!State.user) return; State.user.notifications = { ...(State.user.notifications || {}), [key]: value }; saveAll(); persistSession(); toast('Preference saved'); }
 function toggleAnalyticsConsent(value) { if (!State.user) return; State.user.analyticsConsent = value; saveAll(); persistSession(); toast(value ? 'Anonymized usage on' : 'Anonymized usage off'); }
 function toggleTwoFactor(value) { if (!State.user) return; State.user.twoFactorEnabled = value; saveAll(); persistSession(); toast(value ? 'Two-factor authentication enabled' : 'Two-factor authentication disabled'); render(); }
-function saveProfileField(field, value) { if (!State.user) return; State.user[field] = value; saveAll(); persistSession(); toast('Saved'); }
+function saveProfileField(field, value) { if (!State.user) return; State.user[field] = value; const u = USERS.find(x => x.id === State.user.id); if (u) u[field] = value; saveAll(); persistSession(); toast('Saved'); }
 function handlePhotoChange(input) {
   const file = input.files?.[0];
   if (!file) return;
   if (file.size > 5 * 1024 * 1024) { toast('Photo too large (max 5MB)', 'error'); return; }
   if (!file.type.startsWith('image/')) { toast('Please choose an image file', 'error'); return; }
   const reader = new FileReader();
-  reader.onload = (e) => { const dataUrl = e.target.result; State.savedAvatar = dataUrl; localStorage.setItem(STORAGE_KEYS.AVATAR, dataUrl); if (State.user) State.user.avatar = dataUrl; saveAll(); persistSession(); toast('Photo updated'); render(); };
+  reader.onload = (e) => {
+    const dataUrl = e.target.result;
+    State.savedAvatar = dataUrl;
+    localStorage.setItem(STORAGE_KEYS.AVATAR, dataUrl);
+    if (State.user) {
+      State.user.avatar = dataUrl;
+      const u = USERS.find(x => x.id === State.user.id);
+      if (u) u.avatar = dataUrl;
+    }
+    saveAll(); persistSession(); toast('Photo updated'); render();
+  };
   reader.readAsDataURL(file);
 }
 function resetPhoto() { State.savedAvatar = null; localStorage.removeItem(STORAGE_KEYS.AVATAR); toast('Photo reset'); render(); }
@@ -2349,7 +2529,7 @@ function confirmResetDemo() { modal({ title:'Reset to demo data?', body:`<div cl
 function openChangePassword() {
   modal({
     title: 'Change password',
-    body: `<div class="space-y-4"><div><label class="type-small font-medium mb-1.5 block">Current password</label><input id="old-pw" type="password" class="input" placeholder="••••••••"></div><div><label class="type-small font-medium mb-1.5 block">New password</label><input id="new-pw" type="password" class="input" placeholder="At least 8 characters" oninput="updatePwStrength(this.value)"><div class="flex gap-1 mt-2">${[1,2,3].map(i => `<div id="pw-seg-${i}" class="flex-1 h-0.5 rounded-full bg-[rgb(var(--border))] transition-colors"></div>`).join('')}</div></div><div><label class="type-small font-medium mb-1.5 block">Confirm new password</label><input id="confirm-pw" type="password" class="input" placeholder="Repeat new password"></div></div>`,
+    body: `<div class="space-y-4"><div><label class="type-small font-medium mb-1.5 block">Current password</label><input id="old-pw" type="password" class="input" placeholder="••••••••" autocomplete="current-password"></div><div><label class="type-small font-medium mb-1.5 block">New password</label><input id="new-pw" type="password" class="input" placeholder="At least 8 characters" autocomplete="new-password" oninput="updatePwStrength(this.value)"><div class="flex gap-1 mt-2">${[1,2,3].map(i => `<div id="pw-seg-${i}" class="flex-1 h-0.5 rounded-full bg-[rgb(var(--border))] transition-colors"></div>`).join('')}</div></div><div><label class="type-small font-medium mb-1.5 block">Confirm new password</label><input id="confirm-pw" type="password" class="input" placeholder="Repeat new password" autocomplete="new-password"></div></div>`,
     actions: [{ label:'Cancel', variant:'outline', onclick:'closeModal()' }, { label:'Update password', variant:'primary', onclick:'submitPasswordChange()' }]
   });
 }
@@ -2367,8 +2547,9 @@ function submitPasswordChange() {
    BOOKING FLOW
    ============================================================ */
 let bookStep = 0;
-let bookState = { practitioner:null, service:null, areas:[], date:null, time:null, ref:null };
+let bookState = { practitioner:null, service:null, areas:[], date:null, time:null, ref:null, _submitting:false };
 let bookCat = '';
+let bookViewMonth = null;
 
 function getClientLastAppt() { if (!State.user) return null; return APPOINTMENTS.filter(a => a.client === State.user.id && a.status === 'completed').sort((a, b) => new Date(b.start) - new Date(a.start))[0] || null; }
 
@@ -2412,17 +2593,17 @@ function BookStep1() {
   const cats = [...new Set(services.map(s => s.category))];
   return `<div class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
     ${BookingHeader(1, 3, 'What kind of session do you need?', 'Base price shown. Focus areas add ₱50 to ₱150 each.')}
-    ${lastAppt ? (() => { const lp = getUser(lastAppt.practitioner); const ls = getService(lastAppt.service); const lastAreas = (lastAppt.areas || []).map(x => getArea(x)?.label).filter(Boolean); return `<div class="card p-4 mb-4 border-l-4 !border-l-sage-500"><div class="flex items-start gap-3 flex-wrap"><div class="w-9 h-9 rounded-lg bg-sage-500/12 text-sage-600 grid place-items-center shrink-0">${icon('history', 15)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Welcome back — continue with ${esc(lp.first)}?</div><div class="text-xs muted mt-1">Last session: ${esc(ls.name)} on ${fmtDate(lastAppt.start, {month:'short', day:'numeric'})}${lastAreas.length ? ' · ' + lastAreas.join(', ') : ''}</div></div><button onclick="quickRebook()" class="btn btn-sm btn-primary">${icon('zap', 12)} Book again</button></div></div>`; })() : ''}
+    ${lastAppt ? (() => { const lp = getUser(lastAppt.practitioner); const ls = getService(lastAppt.service); const lastAreas = (lastAppt.areas || []).map(x => getArea(x)?.label).filter(Boolean); return `<div class="card p-4 mb-4 border-l-4 !border-l-sage-500"><div class="flex items-start gap-3 flex-wrap"><div class="w-9 h-9 rounded-lg bg-sage-500/12 text-sage-600 grid place-items-center shrink-0">${icon('history', 15)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Welcome back — continue with ${esc(lp.first)}?</div><div class="text-xs muted mt-1">Last session: ${esc(ls?.name || '')} on ${fmtDate(lastAppt.start, {month:'short', day:'numeric'})}${lastAreas.length ? ' · ' + lastAreas.join(', ') : ''}</div></div><button onclick="quickRebook()" class="btn btn-sm btn-primary">${icon('zap', 12)} Book again</button></div></div>`; })() : ''}
     <div class="grid lg:grid-cols-[1fr_280px] gap-6">
       <div class="space-y-4">
         <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar"><button onclick="bookCat='';render()" class="chip ${!bookCat ? 'chip-on' : 'chip-off'} chip-sm">All</button>${cats.map(c => `<button onclick="bookCat='${c}';render()" class="chip ${bookCat === c ? 'chip-on' : 'chip-off'} chip-sm">${c}</button>`).join('')}</div>
-        <div class="space-y-3">${services.filter(s => !bookCat || s.category === bookCat).map(s => { const p = getUser(s.practitioner); const isLast = lastAppt && s.practitioner === lastAppt.practitioner; return `<button onclick="selectService('${s.id}')" class="w-full card card-hover p-5 text-left ${isLast ? '!border-sage-500/40 !ring-1 !ring-sage-500/20' : ''}"><div class="flex items-start gap-4">${avatar(p, 44)}<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-h3 text-[15px]">${esc(s.name)}</div>${isLast ? `<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-sage-500 text-white font-semibold">Last time</span>` : ''}</div><div class="text-xs muted mt-0.5">with <span class="font-medium text-[rgb(var(--fg))]">${esc(p.name)}</span></div><p class="type-small muted mt-2 leading-relaxed">${esc(s.description)}</p><div class="mt-3 flex flex-wrap items-center gap-3 text-xs muted"><span class="flex items-center gap-1">${icon('clock', 11)} ${s.duration} min</span><span class="flex items-center gap-1">${icon('map-pin', 11)} ${esc(p.location.split(',')[0])}</span></div></div><div class="text-right shrink-0"><div class="font-display font-bold text-base">${fmtMoney(s.price)}</div><div class="text-[10px] muted mt-0.5">base + areas</div><div class="text-[11px] mt-1.5 flex items-center gap-1 justify-end font-semibold text-sage-600">Choose ${icon('arrow-right', 10)}</div></div></div></button>`; }).join('')}</div>
+        <div class="space-y-3">${services.filter(s => !bookCat || s.category === bookCat).map(s => { const p = getUser(s.practitioner); const isLast = lastAppt && s.practitioner === lastAppt.practitioner; return `<button onclick="selectService('${s.id}')" class="w-full card card-hover p-5 text-left ${isLast ? '!border-sage-500/40 !ring-1 !ring-sage-500/20' : ''}"><div class="flex items-start gap-4">${avatar(p, 44)}<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-h3 text-[15px]">${esc(s.name)}</div>${isLast ? `<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-sage-500 text-white font-semibold">Last time</span>` : ''}</div><div class="text-xs muted mt-0.5">with <span class="font-medium text-[rgb(var(--fg))]">${esc(p.name)}</span></div><p class="type-small muted mt-2 leading-relaxed">${esc(s.description)}</p><div class="mt-3 flex flex-wrap items-center gap-3 text-xs muted"><span class="flex items-center gap-1">${icon('clock', 11)} ${s.duration} min</span><span class="flex items-center gap-1">${icon('map-pin', 11)} ${esc((p.location || '').split(',')[0])}</span></div></div><div class="text-right shrink-0"><div class="font-display font-bold text-base">${fmtMoney(s.price)}</div><div class="text-[10px] muted mt-0.5">base + areas</div><div class="text-[11px] mt-1.5 flex items-center gap-1 justify-end font-semibold text-sage-600">Choose ${icon('arrow-right', 10)}</div></div></div></button>`; }).join('')}</div>
       </div>
       <div class="hidden lg:block">${BookingSummaryPanel()}</div>
     </div>
   </div>`;
 }
-function quickRebook() { const a = getClientLastAppt(); if (!a) return; bookState = { practitioner: a.practitioner, service: a.service, areas: [...(a.areas || [])], date: null, time: null }; bookStep = 1; render(); toast('Loaded from your last session'); }
+function quickRebook() { const a = getClientLastAppt(); if (!a) return; resetBookingFlow(); bookState = { practitioner: a.practitioner, service: a.service, areas: [...(a.areas || [])], date: null, time: null, ref: null, _submitting:false }; bookStep = 1; render(); toast('Loaded from your last session'); }
 
 function BookStep2() {
   const p = getUser(bookState.practitioner);
@@ -2430,8 +2611,9 @@ function BookStep2() {
   const selectedDate = bookState.date ? new Date(bookState.date) : null;
   const today = new Date();
   const maxDate = addDays(today, 60);
-  const viewYear = selectedDate ? selectedDate.getFullYear() : today.getFullYear();
-  const viewMonth = selectedDate ? selectedDate.getMonth() : today.getMonth();
+  const baseDate = selectedDate || bookViewMonth || today;
+  const viewYear = baseDate.getFullYear();
+  const viewMonth = baseDate.getMonth();
   const firstOfMonth = new Date(viewYear, viewMonth, 1);
   const lastOfMonth = new Date(viewYear, viewMonth + 1, 0);
   const gridStart = startOfWeek(firstOfMonth);
@@ -2446,13 +2628,13 @@ function BookStep2() {
   const areas = bookState.areas || [];
   const lastWithSame = State.user ? APPOINTMENTS.filter(a => a.client === State.user.id && a.practitioner === p.id && a.status === 'completed').sort((a, b) => new Date(b.start) - new Date(a.start))[0] : null;
   const lastAreas = lastWithSame ? (lastWithSame.areas || []).map(x => getArea(x)?.label).filter(Boolean) : [];
-  const slotGroup = (title, iconName, list) => list.length === 0 ? '' : `<div class="mb-4"><div class="flex items-center gap-2 mb-2"><div class="w-5 h-5 rounded-md bg-[rgb(var(--surface-2))] grid place-items-center muted">${icon(iconName, 11)}</div><div class="text-xs font-bold uppercase tracking-wider">${title}</div></div><div class="grid grid-cols-3 sm:grid-cols-4 gap-2">${list.map(sl => `<button onclick="${sl.available ? `bookState.time='${sl.time}';render()` : ''}" class="time-slot !py-2 !px-3 ${bookState.time === sl.time ? 'selected' : ''} ${!sl.available ? 'disabled' : ''}"><div class="flex items-center gap-1"><span class="font-semibold text-xs">${sl.time}</span></div><div class="slot-meta text-[10px] muted">${sl.available ? `${s.duration}m` : 'Booked'}</div></button>`).join('')}</div></div>`;
+  const slotGroup = (title, iconName, list) => list.length === 0 ? '' : `<div class="mb-4"><div class="flex items-center gap-2 mb-2"><div class="w-5 h-5 rounded-md bg-[rgb(var(--surface-2))] grid place-items-center muted">${icon(iconName, 11)}</div><div class="text-xs font-bold uppercase tracking-wider">${title}</div></div><div class="grid grid-cols-3 sm:grid-cols-4 gap-2">${list.map(sl => `<button type="button" onclick="${sl.available ? `bookState.time='${sl.time}';render()` : ''}" class="time-slot !py-2 !px-3 ${bookState.time === sl.time ? 'selected' : ''} ${!sl.available ? 'disabled' : ''}"><div class="flex items-center gap-1"><span class="font-semibold text-xs">${sl.time}</span></div><div class="slot-meta text-[10px] muted">${sl.available ? `${s.duration}m` : 'Booked'}</div></button>`).join('')}</div></div>`;
   return `<div class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
     ${BookingHeader(2, 3, 'When, and what hurts?', 'Pick a time, then mark the areas that need attention. The total updates live.')}
     <div class="grid lg:grid-cols-[1fr_280px] gap-6">
       <div class="space-y-4">
         <div class="card p-4 flex items-center gap-3">${avatar(p, 40)}<div class="min-w-0 flex-1"><div class="text-xs muted mb-0.5">Booking with</div><div class="type-small font-semibold truncate">${esc(p.name)}</div><div class="text-xs muted truncate mt-0.5">${esc(s.name)} · ${s.duration} min · base ${fmtMoney(s.price)}</div></div><button onclick="bookStep=0;render()" class="text-xs text-sage-600 font-semibold hover:underline">Change</button></div>
-        ${nextAvail ? `<button onclick="bookState.date='${nextAvail.date.toISOString()}';bookState.time='${nextAvail.time}';render()" class="w-full card card-hover p-4 text-left border-l-4 !border-l-sage-500"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-sage-500 text-white grid place-items-center shrink-0">${icon('zap', 15)}</div><div class="flex-1 min-w-0"><div class="text-[10px] font-bold tracking-widest uppercase text-sage-600">Next available</div><div class="type-small font-semibold mt-0.5">${fmtDate(nextAvail.date, {weekday:'long', month:'short', day:'numeric'})} at ${nextAvail.time}</div></div>${icon('arrow-right', 14, 'muted')}</div></button>` : ''}
+        ${nextAvail ? `<button onclick="bookState.date='${nextAvail.date.toISOString()}';bookViewMonth=null;bookState.time='${nextAvail.time}';render()" class="w-full card card-hover p-4 text-left border-l-4 !border-l-sage-500"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-sage-500 text-white grid place-items-center shrink-0">${icon('zap', 15)}</div><div class="flex-1 min-w-0"><div class="text-[10px] font-bold tracking-widest uppercase text-sage-600">Next available</div><div class="type-small font-semibold mt-0.5">${fmtDate(nextAvail.date, {weekday:'long', month:'short', day:'numeric'})} at ${nextAvail.time}</div></div>${icon('arrow-right', 14, 'muted')}</div></button>` : ''}
         <div class="card p-5">
           <div class="flex items-start gap-3 mb-4"><div class="w-9 h-9 rounded-lg bg-sage-500 text-white grid place-items-center shrink-0">${icon('sparkles', 15)}</div><div class="flex-1 min-w-0"><div class="type-h3 text-[14px] flex items-center gap-2 flex-wrap">Where does it hurt?<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-[rgb(var(--surface-2))] muted font-semibold uppercase tracking-wider">Optional</span></div><div class="text-xs muted mt-1">Tap the body, or the list. Each area adds ₱50 to ₱150 on the base price.</div>${areas.length ? `<div class="text-xs font-semibold text-sage-600 mt-2">${areas.length} area${areas.length>1?'s':''} · +${fmtMoney(areas.reduce((acc, id) => acc + areaAddOn(id), 0))}</div>` : ''}</div></div>
           ${lastAreas.length && !areas.length ? `<div class="mb-4 p-3 rounded-lg surface-2"><div class="text-xs muted mb-2">From your last session with ${esc(p.first)}:</div><div class="flex flex-wrap gap-1.5 mb-2">${lastAreas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-sage-500/12 text-sage-700 dark:text-sage-300">${x}</span>`).join('')}</div><button onclick="applyLastAreas()" class="text-xs text-sage-600 font-semibold hover:underline flex items-center gap-1">${icon('rotate-ccw', 11)} Use these again</button></div>` : ''}
@@ -2464,9 +2646,9 @@ function BookStep2() {
         </div>
         <div class="grid md:grid-cols-2 gap-4">
           <div class="card p-4">
-            <div class="flex items-center justify-between mb-4"><button onclick="shiftBookMonth(-1)" class="w-8 h-8 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))]">${icon('chevron-left', 14)}</button><div class="type-h3 text-[14px]">${firstOfMonth.toLocaleDateString('en-US', {month:'long', year:'numeric'})}</div><button onclick="shiftBookMonth(1)" class="w-8 h-8 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))]">${icon('chevron-right', 14)}</button></div>
+            <div class="flex items-center justify-between mb-4"><button onclick="shiftBookMonth(-1)" class="w-8 h-8 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))]" aria-label="Previous month">${icon('chevron-left', 14)}</button><div class="type-h3 text-[14px]">${firstOfMonth.toLocaleDateString('en-US', {month:'long', year:'numeric'})}</div><button onclick="shiftBookMonth(1)" class="w-8 h-8 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))]" aria-label="Next month">${icon('chevron-right', 14)}</button></div>
             <div class="cal-grid text-[10px] uppercase tracking-wider muted font-bold mb-2">${['S','M','T','W','T','F','S'].map(d => `<div class="text-center">${d}</div>`).join('')}</div>
-            <div class="cal-grid">${gridDays.map(d => { const inMonth = d.getMonth() === viewMonth; const inRange = d >= new Date(today.getFullYear(), today.getMonth(), today.getDate()) && d <= maxDate; const isSelected = selectedDate && sameDay(d, selectedDate); const off = isDateInTimeOff(d.toISOString()); const disabled = !inMonth || !inRange || off; const hasAvail = !disabled && generateSlots(d).some(x => x.available); return `<button onclick="${disabled ? '' : `bookState.date='${d.toISOString()}';bookState.time=null;render()`}" class="cal-day ${isSelected ? 'selected' : ''} ${isToday(d) ? 'today' : ''} ${disabled ? 'disabled' : ''} ${off ? 'time-off' : ''}" ${disabled ? 'disabled' : ''}><span>${d.getDate()}</span>${hasAvail && !isSelected ? '<span class="avail-dot"></span>' : ''}</button>`; }).join('')}</div>
+            <div class="cal-grid">${gridDays.map(d => { const inMonth = d.getMonth() === viewMonth; const inRange = d >= new Date(today.getFullYear(), today.getMonth(), today.getDate()) && d <= maxDate; const isSelected = selectedDate && sameDay(d, selectedDate); const off = isDateInTimeOff(d.toISOString()); const disabled = !inMonth || !inRange || off; const hasAvail = !disabled && generateSlots(d).some(x => x.available); return `<button onclick="${disabled ? '' : `bookState.date='${d.toISOString()}';bookViewMonth=null;bookState.time=null;render()`}" class="cal-day ${isSelected ? 'selected' : ''} ${isToday(d) ? 'today' : ''} ${disabled ? 'disabled' : ''} ${off ? 'time-off' : ''}" ${disabled ? 'disabled' : ''}><span>${d.getDate()}</span>${hasAvail && !isSelected ? '<span class="avail-dot"></span>' : ''}</button>`; }).join('')}</div>
           </div>
           <div class="card p-4">${!selectedDate ? `<div class="py-12 text-center"><div class="w-11 h-11 rounded-lg bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))] grid place-items-center mx-auto mb-3">${icon('calendar-days', 20)}</div><div class="type-small font-medium">Select a date</div><div class="text-xs muted mt-1">Available slots will appear here.</div></div>` : slots.length === 0 ? `<div class="py-12 text-center"><div class="type-small font-medium">Closed this day</div><div class="text-xs muted mt-1">Choose a different date.</div></div>` : `<div class="flex items-center justify-between mb-3"><div class="type-h3 text-[14px]">${fmtDate(selectedDate, {weekday:'long', month:'short', day:'numeric'})}</div></div><div class="max-h-[360px] overflow-y-auto pr-1">${slotGroup('Morning', 'sunrise', morning)}${slotGroup('Afternoon', 'sun', afternoon)}</div>`}</div>
         </div>
@@ -2490,17 +2672,33 @@ function generateSlots(date) {
   const startMin = parseTime24(av.start), endMin = parseTime24(av.end);
   const breakStart = av.breakStart ? parseTime24(av.breakStart) : null;
   const breakEnd = av.breakEnd ? parseTime24(av.breakEnd) : null;
+  const duration = (bookState.service && getService(bookState.service)?.duration) || 60;
+  const practitionerId = bookState.practitioner;
+  const now = new Date();
   const out = [];
-  for (let m = startMin; m + 30 <= endMin; m += 30) {
-    if (breakStart != null && breakEnd != null && m >= breakStart && m < breakEnd) continue;
+  for (let m = startMin; m + duration <= endMin; m += 30) {
+    if (breakStart != null && breakEnd != null && m < breakEnd && m + duration > breakStart) continue;
     const slotStart = new Date(date); slotStart.setHours(Math.floor(m / 60), m % 60, 0, 0);
-    const slotEnd = new Date(slotStart.getTime() + 30 * 60000);
-    const taken = APPOINTMENTS.some(a => { if (a.status === 'cancelled' || a.status === 'no-show') return false; const aStart = new Date(a.start); const aEnd = new Date(aStart.getTime() + (a.duration || 60) * 60000); return slotStart < aEnd && slotEnd > aStart; });
-    out.push({ time: minutesToLabel(m), available: !taken });
+    const slotEnd = new Date(slotStart.getTime() + duration * 60000);
+    const taken = APPOINTMENTS.some(a => {
+      if (a.status === 'cancelled' || a.status === 'no-show') return false;
+      if (practitionerId && a.practitioner !== practitionerId) return false;
+      const aStart = new Date(a.start);
+      const aEnd = new Date(aStart.getTime() + (a.duration || 60) * 60000);
+      return slotStart < aEnd && slotEnd > aStart;
+    });
+    const isPast = slotStart <= now;
+    out.push({ time: minutesToLabel(m), available: !taken && !isPast });
   }
   return out;
 }
-function shiftBookMonth(delta) { const d = bookState.date ? new Date(bookState.date) : new Date(); d.setMonth(d.getMonth() + delta); bookState.date = d.toISOString(); render(); }
+function shiftBookMonth(delta) {
+  const base = bookState.date ? new Date(bookState.date) : (bookViewMonth ? new Date(bookViewMonth) : new Date());
+  base.setDate(1);
+  base.setMonth(base.getMonth() + delta);
+  bookViewMonth = base;
+  render();
+}
 function toggleArea(id) { const arr = bookState.areas || []; bookState.areas = arr.includes(id) ? arr.filter(x => x !== id) : [...arr, id]; render(); }
 function applyPack(id) { const pk = BODY_PACKS.find(p => p.id === id); if (pk) { bookState.areas = [...pk.areas]; render(); } }
 
@@ -2531,7 +2729,7 @@ function BookSuccess() {
   const d = bookState.date ? new Date(bookState.date) : new Date();
   const areas = (bookState.areas || []).map(x => getArea(x)).filter(Boolean);
   const ref = bookState.ref;
-  const base = s.price;
+  const base = s?.price || 0;
   const addOn = (bookState.areas || []).reduce((sum, id) => sum + areaAddOn(id), 0);
   const total = base + addOn;
   return `<div class="max-w-lg mx-auto px-4 sm:px-6 py-10">
@@ -2539,11 +2737,11 @@ function BookSuccess() {
       <div class="w-16 h-16 rounded-full bg-sage-500 text-white grid place-items-center mx-auto mb-4 animate-pop">${icon('check', 30)}</div>
       <h1 class="type-h2 text-3xl">You're all set</h1>
       <p class="type-small muted mt-2">Details sent to your email.</p>
-      <div class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg surface-2 text-xs type-mono">${icon('hash', 10)} ${esc(ref)}</div>
+      <div class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg surface-2 text-xs type-mono">${icon('hash', 10)} ${esc(ref || '')}</div>
     </div>
     <div class="card p-5 mb-4">
       <div class="flex items-center gap-3 mb-4">${avatar(p, 48)}<div class="min-w-0 flex-1"><div class="type-h3 text-[15px] truncate">${esc(p.name)}</div><div class="text-xs muted truncate mt-0.5">${esc(p.title)}</div></div></div>
-      <div class="grid grid-cols-2 gap-4 type-small"><div><div class="text-xs muted mb-1">Service</div><div class="font-medium">${esc(s.name)}</div></div><div><div class="text-xs muted mb-1">When</div><div class="font-medium">${fmtDate(d, {month:'short', day:'numeric'})} · ${bookState.time}</div></div></div>
+      <div class="grid grid-cols-2 gap-4 type-small"><div><div class="text-xs muted mb-1">Service</div><div class="font-medium">${esc(s?.name || '')}</div></div><div><div class="text-xs muted mb-1">When</div><div class="font-medium">${fmtDate(d, {month:'short', day:'numeric'})} · ${bookState.time}</div></div></div>
       ${areas.length ? `<div class="pt-4 mt-4 border-t border-dashed border-[rgb(var(--border))]"><div class="text-xs muted mb-2">We'll focus on</div><div class="flex flex-wrap gap-1.5">${areas.map(a => `<span class="chip chip-on !min-h-0 !py-1 !px-3 !text-xs">${esc(a.label)}</span>`).join('')}</div></div>` : ''}
       <div class="pt-4 mt-4 border-t border-dashed border-[rgb(var(--border))] flex items-center justify-between"><div class="type-h3 text-[14px]">Total</div><div class="font-display font-bold text-lg">${fmtMoney(total)}</div></div>
     </div>
@@ -2570,20 +2768,39 @@ function PageBook() {
 }
 function selectService(id) {
   if (getClientUpcoming()) { toast('You already have an upcoming session.', 'warning'); return; }
-  const s = getService(id); bookState.practitioner = s.practitioner; bookState.service = id; bookState.areas = []; bookStep = 1; render(); window.scrollTo({top:0});
+  const s = getService(id);
+  if (!s) return;
+  bookState = { practitioner: s.practitioner, service: id, areas: [], date: null, time: null, ref: null, _submitting: false };
+  bookViewMonth = null;
+  bookStep = 1;
+  render(); window.scrollTo({top:0});
 }
 function confirmBooking() {
+  if (bookState._submitting) return;
   if (getClientUpcoming()) { toast('You already have an upcoming session.', 'warning'); return; }
   const p = getUser(bookState.practitioner);
   const s = getService(bookState.service);
+  if (!p || !s) { toast('Booking data missing', 'error'); return; }
   const d = bookState.date ? new Date(bookState.date) : new Date();
   const [time, ampm] = bookState.time.split(' ');
   let [h, m] = time.split(':').map(Number);
   if (ampm === 'PM' && h !== 12) h += 12;
   if (ampm === 'AM' && h === 12) h = 0;
   d.setHours(h, m, 0, 0);
+  const slotEnd = new Date(d.getTime() + s.duration * 60000);
+  const collide = APPOINTMENTS.some(a => {
+    if (a.status === 'cancelled' || a.status === 'no-show') return false;
+    if (a.practitioner !== p.id) return false;
+    const aStart = new Date(a.start);
+    const aEnd = new Date(aStart.getTime() + (a.duration || 60) * 60000);
+    return d < aEnd && slotEnd > aStart;
+  });
+  if (collide) { toast('That time is no longer available. Please pick another.', 'error'); bookStep = 1; render(); return; }
+  bookState._submitting = true;
   const ref = 'TB-' + new Date().getFullYear().toString().slice(2) + '01-' + Math.floor(1000 + Math.random()*9000);
-  APPOINTMENTS.push({ id: 'ap' + Date.now(), client: State.user.id, practitioner: p.id, service: s.id, start: d.toISOString(), duration: s.duration, status: 'pending', mode: p.consultation, location: p.location, areas: [...(bookState.areas || [])], ref });
+  const newId = 'ap' + Date.now();
+  APPOINTMENTS.push({ id: newId, client: State.user.id, practitioner: p.id, service: s.id, start: d.toISOString(), duration: s.duration, status: 'pending', mode: p.consultation, location: p.location, areas: [...(bookState.areas || [])], ref });
+  NOTIFICATIONS.push({ id: 'n' + Date.now(), type: 'appointment', title: 'New appointment request', body: `${State.user.name} · ${s.name} · ${fmtDate(d, {weekday:'short', month:'short', day:'numeric'})} at ${bookState.time}`, at: new Date().toISOString(), read: false, action: 'view', actionLabel: 'View', link: '#/app/appointments/' + newId });
   bookState.ref = ref;
   saveAll(); bookStep = 3; toast('Booked'); render();
 }
@@ -2592,7 +2809,7 @@ function confirmBooking() {
    404
    ============================================================ */
 function Page404() { return `<div class="min-h-screen flex flex-col">
-  <header class="border-b border-[rgb(var(--border))]"><div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between"><a href="#/">${LogoMark()}</a><div class="flex items-center gap-3"><div data-theme-toggle></div><a href="${State.user ? '#/app/dashboard' : '#/login'}" class="btn btn-sm ${State.user ? 'btn-outline' : 'btn-primary'}">${State.user ? 'Back to app' : 'Sign in'}</a></div></div></header>
+  <header class="border-b border-[rgb(var(--border))]"><div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between"><a href="#/">${LogoMark()}</a><div class="flex items-center gap-3">${GroupCreditBadge()}<div data-theme-toggle></div><a href="${State.user ? '#/app/dashboard' : '#/login'}" class="btn btn-sm ${State.user ? 'btn-outline' : 'btn-primary'}">${State.user ? 'Back to app' : 'Sign in'}</a></div></div></header>
   <div class="flex-1 grid place-items-center px-4 py-20"><div class="text-center max-w-md">
     <div class="w-16 h-16 rounded-xl bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))] grid place-items-center mx-auto mb-6">${icon('compass', 30)}</div>
     <div class="font-display font-bold text-5xl tracking-tight">404</div>
@@ -2604,25 +2821,26 @@ function Page404() { return `<div class="min-h-screen flex flex-col">
 </div>`; }
 
 /* ============================================================
-   RENDER
+   RENDER — FIXED ROUTER
    ============================================================ */
 function render() {
   const root = $('#root');
   const { path, parts } = getRoute();
+  const top = parts[0] || '';
   const sub = parts.slice(1);
 
   if (!path || path === '') root.innerHTML = Landing();
-  else if (path === 'login') root.innerHTML = LoginPage();
-  else if (path === 'register') root.innerHTML = RegisterPage();
-  else if (path === 'forgot') root.innerHTML = ForgotPage();
-  else if (path === 'about') root.innerHTML = PageAbout();
-  else if (path === 'privacy') root.innerHTML = PagePrivacy();
-  else if (path === 'terms') root.innerHTML = PageTerms();
-  else if (path === 'help') root.innerHTML = PageHelp();
-  else if (path === 'onboard') root.innerHTML = OnboardingPage();
-  else if (path === 'self-care') root.innerHTML = PageGuides(sub[0] || null);
+  else if (top === 'login') root.innerHTML = LoginPage();
+  else if (top === 'register') root.innerHTML = RegisterPage();
+  else if (top === 'forgot') root.innerHTML = ForgotPage();
+  else if (top === 'about') root.innerHTML = PageAbout();
+  else if (top === 'privacy') root.innerHTML = PagePrivacy();
+  else if (top === 'terms') root.innerHTML = PageTerms();
+  else if (top === 'help') root.innerHTML = PageHelp();
+  else if (top === 'onboard') root.innerHTML = OnboardingPage();
+  else if (top === 'self-care') root.innerHTML = PageGuides(sub[0] || null);
   else if (!State.user) root.innerHTML = LoginPage();
-  else if (path.startsWith('app/')) {
+  else if (top === 'app') {
     let page = '';
     const u = State.user;
     if (sub.length === 0 || sub[0] === 'dashboard') page = PageDashboard();
@@ -2635,7 +2853,13 @@ function render() {
     else if (sub[0] === 'verification' && u.role === 'practitioner') page = PageVerification();
     else if (sub[0] === 'invoices') page = PageInvoices();
     else if (sub[0] === 'notifications') page = PageNotifications();
-    else if (sub[0] === 'messages') page = PageMessages(sub[1]);
+    else if (sub[0] === 'messages') {
+      const convoId = sub[1];
+      const convos = CONVERSATIONS.filter(c => c.participants.includes(u.id));
+      const target = convoId ? convos.find(c => c.id === convoId) : convos[0];
+      if (target && target.unread) { target.unread = 0; persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS); }
+      page = PageMessages(convoId);
+    }
     else if (sub[0] === 'settings') page = PageSettings();
     else if (sub[0] === 'book' && u.role === 'client') page = PageBook();
     else if (sub[0] === 'self-care') page = PageGuides(sub[1] || null);
@@ -2645,11 +2869,29 @@ function render() {
   else root.innerHTML = Page404();
   iconEl();
   renderThemeToggle();
-  $$('.body-svg-interactive .body-zone').forEach(z => { z.addEventListener('click', () => toggleArea(z.dataset.zone)); });
+  $$('.body-svg-interactive .body-zone').forEach(z => {
+    const fire = () => toggleArea(z.dataset.zone);
+    z.addEventListener('click', fire);
+    z.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fire(); } });
+  });
 }
 
-window.addEventListener('hashchange', () => { render(); window.scrollTo({top:0}); });
+/* Track the previous route so we can reset the booking flow when the user
+   re-enters /app/book fresh (avoids showing a stale success screen). */
+let prevRouteKey = null;
+function currentRouteKey() { const { path, parts } = getRoute(); return path + '|' + parts.join('/'); }
+window.addEventListener('hashchange', () => {
+  const key = currentRouteKey();
+  const { path } = getRoute();
+  if (path === 'app/book' && prevRouteKey && !prevRouteKey.startsWith('app/book|') && bookStep >= 3) {
+    resetBookingFlow();
+  }
+  prevRouteKey = key;
+  render();
+  window.scrollTo({top:0});
+});
 applyTheme();
+prevRouteKey = currentRouteKey();
 render();
 </script>
 </body>
