@@ -268,7 +268,6 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .dark .group-credit-badge { background: rgba(129,199,132,0.12); color: rgb(165,214,167); border-color: rgba(129,199,132,0.22); }
 .dark .group-credit-badge:hover { background: rgba(129,199,132,0.22); }
 
-/* Credit icon (compact, sidebar header) */
 .credit-icon {
   width: 30px; height: 30px; border-radius: 999px;
   display: grid; place-items: center;
@@ -306,7 +305,6 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .prose-list li { display: flex; gap: 12px; align-items: flex-start; color: rgb(var(--fg) / 0.78); }
 .prose-list li::before { content: ''; flex-shrink: 0; width: 5px; height: 5px; border-radius: 50%; background: #4CAF50; margin-top: 11px; }
 
-/* ---------- Stat tiles with gradient accent ---------- */
 .stat-tile { position: relative; overflow: hidden; isolation: isolate; }
 .stat-tile::after {
   content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
@@ -315,14 +313,12 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 }
 .stat-tile:hover::after { opacity: .85; }
 
-/* ---------- Page transitions & reveals ---------- */
 @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 #root.page-enter > * { animation: pageIn .4s var(--ease-out-expo) both; }
 
 [data-reveal] { opacity: 0; transform: translateY(18px); transition: opacity .75s var(--ease-out-expo), transform .75s var(--ease-out-expo); will-change: opacity, transform; }
 [data-reveal].revealed { opacity: 1; transform: translateY(0); }
 
-/* Staggered children */
 @keyframes staggerIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 [data-stagger] > * { opacity: 0; animation: staggerIn .55s var(--ease-out-expo) forwards; }
 [data-stagger] > *:nth-child(1) { animation-delay: .04s; }
@@ -352,10 +348,8 @@ body.scrolled header.sticky { box-shadow: 0 6px 24px -10px rgba(20,23,25,0.10); 
 @keyframes cardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 @media (prefers-reduced-motion: reduce) { .card.shadow-lift { animation: none; } }
 
-/* ---------- Sidebar ---------- */
 .app-sidebar { width: 256px; }
 
-/* Tablet rail: 768–1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
   .app-sidebar { width: 68px !important; }
   .app-sidebar .sb-hide { display: none !important; }
@@ -370,7 +364,6 @@ body.scrolled header.sticky { box-shadow: 0 6px 24px -10px rgba(20,23,25,0.10); 
 }
 .app-sidebar .sb-rail-only { display: none; }
 
-/* Messages container responsiveness */
 .messages-container {
   height: calc(100dvh - 3.5rem - 72px);
   max-height: calc(100dvh - 3.5rem - 72px);
@@ -383,16 +376,21 @@ body.scrolled header.sticky { box-shadow: 0 6px 24px -10px rgba(20,23,25,0.10); 
 }
 .messages-thread { scroll-behavior: smooth; scrollbar-width: thin; }
 
-/* Error boundary */
 .error-boundary { max-width: 520px; margin: 80px auto; text-align: center; }
 
-/* ---------- a11y + touch polish ---------- */
 .sr-only {
   position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
   overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
 }
 button, .chip, .tab, .nav-item { touch-action: manipulation; }
 body.modal-open { overflow: hidden; }
+
+/* Details marker (Safari) */
+details > summary { list-style: none; }
+details > summary::-webkit-details-marker { display: none; }
+
+/* Anchor scroll offset for sticky headers */
+section[id] { scroll-margin-top: 80px; }
 
 @media print { .no-print { display: none !important; } body { background: white; } }
 </style>
@@ -416,20 +414,14 @@ const STORAGE_KEYS = {
 function persist(k, d) { try { localStorage.setItem(k, JSON.stringify(d)); } catch(e){ if (e && e.name === 'QuotaExceededError') console.warn('[therabyte] storage quota exceeded for', k); } }
 function load(k, f) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : f; } catch(e) { return f; } }
 
-/* ============================================================
-   CREDIT CONFIG
-   ============================================================ */
 const CREDIT = {
   name: 'LvDiagnostech',
   url: 'https://jigeulei.github.io/diagnostech/',
 };
 
-/* ============================================================
-   HELPERS
-   ============================================================ */
 const $ = (s, el=document) => el.querySelector(s);
 const $$ = (s, el=document) => [...el.querySelectorAll(s)];
-const esc = (s='') => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const esc = (s) => { if (s == null) s = ''; return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); };
 const getUser = id => USERS.find(u => u.id === id) || USERS[0];
 const getService = id => SERVICES.find(s => s.id === id);
 const getAppt = id => APPOINTMENTS.find(a => a.id === id);
@@ -469,6 +461,11 @@ function toDateInputValue(d) {
   const da = String(x.getDate()).padStart(2, '0');
   return `${y}-${m}-${da}`;
 }
+function scrollToSection(e, id) {
+  if (e) e.preventDefault();
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 function rerenderKeepingFocus(selector) {
   const el = document.querySelector(selector);
   if (!el) { render(); return; }
@@ -480,7 +477,6 @@ function rerenderKeepingFocus(selector) {
     if (next) { next.focus(); try { next.setSelectionRange(start, end); } catch(e) {} }
   }
 }
-/* Debounced re-render for search inputs — 180ms */
 const _searchTimers = {};
 function debouncedRerender(selector, delay = 180) {
   clearTimeout(_searchTimers[selector]);
@@ -490,7 +486,7 @@ function avatar(u, size=40){
   const isMe = State.user && State.user.id === u.id;
   const mySaved = isMe && State.savedAvatar && State.savedAvatar.userId === u.id ? State.savedAvatar.dataUrl : null;
   const src = mySaved || u.avatar;
-  return `<img src="${src}" alt="${esc(u.name)}" class="rounded-full object-cover shrink-0 bg-black/5" style="width:${size}px;height:${size}px" onerror="this.src='https://i.pravatar.cc/150?u=${u.id}'">`;
+  return `<img src="${src}" alt="${esc(u.name)}" class="rounded-full object-cover shrink-0 bg-black/5" style="width:${size}px;height:${size}px" onerror="this.onerror=null;this.src='https://i.pravatar.cc/150?u=${u.id}'">`;
 }
 function icon(n, s=18, c=''){ return `<i data-lucide="${n}" class="${c}" style="width:${s}px;height:${s}px"></i>`; }
 function iconEl(){ if (window.lucide) lucide.createIcons(); }
@@ -501,11 +497,6 @@ function getClientUpcoming() { if (!State.user) return null; const now = new Dat
 const AREA_PRICING = { head:50, neck:50, shoulders:100, 'upper-back':100, arms:75, hands:50, 'lower-back':100, glutes:75, thighs:75, calves:50, feet:50 };
 function areaAddOn(id) { return AREA_PRICING[id] || 50; }
 
-/* ============================================================
-   MOCK API LAYER
-   Mirrors the shape of a real backend. Swap the bodies for
-   fetch() calls and the rest of the app doesn't change.
-   ============================================================ */
 const API = {
   async createAppointment(payload) {
     const collide = APPOINTMENTS.some(a => {
@@ -549,9 +540,6 @@ const API = {
   },
 };
 
-/* ============================================================
-   SEED DATA
-   ============================================================ */
 const SEED_USERS = [
   { id:'p1', role:'practitioner', name:'Dr. Sarah Chen', first:'Sarah', title:'Licensed Massage Therapist', email:'sarah@therabyte.demo', avatar:'https://i.pravatar.cc/150?img=47', bio:'Eight years of focused, gentle bodywork for people who sit too much and sleep too little.', verified:true, rating:4.9, reviews:128, languages:['English','Mandarin'], location:'Wellness Studio, Makati City', consultation:'In-person & Online', experience:'8 years', quals:'Licensed Massage Therapist · Swedish & Deep Tissue certified', phone:'+63 917 555 0101' },
   { id:'p2', role:'practitioner', name:'Miguel Torres', first:'Miguel', title:'Sports Therapist', email:'miguel@therabyte.demo', avatar:'https://i.pravatar.cc/150?img=12', bio:'Recovery and mobility work for athletes and active adults.', verified:true, rating:4.8, reviews:94, languages:['English','Filipino'], location:'BGC Sports Lab, Taguig', consultation:'In-person', experience:'6 years', quals:'Certified Sports Therapist', phone:'+63 917 555 0102' },
@@ -647,9 +635,6 @@ const SEED_AVAILABILITY = [
   { day:'Sunday', enabled:false, start:'09:00', end:'17:00', breakStart:null, breakEnd:null },
 ];
 
-/* ============================================================
-   LIVE DATA
-   ============================================================ */
 let USERS = load(STORAGE_KEYS.USERS, SEED_USERS);
 let SERVICES = load(STORAGE_KEYS.SERVICES, SEED_SERVICES);
 let APPOINTMENTS = load(STORAGE_KEYS.APPOINTMENTS, SEED_APPOINTMENTS);
@@ -735,9 +720,6 @@ const GUIDE_AREAS = Object.keys(GUIDES);
 const CAL_START_HOUR = 7;
 const CAL_END_HOUR = 20;
 
-/* ============================================================
-   STATE
-   ============================================================ */
 const State = {
   user: load(STORAGE_KEYS.USER_SESSION, null),
   theme: localStorage.getItem(STORAGE_KEYS.THEME) || 'system',
@@ -773,15 +755,14 @@ function renderThemeToggle() {
   iconEl();
 }
 
-/* ---------- Toast (capped at 3 visible) ---------- */
 function toast(msg, kind='success') {
-  const k = { success:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'}, error:{bg:'#B91C1C',ic:'alert-circle'}, info:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'info'}, warning:{bg:'#A16207',ic:'alert-triangle'} }[kind] || { success:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'} }[kind] || {bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'};
+  const k = { success:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'}, error:{bg:'#B91C1C',ic:'alert-circle'}, info:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'info'}, warning:{bg:'#A16207',ic:'alert-triangle'} }[kind] || {bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'};
   const root = $('#toast-root');
   while (root.children.length >= 3) root.removeChild(root.firstElementChild);
   const el = document.createElement('div');
   el.className = 'pointer-events-auto surface shadow-lift rounded-xl px-4 py-3 flex items-center gap-3';
   el.style.animation = 'fadeUp .35s cubic-bezier(0.16,1,0.3,1) both';
-  el.setAttribute('role', kind === 'error' ? 'alert' : 'status');
+  if (kind === 'error') el.setAttribute('role', 'alert');
   el.innerHTML = `<div class="w-7 h-7 rounded-full grid place-items-center text-white shrink-0" style="background:${k.bg}">${icon(k.ic, 14)}</div><div class="text-sm font-medium flex-1">${esc(msg)}</div>`;
   root.appendChild(el); iconEl();
   setTimeout(() => { el.style.transition='all .35s cubic-bezier(0.16,1,0.3,1)'; el.style.opacity='0'; el.style.transform='translateX(24px) scale(.96)'; setTimeout(() => el.remove(), 350); }, 3000);
@@ -836,9 +817,6 @@ function modalKeydown(e) {
   else if (!root.contains(active)) { e.preventDefault(); first.focus(); }
 }
 
-/* ============================================================
-   BRAND LOGO — supports icon-only mode
-   ============================================================ */
 let _logoCounter = 0;
 function LogoMark(small, iconOnly) {
   _logoCounter++;
@@ -977,9 +955,6 @@ function StarsDisplay(rating, size = 14) {
   return `<div class="flex items-center gap-0.5 text-amber-500">${Array.from({length:5}).map((_,i) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${i < rating ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`).join('')}</div>`;
 }
 
-/* ============================================================
-   STATIC LAYOUT
-   ============================================================ */
 function StaticFooter() {
   return `
   <footer class="border-t border-[rgb(var(--border))] mt-16">
@@ -994,8 +969,9 @@ function StaticFooter() {
           <div class="text-[11px] font-bold tracking-[0.14em] uppercase muted mb-4">Product</div>
           <ul class="space-y-2.5 type-small">
             <li><a href="#/" class="muted hover:text-[rgb(var(--fg))] transition">Home</a></li>
+            <li><a href="#/register" class="muted hover:text-[rgb(var(--fg))] transition">Get started</a></li>
             <li><a href="#/self-care" class="muted hover:text-[rgb(var(--fg))] transition">Self-care guides</a></li>
-            <li><a href="#/login" class="muted hover:text-[rgb(var(--fg))] transition">Sign in</a></li>
+            <li><a href="#/help" class="muted hover:text-[rgb(var(--fg))] transition">Help Center</a></li>
           </ul>
         </div>
         <div>
@@ -1079,7 +1055,6 @@ function ContentSection({ title, children }) {
 function P(text) { return `<p class="prose-p">${text}</p>`; }
 function UL(items) { return `<ul class="prose-list space-y-2">${items.map(i => `<li><span>${i}</span></li>`).join('')}</ul>`; }
 
-/* ---------- Static pages (unchanged content) ---------- */
 function PageAbout() {
   return StaticPageLayout({
     active: 'about',
@@ -1291,9 +1266,6 @@ function PageHelp() {
   });
 }
 
-/* ============================================================
-   LANDING
-   ============================================================ */
 function Landing() {
   return `
   <div class="min-h-screen overflow-x-hidden">
@@ -1301,10 +1273,10 @@ function Landing() {
       <div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between gap-6">
         ${LogoMark()}
         <nav class="hidden lg:flex items-center gap-7 type-small font-medium">
-          <a href="#how" class="muted hover:text-[rgb(var(--fg))] transition">Product</a>
-          <a href="#practitioners" class="muted hover:text-[rgb(var(--fg))] transition">For practitioners</a>
-          <a href="#self-care" class="muted hover:text-[rgb(var(--fg))] transition">Self-care</a>
-          <a href="#faq" class="muted hover:text-[rgb(var(--fg))] transition">FAQ</a>
+          <a href="#how" onclick="scrollToSection(event,'how')" class="muted hover:text-[rgb(var(--fg))] transition">Product</a>
+          <a href="#practitioners" onclick="scrollToSection(event,'practitioners')" class="muted hover:text-[rgb(var(--fg))] transition">For practitioners</a>
+          <a href="#self-care" onclick="scrollToSection(event,'self-care')" class="muted hover:text-[rgb(var(--fg))] transition">Self-care</a>
+          <a href="#faq" onclick="scrollToSection(event,'faq')" class="muted hover:text-[rgb(var(--fg))] transition">FAQ</a>
         </nav>
         <div class="flex items-center gap-3">
           ${GroupCreditBadge()}
@@ -1479,7 +1451,7 @@ function Landing() {
       <div class="max-w-6xl mx-auto px-5 sm:px-6 py-14">
         <div class="grid sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 mb-12">
           <div>${LogoMark()}<p class="type-small muted mt-4 leading-relaxed max-w-xs">Booking and intake for massage therapists, physiotherapists, and bodyworkers.</p><p class="text-xs mt-3 italic font-medium text-brand-600 dark:text-brand-300">Heal with care, grow with nature.</p></div>
-          <div><div class="text-[11px] font-bold tracking-[0.14em] uppercase muted mb-4">Product</div><ul class="space-y-2.5 type-small"><li><a href="#how" class="muted hover:text-[rgb(var(--fg))] transition">How it works</a></li><li><a href="#practitioners" class="muted hover:text-[rgb(var(--fg))] transition">For practitioners</a></li><li><a href="#self-care" class="muted hover:text-[rgb(var(--fg))] transition">Self-care guides</a></li><li><a href="#faq" class="muted hover:text-[rgb(var(--fg))] transition">FAQ</a></li></ul></div>
+          <div><div class="text-[11px] font-bold tracking-[0.14em] uppercase muted mb-4">Product</div><ul class="space-y-2.5 type-small"><li><a href="#how" onclick="scrollToSection(event,'how')" class="muted hover:text-[rgb(var(--fg))] transition">How it works</a></li><li><a href="#practitioners" onclick="scrollToSection(event,'practitioners')" class="muted hover:text-[rgb(var(--fg))] transition">For practitioners</a></li><li><a href="#self-care" onclick="scrollToSection(event,'self-care')" class="muted hover:text-[rgb(var(--fg))] transition">Self-care guides</a></li><li><a href="#faq" onclick="scrollToSection(event,'faq')" class="muted hover:text-[rgb(var(--fg))] transition">FAQ</a></li></ul></div>
           <div><div class="text-[11px] font-bold tracking-[0.14em] uppercase muted mb-4">Company</div><ul class="space-y-2.5 type-small"><li><a href="#/about" class="muted hover:text-[rgb(var(--fg))] transition">About</a></li><li><a href="#/help" class="muted hover:text-[rgb(var(--fg))] transition">Help Center</a></li><li><a href="#/privacy" class="muted hover:text-[rgb(var(--fg))] transition">Privacy</a></li><li><a href="#/terms" class="muted hover:text-[rgb(var(--fg))] transition">Terms</a></li></ul></div>
           <div><div class="text-[11px] font-bold tracking-[0.14em] uppercase muted mb-4">Contact</div><ul class="space-y-2.5 type-small"><li><a href="mailto:hello@therabyte.example" class="muted hover:text-[rgb(var(--fg))] transition">hello@therabyte.example</a></li><li><a href="mailto:privacy@therabyte.example" class="muted hover:text-[rgb(var(--fg))] transition">privacy@therabyte.example</a></li></ul></div>
         </div>
@@ -1496,9 +1468,6 @@ function Landing() {
   </div>`;
 }
 
-/* ============================================================
-   AUTH
-   ============================================================ */
 function AuthLayout(children) {
   return `
   <div class="min-h-screen grid lg:grid-cols-2">
@@ -1616,7 +1585,9 @@ function handleLogin(form) {
 function demoLogin(id) { const u = getUser(id); resetBookingFlow(); set({ user: u }); persistSession(); toast(`Signed in as ${u.name}`); navigate('/app/dashboard'); }
 function handleRegister(form) {
   const name = form.name.value.trim(); const role = form.role.value; const email = form.email.value.trim();
+  const password = form.password ? form.password.value : '';
   if (!name || !email) { toast('Name and email are required', 'error'); return; }
+  if (!password || password.length < 8) { toast('Password must be at least 8 characters', 'error'); return; }
   if (USERS.some(u => u.email === email)) { toast('An account with that email already exists', 'error'); return; }
   const u = { id:'me-'+Date.now(), role, name, first:name.split(' ')[0], email, avatar:`https://i.pravatar.cc/150?u=${encodeURIComponent(email)}`, title:role==='practitioner'?'Practitioner':undefined, verified:false, joined:new Date().toISOString().slice(0,10), notifications:{ reminders:true, messages:true, focusAreas: role==='practitioner', product:false }, twoFactorEnabled:false };
   USERS.push(u); saveAll(); resetBookingFlow(); set({ user: u }); persistSession(); toast(`Welcome, ${u.first}`);
@@ -1627,9 +1598,6 @@ function logout() {
   set({ user: null }); persistSession(); toast('Signed out'); navigate('/');
 }
 
-/* ============================================================
-   ONBOARDING
-   ============================================================ */
 let onboardStep = 0;
 function OnboardingPage() {
   const steps = [['About you','Your title and short bio'],['First service','What do you offer?'],['Your hours','When do you work?'],['All set',"You're ready to take bookings"]];
@@ -1661,9 +1629,6 @@ function nextOnboard() {
 function prevOnboard() { if (onboardStep > 0) { onboardStep--; render(); } }
 function finishOnboard() { toast('Welcome to therabyte'); onboardStep = 0; navigate('/app/dashboard'); }
 
-/* ============================================================
-   APP SHELL
-   ============================================================ */
 const PRACTITIONER_NAV = [
   { route:'dashboard', label:'Today', icon:'home' },
   { route:'calendar', label:'Calendar', icon:'calendar' },
@@ -1779,9 +1744,6 @@ function mobileNavItems(u, path) {
   }).join('');
 }
 
-/* ============================================================
-   PRACTITIONER DASHBOARD
-   ============================================================ */
 function prepHintFor(appt) {
   const prior = APPOINTMENTS.filter(x => x.client === appt.client && x.practitioner === appt.practitioner && x.id !== appt.id && new Date(x.start) < new Date(appt.start)).sort((a, b) => new Date(b.start) - new Date(a.start))[0];
   if (!prior) return 'First visit';
@@ -1859,9 +1821,6 @@ function PageDashboard() {
   </div>`;
 }
 
-/* ============================================================
-   CLIENT DASHBOARD
-   ============================================================ */
 function PageClientDashboard() {
   const u = State.user;
   const myAppts = APPOINTMENTS.filter(a => a.client === u.id).sort((a,b)=>new Date(b.start)-new Date(a.start));
@@ -1927,9 +1886,6 @@ function PageClientDashboard() {
 }
 function rebook(apptId) { const a = getAppt(apptId); if (!a) return; resetBookingFlow(); bookState = { practitioner: a.practitioner, service: a.service, areas: [...(a.areas||[])], date: null, time: null, ref: null, _submitting:false }; bookStep = 1; navigate('/app/book'); toast('Pre-filled from your last session'); }
 
-/* ============================================================
-   CALENDAR
-   ============================================================ */
 function PageCalendar() {
   const u = State.user;
   const view = State.calendarView, date = State.calendarDate;
@@ -2021,9 +1977,6 @@ function MonthView(date, appts) {
 }
 function shiftCalendar(delta) { const d = new Date(State.calendarDate); if (State.calendarView === 'day') d.setDate(d.getDate() + delta); else if (State.calendarView === 'week') d.setDate(d.getDate() + delta*7); else d.setMonth(d.getMonth() + delta); set({ calendarDate: d }); }
 
-/* ============================================================
-   APPOINTMENTS LIST
-   ============================================================ */
 function groupByDateLocal(items, getDate, opts = {}) {
   const now = new Date(), today = startOfDay(now), tomorrow = addDays(today, 1), weekEnd = addDays(today, 7);
   const buckets = { today: [], tomorrow: [], thisWeek: [], later: [], past: [] };
@@ -2066,9 +2019,6 @@ function PageAppointments() {
   </div>`;
 }
 
-/* ============================================================
-   APPOINTMENT DETAIL
-   ============================================================ */
 function PageAppointmentDetail(id) {
   const a = getAppt(id);
   if (!a) return Page404();
@@ -2090,8 +2040,9 @@ function PageAppointmentDetail(id) {
   const basePrice = s?.price || 0;
   const addOn = (a.areas || []).reduce((sum, aid) => sum + areaAddOn(aid), 0);
 
+  const isTerminal = a.status === 'completed' || a.status === 'cancelled' || a.status === 'no-show';
   const actions = canManage
-    ? `${a.status !== 'completed' ? `<button onclick="markComplete('${a.id}')" class="btn btn-sm btn-outline">${icon('check', 13)} Mark complete</button>` : ''}<button onclick="openReschedule('${a.id}')" class="btn btn-sm btn-outline">${icon('refresh-cw', 13)} Reschedule</button>`
+    ? `${a.status !== 'completed' ? `<button onclick="markComplete('${a.id}')" class="btn btn-sm btn-outline">${icon('check', 13)} Mark complete</button>` : ''}${!isTerminal ? `<button onclick="openReschedule('${a.id}')" class="btn btn-sm btn-outline">${icon('refresh-cw', 13)} Reschedule</button>` : ''}`
     : isPast ? `<button onclick="rebook('${a.id}')" class="btn btn-sm btn-primary">${icon('refresh-cw', 13)} Book again</button>`
     : `<button onclick="openApptRequest('${a.id}','reschedule')" class="btn btn-sm btn-outline">${icon('refresh-cw', 13)} Reschedule</button><button onclick="openApptRequest('${a.id}','cancel')" class="btn btn-sm btn-outline !text-red-600 !border-red-500/25">Cancel</button>`;
 
@@ -2259,9 +2210,6 @@ function submitReview(apptId) {
   saveAll(); closeModal(); State.reviewOpen = null; toast('Thank you for your review'); render();
 }
 
-/* ============================================================
-   NOTE EDITOR
-   ============================================================ */
 const NOTE_TEMPLATES = {
   free: { label:'Free-form', icon:'file-text', placeholder:'How did the session go? Anything to follow up?', starter:'' },
   soap: { label:'SOAP', icon:'clipboard-list', placeholder:'S: Subjective — what the client reports\nO: Objective — what you observe\nA: Assessment — your clinical read\nP: Plan — next steps', starter:'S: \nO: \nA: \nP: ' },
@@ -2300,9 +2248,6 @@ function onNoteInput(apptId, value) {
 }
 function saveNoteNow(apptId) { persist(STORAGE_KEYS.NOTES, NOTES); const el = document.getElementById('autosave-' + apptId); if (el) el.innerHTML = `<span class="autosave-dot"></span> Saved just now`; toast('Note saved'); }
 
-/* ============================================================
-   MESSAGES
-   ============================================================ */
 function PageMessages(convoId) {
   const u = State.user;
   const convos = CONVERSATIONS.filter(c => c.participants.includes(u.id));
@@ -2349,9 +2294,6 @@ async function sendMessage(form, convoId) {
   }
 }
 
-/* ============================================================
-   CLIENTS
-   ============================================================ */
 function PageClients() {
   const u = State.user;
   const myClientIds = [...new Set(APPOINTMENTS.filter(a => a.practitioner === u.id).map(a => a.client))];
@@ -2417,9 +2359,6 @@ function PageClientDetail(id) {
   </div>`;
 }
 
-/* ============================================================
-   SELF-CARE GUIDES
-   ============================================================ */
 function PageGuides(areaId) {
   if (areaId && GUIDES[areaId]) {
     const g = GUIDES[areaId];
@@ -2443,9 +2382,6 @@ function PageGuides(areaId) {
   </div>`;
 }
 
-/* ============================================================
-   SERVICES
-   ============================================================ */
 function PageServices() {
   const u = State.user;
   const mine = SERVICES.filter(s => s.practitioner === u.id);
@@ -2489,9 +2425,6 @@ function submitService(editId) {
 function toggleServiceActive(id) { const s = getService(id); if (!s) return; s.active = !(s.active !== false); saveAll(); toast(s.active ? 'Visible to clients' : 'Hidden from clients'); render(); }
 function duplicateService(id) { const s = getService(id); if (!s) return; SERVICES.push({ ...s, id:'sv'+Date.now(), name: s.name + ' (copy)', active:false }); saveAll(); toast('Service duplicated — currently hidden'); render(); }
 
-/* ============================================================
-   AVAILABILITY
-   ============================================================ */
 function PageAvailability() {
   return `
   <div class="max-w-3xl mx-auto px-4 sm:px-6 py-6">
@@ -2519,9 +2452,6 @@ function submitTimeOff() {
 }
 function removeTimeOff(id) { State.timeOff = State.timeOff.filter(t => t.id !== id); saveTimeOff(); toast('Time off removed'); render(); }
 
-/* ============================================================
-   REPORTS
-   ============================================================ */
 function PageAnalytics() {
   const u = State.user;
   const myAppts = APPOINTMENTS.filter(a => a.practitioner === u.id);
@@ -2559,9 +2489,6 @@ function PageAnalytics() {
   </div>`;
 }
 
-/* ============================================================
-   VERIFICATION
-   ============================================================ */
 function PageVerification() {
   const u = State.user;
   const isVerified = u.verified;
@@ -2577,9 +2504,6 @@ function PageVerification() {
 function saveCredentials(field, value) { if (!State.user) return; State.user.credentials = { ...(State.user.credentials || {}), [field]: value }; saveAll(); persistSession(); toast('Saved'); }
 function submitVerification() { if (!State.user) return; const c = State.user.credentials || {}; if (!c.id || !c.authority) { toast('Fill in credential ID and issuing authority', 'error'); return; } State.user.verificationSubmitted = true; saveAll(); persistSession(); toast('Submitted for review'); render(); }
 
-/* ============================================================
-   INVOICES
-   ============================================================ */
 function PageInvoices() {
   const u = State.user;
   const all = u.role === 'client' ? INVOICES.filter(i => i.client === u.id) : INVOICES.filter(i => i.practitioner === u.id);
@@ -2622,9 +2546,6 @@ function openInvoice(id) {
 }
 function markInvoicePaid(id) { const inv = INVOICES.find(i => i.id === id); if (!inv) return; inv.status = 'paid'; inv.paidAt = new Date().toISOString(); inv.method = 'Demo'; saveAll(); closeModal(); toast('Invoice marked paid'); render(); }
 
-/* ============================================================
-   NOTIFICATIONS
-   ============================================================ */
 function PageNotifications() {
   const list = [...NOTIFICATIONS];
   const card = (n) => {
@@ -2663,9 +2584,6 @@ function handleNotification(id, action) {
   render();
 }
 
-/* ============================================================
-   SETTINGS
-   ============================================================ */
 function PageSettings() {
   const u = State.user;
   const isPractitioner = u.role === 'practitioner';
@@ -2814,9 +2732,6 @@ function submitPasswordChange() {
   closeModal(); toast('Password updated');
 }
 
-/* ============================================================
-   BOOKING FLOW
-   ============================================================ */
 let bookStep = 0;
 let bookState = { practitioner:null, service:null, areas:[], date:null, time:null, ref:null, _submitting:false };
 let bookCat = '';
@@ -3077,9 +2992,6 @@ async function confirmBooking() {
   }
 }
 
-/* ============================================================
-   404
-   ============================================================ */
 function Page404() { return `<div class="min-h-screen flex flex-col">
   <header class="border-b border-[rgb(var(--border))]"><div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">${LogoMark()}<div class="flex items-center gap-3">${GroupCreditBadge()}<div data-theme-toggle></div><a href="${State.user ? '#/app/dashboard' : '#/login'}" class="btn btn-sm ${State.user ? 'btn-outline' : 'btn-primary'}">${State.user ? 'Back to app' : 'Sign in'}</a></div></div></header>
   <div class="flex-1 grid place-items-center px-4 py-20"><div class="text-center max-w-md">
@@ -3092,9 +3004,6 @@ function Page404() { return `<div class="min-h-screen flex flex-col">
   ${StaticFooter()}
 </div>`; }
 
-/* ============================================================
-   ERROR BOUNDARY
-   ============================================================ */
 function renderError(err) {
   console.error('[therabyte] render error:', err);
   const root = $('#root');
@@ -3117,11 +3026,19 @@ function renderError(err) {
   iconEl();
 }
 
-/* ============================================================
-   RENDER
-   ============================================================ */
 function render() {
   try {
+    var _mr = document.getElementById('modal-root');
+    if (_mr && _mr.firstElementChild) {
+      _mr.innerHTML = '';
+      document.body.classList.remove('modal-open');
+      var _ar = document.getElementById('root');
+      if (_ar) {
+        if ('inert' in HTMLElement.prototype) _ar.inert = false;
+        else _ar.removeAttribute('aria-hidden');
+      }
+      if (modalKeydownAttached) { document.removeEventListener('keydown', modalKeydown, true); modalKeydownAttached = false; }
+    }
     const root = $('#root');
     if (!root) return;
     const { path, parts } = getRoute();
@@ -3182,9 +3099,6 @@ function render() {
   }
 }
 
-/* ============================================================
-   ANIMATION ENHANCEMENTS
-   ============================================================ */
 function setupReveals() {
   const els = document.querySelectorAll('[data-reveal]:not(.revealed)');
   if (!els.length) return;
@@ -3252,23 +3166,21 @@ requestAnimationFrame(() => {
 });
 </script>
 
-<div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true">&nbsp;</div>
 <script>
 /* ============================================================
-   POLISH LAYER
-   Patches applied on top of the main script.
+   POLISH LAYER — QA pass applied
    1. UTC date drift fix for YYYY-MM-DD strings
-   2. Per-route document title
-   3. Screen reader announcements
+   2. Per-route document title (aware of signed-in state)
+   3. Screen reader announcements (deduplicated)
    4. Focus management on navigation
-   5. Toast container aria-live
-   6. Modal background isolation (WCAG 2.1.2)
-   7. Email sanity check for register
+   5. Toast container aria-live (individual roles handled in main script)
+   6. Modal background isolation (WCAG 2.1.2) — unlock before restore focus
+   7. Email sanity check for register (guarded)
    ============================================================ */
 (function () {
   'use strict';
 
-  /* --- 1. Fix UTC date drift for YYYY-MM-DD strings --- */
   var ISO_DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
   function asLocalDate(d) {
     if (typeof d === 'string' && ISO_DATE_ONLY.test(d)) {
@@ -3286,7 +3198,6 @@ requestAnimationFrame(() => {
   var _toDateInputValue = window.toDateInputValue;
   window.toDateInputValue = function (d) { return _toDateInputValue(asLocalDate(d)); };
 
-  /* --- 2. Per-route document title --- */
   var TITLES = {
     '': 'therabyte — Booking & intake for bodywork',
     'login': 'Sign in — therabyte',
@@ -3312,20 +3223,25 @@ requestAnimationFrame(() => {
     var top = parts[0] || '';
     var title = TITLES[top];
     if (!title && top === 'app') {
-      title = (APP_TITLES[parts[1]] || 'App') + ' — therabyte';
+      var signedIn = false;
+      try { signedIn = !!(typeof State !== 'undefined' && State && State.user); } catch (e) { signedIn = false; }
+      title = signedIn
+        ? ((APP_TITLES[parts[1]] || 'App') + ' — therabyte')
+        : 'Sign in — therabyte';
     }
     if (title) document.title = title;
   }
 
-  /* --- 3. Screen reader announcements --- */
+  var previousAnnouncement = '';
   function announce(msg) {
+    if (!msg || msg === previousAnnouncement) return;
+    previousAnnouncement = msg;
     var el = document.getElementById('sr-announcer');
     if (!el) return;
     el.textContent = '';
     requestAnimationFrame(function () { el.textContent = msg; });
   }
 
-  /* --- 4. Focus management on navigation --- */
   var lastHash = location.hash;
   function onRouteChange() {
     if (location.hash === lastHash) return;
@@ -3338,12 +3254,10 @@ requestAnimationFrame(() => {
       if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
       try { main.focus({ preventScroll: true }); } catch (e) { main.focus(); }
     });
-    window.scrollTo({ top: 0, behavior: 'auto' });
   }
   window.addEventListener('hashchange', onRouteChange);
   applyTitle();
 
-  /* --- 5. Toast container aria-live --- */
   var toastRoot = document.getElementById('toast-root');
   if (toastRoot) {
     toastRoot.setAttribute('role', 'status');
@@ -3351,7 +3265,6 @@ requestAnimationFrame(() => {
     toastRoot.setAttribute('aria-atomic', 'false');
   }
 
-  /* --- 6. Modal isolates the background (WCAG 2.1.2) --- */
   var appRoot = document.getElementById('root');
   var supportsInert = 'inert' in HTMLElement.prototype;
   function lockBackground() {
@@ -3382,14 +3295,14 @@ requestAnimationFrame(() => {
   };
   var _closeModal = window.closeModal;
   window.closeModal = function () {
-    _closeModal();
     unlockBackground();
+    _closeModal();
   };
 
-  /* --- 7. Email sanity check for register --- */
   var _handleRegister = window.handleRegister;
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   window.handleRegister = function (form) {
+    if (!form || !form.email) return _handleRegister(form);
     var email = (form.email.value || '').trim();
     if (!EMAIL_RE.test(email)) {
       window.toast('Please enter a valid email address', 'error');
@@ -3398,7 +3311,7 @@ requestAnimationFrame(() => {
     return _handleRegister(form);
   };
 
-  console.info('[therabyte] polish layer active — date drift, a11y, focus, modal isolation.');
+  console.info('[therabyte] polish layer active — date drift, a11y, focus, modal isolation. QA pass applied.');
 })();
 </script>
 </body>
