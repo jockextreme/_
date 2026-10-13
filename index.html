@@ -3,9 +3,10 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>TheraByte — Know what to work on before they arrive</title>
+<title>therabyte — Heal with care, grow with nature</title>
 <meta name="author" content="LvDiagnostech">
-<meta name="description" content="Booking and intake for bodywork practitioners. Built by LvDiagnostech.">
+<meta name="description" content="Booking and intake for bodywork practitioners. Heal with care, grow with nature.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%231B5E20'/%3E%3Cstop offset='50%25' stop-color='%234CAF50'/%3E%3Cstop offset='100%25' stop-color='%238BC34A'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='url(%23g)' stroke-width='3.5'/%3E%3Ccircle cx='50' cy='31' r='9.5' fill='url(%23g)'/%3E%3Cpath d='M 32 62 C 32 46 40 42 50 42 C 60 42 68 46 68 62 L 68 73 L 32 73 Z' fill='url(%23g)'/%3E%3Cpath d='M 20 76 C 18 70 22 63 30 63 L 36 67 L 42 65 L 46 69 L 44 76 C 38 80 26 80 20 76 Z' fill='url(%23g)'/%3E%3Cpath d='M 80 76 C 82 70 78 63 70 63 L 64 67 L 58 65 L 54 69 L 56 76 C 62 80 74 80 80 76 Z' fill='url(%23g)'/%3E%3Cpath d='M 82 30 Q 92 20 102 28 Q 100 42 88 42 Q 80 38 82 30 Z' fill='%232E7D32'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700;800&display=swap" rel="stylesheet">
@@ -17,6 +18,7 @@ tailwind.config = {
     fontFamily: { sans: ['Inter','system-ui','sans-serif'], display: ['Poppins','Inter','system-ui','sans-serif'] },
     colors: {
       sage:  { 50:'#F2F7F0',100:'#E8F0E5',200:'#D3E1CD',300:'#B4CCA9',400:'#93B285',500:'#7FA07A',600:'#5F8259',700:'#4A6744',800:'#3B5237',900:'#2E3F2B' },
+      brand: { 50:'#F1F8E9',100:'#DCEDC8',200:'#C5E1A5',300:'#AED581',400:'#8BC34A',500:'#4CAF50',600:'#388E3C',700:'#2E7D32',800:'#1B5E20',900:'#0F3D14' },
       sky2:  { 50:'#F1F6F9',100:'#E5EEF3',200:'#C9DEE8',300:'#A8C5D6',400:'#7EA5BC',500:'#5E86A0',600:'#486A82',700:'#3B5668',800:'#314452',900:'#293947' },
       rose2: { 50:'#FAF3F3',100:'#F5E8E8',200:'#EED3D3',300:'#DFB0B0',400:'#D4A5A5',500:'#B88282',600:'#9C6565',700:'#804F4F',800:'#6A4242',900:'#573838' },
       ink:   { 50:'#F7F8F8',100:'#EEF0F1',200:'#DDE1E3',300:'#BCC3C7',400:'#8E979D',500:'#5E686E',600:'#3E484D',700:'#2C3338',800:'#1E2327',900:'#141719' },
@@ -24,7 +26,9 @@ tailwind.config = {
     boxShadow: {
       xs: '0 1px 2px 0 rgba(20,23,25,0.04)',
       soft: '0 1px 3px 0 rgba(20,23,25,0.04), 0 4px 16px -4px rgba(20,23,25,0.06)',
-      lift: '0 2px 8px -2px rgba(20,23,25,0.06), 0 12px 32px -12px rgba(20,23,25,0.10)'
+      lift: '0 2px 8px -2px rgba(20,23,25,0.06), 0 12px 32px -12px rgba(20,23,25,0.10)',
+      brand: '0 4px 14px -4px rgba(46,125,50,0.30), 0 2px 4px -2px rgba(46,125,50,0.15)',
+      ring: '0 0 0 1px rgba(46,125,50,0.15), 0 4px 12px -4px rgba(46,125,50,0.20)'
     },
     keyframes: {
       fadeUp: { '0%':{opacity:0,transform:'translateY(12px)'}, '100%':{opacity:1,transform:'translateY(0)'} },
@@ -43,8 +47,8 @@ tailwind.config = {
 </script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <style>
-:root { --bg:250 250 249; --surface:255 255 255; --surface-2:246 246 244; --fg:20 23 25; --muted:110 118 124; --border:229 231 232; --border-strong:212 215 217; }
-.dark { --bg:14 16 18; --surface:22 25 28; --surface-2:30 34 38; --fg:240 242 243; --muted:145 152 158; --border:40 44 48; --border-strong:55 60 66; }
+:root { --bg:250 250 249; --surface:255 255 255; --surface-2:246 246 244; --fg:20 23 25; --muted:110 118 124; --border:229 231 232; --border-strong:212 215 217; --brand:46 125 50; --brand-light:76 175 80; --brand-soft:241 248 233; }
+.dark { --bg:14 16 18; --surface:22 25 28; --surface-2:30 34 38; --fg:240 242 243; --muted:145 152 158; --border:40 44 48; --border-strong:55 60 66; --brand:129 199 132; --brand-light:165 214 167; --brand-soft:20 30 22; }
 * { border-color: rgb(var(--border)); }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 body {
@@ -58,7 +62,7 @@ body {
 .surface { background: rgb(var(--surface)); border: 1px solid rgb(var(--border)); }
 .surface-2 { background: rgb(var(--surface-2)); }
 .muted { color: rgb(var(--muted)); }
-:focus-visible { outline: 2px solid rgb(127,160,122); outline-offset: 2px; border-radius: 6px; }
+:focus-visible { outline: 2px solid rgb(var(--brand)); outline-offset: 2px; border-radius: 6px; }
 .no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 ::-webkit-scrollbar { width: 8px; height: 8px; }
 ::-webkit-scrollbar-thumb { background: rgba(110,118,124,0.30); border-radius: 999px; }
@@ -71,7 +75,6 @@ h1, h2, h3, h4, h5 { font-family: 'Poppins', 'Inter', system-ui, sans-serif; let
 .type-h1 { font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: -0.028em; line-height: 1.1; }
 .type-h2 { font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: -0.024em; line-height: 1.15; }
 .type-h3 { font-family: 'Poppins', sans-serif; font-weight: 600; letter-spacing: -0.02em; line-height: 1.25; }
-.type-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; }
 .type-body-lg { font-size: 17px; line-height: 1.65; letter-spacing: -0.005em; }
 .type-body { font-size: 14.5px; line-height: 1.6; }
 .type-small { font-size: 13px; line-height: 1.5; }
@@ -80,17 +83,17 @@ h1, h2, h3, h4, h5 { font-family: 'Poppins', 'Inter', system-ui, sans-serif; let
 /* ---------- Nav ---------- */
 .nav-item { display: flex; align-items: center; gap: 11px; padding: 0 10px; min-height: 36px; border-radius: 7px; font-size: 13.5px; font-weight: 500; color: rgb(var(--muted)); transition: all 0.15s ease; cursor: pointer; text-decoration: none; }
 .nav-item:hover { background: rgb(var(--surface-2)); color: rgb(var(--fg)); }
-.nav-item.active { background: rgba(127,160,122,0.10); color: rgb(74,103,68); font-weight: 600; }
-.dark .nav-item.active { background: rgba(127,160,122,0.15); color: rgb(180,204,169); }
+.nav-item.active { background: rgba(46,125,50,0.10); color: rgb(var(--brand)); font-weight: 600; }
+.dark .nav-item.active { background: rgba(129,199,132,0.15); color: rgb(180,204,169); }
 
 /* ---------- Buttons ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 13.5px; letter-spacing: -0.005em; border-radius: 8px; transition: all 0.15s ease; cursor: pointer; white-space: nowrap; border: none; min-height: 38px; padding: 0 14px; }
 .btn:active { transform: translateY(1px) scale(0.99); }
 .btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.btn-primary { background: rgb(44 51 56); color: white; box-shadow: 0 1px 2px rgba(20,23,25,0.15), inset 0 1px 0 rgba(255,255,255,0.10); }
-.btn-primary:hover:not(:disabled) { background: rgb(20 23 25); }
-.dark .btn-primary { background: rgb(240 242 243); color: rgb(14 16 18); }
-.dark .btn-primary:hover:not(:disabled) { background: rgb(255 255 255); }
+.btn-primary { background: linear-gradient(135deg, #4CAF50 0%, #2E7D32 100%); color: white; box-shadow: 0 1px 2px rgba(46,125,50,0.20), inset 0 1px 0 rgba(255,255,255,0.15); }
+.btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, #43A047 0%, #1B5E20 100%); box-shadow: 0 4px 12px -2px rgba(46,125,50,0.35), inset 0 1px 0 rgba(255,255,255,0.20); }
+.dark .btn-primary { background: linear-gradient(135deg, #66BB6A 0%, #4CAF50 100%); color: rgb(14 16 18); }
+.dark .btn-primary:hover:not(:disabled) { background: linear-gradient(135deg, #81C784 0%, #66BB6A 100%); }
 .btn-outline { background: rgb(var(--surface)); color: rgb(var(--fg)); border: 1px solid rgb(var(--border-strong)); }
 .btn-outline:hover:not(:disabled) { background: rgb(var(--surface-2)); border-color: rgb(var(--muted)); }
 .btn-ghost { background: transparent; color: rgb(var(--fg)); }
@@ -101,7 +104,7 @@ h1, h2, h3, h4, h5 { font-family: 'Poppins', 'Inter', system-ui, sans-serif; let
 /* ---------- Forms ---------- */
 .input { width: 100%; height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid rgb(var(--border-strong)); background: rgb(var(--surface)); color: rgb(var(--fg)); font-size: 14px; outline: none; transition: all 0.15s ease; font-family: inherit; }
 .input:hover { border-color: rgb(var(--muted)); }
-.input:focus { border-color: rgb(127,160,122); box-shadow: 0 0 0 3px rgba(127,160,122,0.14); }
+.input:focus { border-color: rgb(var(--brand)); box-shadow: 0 0 0 3px rgba(46,125,50,0.14); }
 .input::placeholder { color: rgb(var(--muted)); }
 textarea.input { height: auto; padding: 10px 12px; resize: vertical; min-height: 80px; font-family: inherit; line-height: 1.6; }
 select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236E767C' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; padding-right: 34px; }
@@ -110,12 +113,12 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 }
 
 /* ---------- Cards ---------- */
-.card { background: rgb(var(--surface)); border: 1px solid rgb(var(--border)); border-radius: 12px; }
+.card { background: rgb(var(--surface)); border: 1px solid rgb(var(--border)); border-radius: 12px; box-shadow: 0 1px 2px rgba(20,23,25,0.02); }
 .card-lg { border-radius: 16px; }
 .card-hover { transition: all 0.15s ease; }
-.card-hover:hover { border-color: rgb(var(--border-strong)); }
+.card-hover:hover { border-color: rgb(var(--border-strong)); box-shadow: 0 4px 16px -4px rgba(20,23,25,0.08); }
 
-.list-container { background: rgb(var(--surface)); border: 1px solid rgb(var(--border)); border-radius: 12px; overflow: hidden; }
+.list-container { background: rgb(var(--surface)); border: 1px solid rgb(var(--border)); border-radius: 12px; overflow: hidden; box-shadow: 0 1px 2px rgba(20,23,25,0.02); }
 .list-row { padding: 14px 18px; transition: background 0.12s ease; cursor: pointer; }
 .list-row:hover { background: rgb(var(--surface-2)); }
 .list-row + .list-row { border-top: 1px solid rgb(var(--border)); }
@@ -127,9 +130,8 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .chip { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; padding: 0 12px; border-radius: 999px; font-size: 12.5px; font-weight: 500; cursor: pointer; transition: all 0.15s ease; white-space: nowrap; border: 1px solid transparent; }
 .chip-off { background: rgb(var(--surface-2)); color: rgb(var(--muted)); border-color: rgb(var(--border)); }
 .chip-off:hover { background: rgb(var(--surface)); border-color: rgb(var(--border-strong)); color: rgb(var(--fg)); }
-.chip-on { background: rgb(var(--fg)); color: rgb(var(--surface)); }
-.chip-on:hover { background: rgb(44 51 56); }
-.dark .chip-on { background: rgb(240 242 243); color: rgb(14 16 18); }
+.chip-on { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; box-shadow: 0 1px 3px rgba(46,125,50,0.20); }
+.chip-on:hover { background: linear-gradient(135deg, #43A047, #1B5E20); }
 .chip-sm { min-height: 28px; padding: 0 10px; font-size: 12px; }
 
 .tab { padding: 6px 12px; min-height: 32px; border-radius: 6px; font-size: 12.5px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; white-space: nowrap; color: rgb(var(--muted)); background: transparent; border: none; }
@@ -142,11 +144,11 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 /* ---------- Body map ---------- */
 .body-svg { width: 100%; height: auto; max-width: 180px; display: block; margin: 0 auto; }
 .body-svg-lg { max-width: 240px; }
-.body-zone { fill: rgba(127,160,122,0.08); stroke: rgba(127,160,122,0.30); stroke-width: 1.2; transition: all 0.2s ease; }
+.body-zone { fill: rgba(76,175,80,0.08); stroke: rgba(76,175,80,0.30); stroke-width: 1.2; transition: all 0.2s ease; }
 .body-svg-interactive .body-zone { cursor: pointer; }
-.body-svg-interactive .body-zone:hover { fill: rgba(127,160,122,0.20); }
-.body-svg-interactive .body-zone:focus-visible { outline: 2px solid rgb(74,103,68); outline-offset: 1px; }
-.body-zone.selected { fill: rgb(127,160,122); stroke: rgb(74,103,68); stroke-width: 1.8; }
+.body-svg-interactive .body-zone:hover { fill: rgba(76,175,80,0.20); }
+.body-svg-interactive .body-zone:focus-visible { outline: 2px solid rgb(46,125,50); outline-offset: 1px; }
+.body-zone.selected { fill: #4CAF50; stroke: #2E7D32; stroke-width: 1.8; }
 .body-label { fill: rgb(110,118,124); font-size: 9px; font-weight: 600; pointer-events: none; user-select: none; letter-spacing: 0.02em; }
 .dark .body-label { fill: rgb(145,152,158); }
 
@@ -154,62 +156,60 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .cal-day { aspect-ratio: 1; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all 0.12s ease; border: 1px solid transparent; position: relative; font-size: 13px; font-weight: 500; background: transparent; color: rgb(var(--fg)); }
 .cal-day:hover:not(:disabled):not(.disabled) { background: rgb(var(--surface-2)); }
-.cal-day.selected { background: rgb(var(--fg)); color: rgb(var(--surface)); font-weight: 700; }
-.cal-day.today:not(.selected) { border-color: rgb(127,160,122); font-weight: 700; color: rgb(74,103,68); }
+.cal-day.selected { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; font-weight: 700; box-shadow: 0 2px 6px rgba(46,125,50,0.25); }
+.cal-day.today:not(.selected) { border-color: #4CAF50; font-weight: 700; color: #2E7D32; }
 .cal-day.disabled { color: rgb(var(--muted)); opacity: 0.3; cursor: not-allowed; }
 .cal-day.time-off { color: rgb(var(--muted)); opacity: 0.4; cursor: not-allowed; position: relative; }
 .cal-day.time-off::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, transparent 46%, rgba(220,38,38,0.25) 46%, rgba(220,38,38,0.25) 54%, transparent 54%); border-radius: 8px; }
-.cal-day .avail-dot { position: absolute; bottom: 4px; width: 3px; height: 3px; border-radius: 50%; background: rgb(127,160,122); }
-.cal-day.selected .avail-dot { background: rgb(var(--surface)); }
+.cal-day .avail-dot { position: absolute; bottom: 4px; width: 3px; height: 3px; border-radius: 50%; background: #4CAF50; }
+.cal-day.selected .avail-dot { background: white; }
 
 .time-slot { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; border-radius: 8px; border: 1px solid rgb(var(--border-strong)); background: rgb(var(--surface)); cursor: pointer; transition: all 0.15s ease; }
-.time-slot:hover:not(.disabled) { border-color: rgb(127,160,122); background: rgba(127,160,122,0.04); }
-.time-slot.selected { border-color: rgb(var(--fg)); background: rgb(var(--fg)); color: rgb(var(--surface)); }
-.time-slot.selected .slot-meta { color: rgba(255,255,255,0.75); }
+.time-slot:hover:not(.disabled) { border-color: #4CAF50; background: rgba(76,175,80,0.04); }
+.time-slot.selected { border-color: transparent; background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; box-shadow: 0 2px 6px rgba(46,125,50,0.25); }
+.time-slot.selected .slot-meta { color: rgba(255,255,255,0.80); }
 .time-slot.disabled { opacity: 0.4; cursor: not-allowed; background: rgb(var(--surface-2)); }
 
 .timeline { position: relative; padding-left: 22px; }
 .timeline::before { content: ''; position: absolute; left: 6px; top: 10px; bottom: 10px; width: 1.5px; background: rgb(var(--border)); }
 .timeline-item { position: relative; padding-bottom: 20px; cursor: pointer; }
-.timeline-item::before { content: ''; position: absolute; left: -22px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: rgb(var(--surface)); border: 2px solid rgb(127,160,122); }
-.timeline-item.completed::before { background: rgb(127,160,122); }
+.timeline-item::before { content: ''; position: absolute; left: -22px; top: 4px; width: 12px; height: 12px; border-radius: 50%; background: rgb(var(--surface)); border: 2px solid #4CAF50; }
+.timeline-item.completed::before { background: #4CAF50; }
 
 .cal-cell { position: relative; cursor: pointer; transition: background 0.15s ease; }
-.cal-cell:hover { background: rgba(127,160,122,0.05); }
+.cal-cell:hover { background: rgba(76,175,80,0.05); }
 .cal-cell:hover .cal-cell-add { opacity: 1; }
-.cal-cell-add { position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; border-radius: 5px; background: rgb(var(--fg)); color: rgb(var(--surface)); display: grid; place-items: center; opacity: 0; transition: opacity 0.15s ease; pointer-events: none; }
+.cal-cell-add { position: absolute; top: 3px; right: 3px; width: 18px; height: 18px; border-radius: 5px; background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; display: grid; place-items: center; opacity: 0; transition: opacity 0.15s ease; pointer-events: none; }
 .cal-cell:hover .cal-cell-add { pointer-events: auto; }
-
-.focus-ring { box-shadow: 0 0 0 2px rgba(127,160,122,0.25), 0 0 0 6px rgba(127,160,122,0.06); border-radius: 12px; }
 
 .note-tpl { display: inline-flex; align-items: center; gap: 6px; padding: 5px 10px; border-radius: 6px; font-size: 12px; font-weight: 600; cursor: pointer; background: rgb(var(--surface-2)); color: rgb(var(--muted)); border: 1px solid transparent; transition: all 0.15s ease; }
 .note-tpl:hover { background: rgb(var(--surface)); border-color: rgb(var(--border-strong)); color: rgb(var(--fg)); }
-.note-tpl.active { background: rgb(var(--fg)); color: rgb(var(--surface)); }
+.note-tpl.active { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; }
 .autosave { font-size: 11px; color: rgb(var(--muted)); display: inline-flex; align-items: center; gap: 5px; }
-.autosave-dot { width: 5px; height: 5px; border-radius: 50%; background: rgb(127,160,122); }
+.autosave-dot { width: 5px; height: 5px; border-radius: 50%; background: #4CAF50; }
 
 .svc-status { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 600; padding: 3px 9px; border-radius: 5px; cursor: pointer; user-select: none; transition: all 0.15s ease; }
-.svc-status.on { background: rgba(127,160,122,0.12); color: rgb(74,103,68); }
-.dark .svc-status.on { color: rgb(180,204,169); }
+.svc-status.on { background: rgba(76,175,80,0.12); color: #2E7D32; }
+.dark .svc-status.on { color: rgb(165,214,167); }
 .svc-status.off { background: rgb(var(--surface-2)); color: rgb(var(--muted)); }
 
-.auth-panel { position: relative; background: linear-gradient(145deg, #3B5237 0%, #2E3F2B 60%, #1E2820 100%); overflow: hidden; }
-.auth-panel::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 15% 15%, rgba(127,160,122,0.30) 0%, transparent 50%), radial-gradient(circle at 85% 85%, rgba(168,197,214,0.15) 0%, transparent 50%); }
-.auth-panel::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 60px 60px; }
+.auth-panel { position: relative; background: linear-gradient(145deg, #2E7D32 0%, #1B5E20 60%, #0F2A12 100%); overflow: hidden; }
+.auth-panel::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 15% 15%, rgba(129,199,132,0.35) 0%, transparent 50%), radial-gradient(circle at 85% 85%, rgba(165,214,167,0.20) 0%, transparent 50%); }
+.auth-panel::after { content: ''; position: absolute; inset: 0; background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
 
 .guide-step { display: flex; gap: 16px; padding: 18px 0; border-bottom: 1px solid rgb(var(--border)); }
 .guide-step:last-child { border-bottom: none; }
-.guide-num { width: 26px; height: 26px; border-radius: 7px; background: rgb(var(--fg)); color: rgb(var(--surface)); display: grid; place-items: center; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+.guide-num { width: 26px; height: 26px; border-radius: 7px; background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; display: grid; place-items: center; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 12px; flex-shrink: 0; }
 
 .settings-tab { display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; border-radius: 7px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.15s ease; color: rgb(var(--muted)); background: transparent; border: none; }
 .settings-tab:hover { background: rgb(var(--surface-2)); color: rgb(var(--fg)); }
-.settings-tab.active { background: rgb(var(--fg)); color: rgb(var(--surface)); }
+.settings-tab.active { background: linear-gradient(135deg, #4CAF50, #2E7D32); color: white; box-shadow: 0 2px 6px rgba(46,125,50,0.20); }
 
-.area-price { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; background: rgba(127,160,122,0.12); color: rgb(74,103,68); margin-left: 6px; letter-spacing: 0.02em; }
-.dark .area-price { background: rgba(127,160,122,0.18); color: rgb(180,204,169); }
+.area-price { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 4px; background: rgba(76,175,80,0.12); color: #2E7D32; margin-left: 6px; letter-spacing: 0.02em; }
+.dark .area-price { background: rgba(76,175,80,0.20); color: rgb(165,214,167); }
 
-.section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: rgb(95,130,89); }
-.dark .section-eyebrow { color: rgb(180,204,169); }
+.section-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: #2E7D32; }
+.dark .section-eyebrow { color: rgb(165,214,167); }
 
 .chart-bar { transition: height 0.6s cubic-bezier(0.16,1,0.3,1); }
 
@@ -222,21 +222,45 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .switch input { opacity: 0; width: 0; height: 0; }
 .switch-slider { position: absolute; cursor: pointer; inset: 0; background: rgb(var(--border-strong)); border-radius: 22px; transition: 0.2s; }
 .switch-slider::before { content: ''; position: absolute; height: 16px; width: 16px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.2s; }
-.switch input:checked + .switch-slider { background: rgb(127,160,122); }
+.switch input:checked + .switch-slider { background: linear-gradient(135deg, #4CAF50, #2E7D32); }
 .switch input:checked + .switch-slider::before { transform: translateX(16px); }
 
 /* ---------- Group Credit Badge ---------- */
-.group-credit-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: rgba(127,160,122,0.12); color: rgb(74,103,68); font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.15s ease; border: 1px solid rgba(127,160,122,0.20); }
-.group-credit-badge:hover { background: rgba(127,160,122,0.20); transform: translateY(-1px); }
-.dark .group-credit-badge { background: rgba(127,160,122,0.18); color: rgb(180,204,169); }
-.dark .group-credit-badge:hover { background: rgba(127,160,122,0.28); }
+.group-credit-badge { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; background: rgba(46,125,50,0.08); color: #2E7D32; font-size: 11px; font-weight: 700; text-decoration: none; transition: all 0.15s ease; border: 1px solid rgba(46,125,50,0.18); }
+.group-credit-badge:hover { background: rgba(46,125,50,0.16); transform: translateY(-1px); box-shadow: 0 4px 10px -2px rgba(46,125,50,0.20); }
+.dark .group-credit-badge { background: rgba(129,199,132,0.12); color: rgb(165,214,167); border-color: rgba(129,199,132,0.22); }
+.dark .group-credit-badge:hover { background: rgba(129,199,132,0.22); }
+
+/* ---------- Trust bar ---------- */
+.trust-bar { display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap; }
+.trust-item { display: inline-flex; align-items: center; gap: 8px; color: rgb(var(--muted)); font-size: 12px; font-weight: 600; letter-spacing: -0.005em; opacity: 0.7; transition: opacity 0.2s; }
+.trust-item:hover { opacity: 1; }
+.trust-item svg { opacity: 0.9; }
+
+/* ---------- Demo notice ---------- */
+.demo-notice { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 999px; background: rgba(250,204,21,0.10); color: #A16207; font-size: 11px; font-weight: 600; border: 1px solid rgba(250,204,21,0.25); }
+.dark .demo-notice { background: rgba(250,204,21,0.08); color: #FCD34D; border-color: rgba(250,204,21,0.20); }
+
+/* ---------- Logo ---------- */
+.tb-logo-wrap { display: flex; align-items: center; gap: 10px; text-decoration: none; user-select: none; }
+.tb-logo-mark { flex-shrink: 0; transition: transform 0.25s cubic-bezier(0.16,1,0.3,1); }
+.tb-logo-wrap:hover .tb-logo-mark { transform: scale(1.06) rotate(-2deg); }
+.tb-logo-wordmark { font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: -0.04em; color: #2E7D32; line-height: 1; }
+.dark .tb-logo-wordmark { color: #A5D6A7; }
+.tb-logo-wordmark-sm { font-size: 15px; }
+.tb-logo-wordmark-lg { font-size: 18px; }
+
+/* ---------- Hero polish ---------- */
+.hero-mesh { position: relative; overflow: hidden; }
+.hero-mesh::before { content: ''; position: absolute; top: -20%; right: -10%; width: 60%; height: 80%; background: radial-gradient(circle, rgba(76,175,80,0.14) 0%, transparent 65%); pointer-events: none; }
+.hero-mesh::after { content: ''; position: absolute; bottom: -20%; left: -10%; width: 50%; height: 70%; background: radial-gradient(circle, rgba(139,195,74,0.10) 0%, transparent 65%); pointer-events: none; }
 
 /* ---------- Prose ---------- */
 .prose-p { font-size: 15px; line-height: 1.75; color: rgb(var(--fg) / 0.78); }
 .prose-lead { font-size: 17px; line-height: 1.65; color: rgb(var(--fg) / 0.78); letter-spacing: -0.005em; }
 .prose-list { font-size: 15px; line-height: 1.75; }
 .prose-list li { display: flex; gap: 12px; align-items: flex-start; color: rgb(var(--fg) / 0.78); }
-.prose-list li::before { content: ''; flex-shrink: 0; width: 5px; height: 5px; border-radius: 50%; background: rgb(127,160,122); margin-top: 11px; }
+.prose-list li::before { content: ''; flex-shrink: 0; width: 5px; height: 5px; border-radius: 50%; background: #4CAF50; margin-top: 11px; }
 
 @media print { .no-print { display: none !important; } body { background: white; } }
 </style>
@@ -295,20 +319,24 @@ function startOfWeek(d){ const x=new Date(d); x.setDate(x.getDate()-x.getDay());
 function startOfDay(d){ const x = new Date(d); x.setHours(0,0,0,0); return x; }
 function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
 function isToday(d){ return sameDay(new Date(d), new Date()); }
-
 function hourLabel(h) {
   if (h === 0) return '12 AM';
   if (h === 12) return '12 PM';
   return h > 12 ? (h - 12) + ' PM' : h + ' AM';
 }
-
 function parseLocalDate(str, h = 0, m = 0) {
   if (!str) return null;
   const [y, mo, da] = String(str).split('-').map(Number);
   if (!y || !mo || !da) return new Date(str);
   return new Date(y, mo - 1, da, h, m, 0, 0);
 }
-
+function toDateInputValue(d) {
+  const x = typeof d === 'string' ? new Date(d) : d;
+  const y = x.getFullYear();
+  const m = String(x.getMonth() + 1).padStart(2, '0');
+  const da = String(x.getDate()).padStart(2, '0');
+  return `${y}-${m}-${da}`;
+}
 function rerenderKeepingFocus(selector) {
   const el = document.querySelector(selector);
   if (!el) { render(); return; }
@@ -317,16 +345,13 @@ function rerenderKeepingFocus(selector) {
   render();
   if (hadFocus) {
     const next = document.querySelector(selector);
-    if (next) {
-      next.focus();
-      try { next.setSelectionRange(start, end); } catch(e) {}
-    }
+    if (next) { next.focus(); try { next.setSelectionRange(start, end); } catch(e) {} }
   }
 }
-
 function avatar(u, size=40){
   const isMe = State.user && State.user.id === u.id;
-  const src = (isMe && State.savedAvatar) || u.avatar;
+  const mySaved = isMe && State.savedAvatar && State.savedAvatar.userId === u.id ? State.savedAvatar.dataUrl : null;
+  const src = mySaved || u.avatar;
   return `<img src="${src}" alt="${esc(u.name)}" class="rounded-full object-cover shrink-0 bg-black/5" style="width:${size}px;height:${size}px" onerror="this.src='https://i.pravatar.cc/150?u=${u.id}'">`;
 }
 function icon(n, s=18, c=''){ return `<i data-lucide="${n}" class="${c}" style="width:${s}px;height:${s}px"></i>`; }
@@ -521,7 +546,6 @@ const GUIDES = {
   ]},
 };
 const GUIDE_AREAS = Object.keys(GUIDES);
-
 const CAL_START_HOUR = 7;
 const CAL_END_HOUR = 20;
 
@@ -532,7 +556,11 @@ const State = {
   user: load(STORAGE_KEYS.USER_SESSION, null),
   theme: localStorage.getItem(STORAGE_KEYS.THEME) || 'system',
   calendarView: 'week', calendarDate: new Date(), settingsTab: 'profile',
-  savedAvatar: localStorage.getItem(STORAGE_KEYS.AVATAR) || null,
+  savedAvatar: (() => {
+    const raw = localStorage.getItem(STORAGE_KEYS.AVATAR);
+    if (!raw) return null;
+    try { const p = JSON.parse(raw); if (p && p.userId && p.dataUrl) return p; return null; } catch(e) { return null; }
+  })(),
   timeOff: (() => { const t = load(STORAGE_KEYS.TIME_OFF, [{ id:'to1', start:addDays(new Date(),14).toISOString(), end:addDays(new Date(),17).toISOString(), reason:'Holiday break' }]); return t.slice().sort((a,b) => new Date(a.start) - new Date(b.start)); })(),
   apptSort:'upcoming', invoiceFilter:'all', apptFilter:'all',
   apptQuery:'', clientQuery:'', reviewOpen:null,
@@ -559,7 +587,7 @@ function renderThemeToggle() {
   iconEl();
 }
 function toast(msg, kind='success') {
-  const k = { success:{bg:'rgb(20 23 25)',ic:'check'}, error:{bg:'#B91C1C',ic:'alert-circle'}, info:{bg:'#3B5668',ic:'info'}, warning:{bg:'#A16207',ic:'alert-triangle'} }[kind] || {bg:'rgb(20 23 25)',ic:'check'};
+  const k = { success:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'}, error:{bg:'#B91C1C',ic:'alert-circle'}, info:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'info'}, warning:{bg:'#A16207',ic:'alert-triangle'} }[kind] || {bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'};
   const el = document.createElement('div');
   el.className = 'pointer-events-auto surface shadow-lift rounded-xl px-4 py-3 flex items-center gap-3 animate-slideIn';
   el.setAttribute('role', kind === 'error' ? 'alert' : 'status');
@@ -568,7 +596,6 @@ function toast(msg, kind='success') {
   setTimeout(() => { el.style.transition='all 0.3s'; el.style.opacity='0'; el.style.transform='translateX(20px)'; setTimeout(() => el.remove(), 300); }, 3000);
 }
 
-/* -------- Modal -------- */
 let modalKeydownAttached = false;
 let lastFocusedEl = null;
 function modal({ title, body, actions=[], size='md' }) {
@@ -588,14 +615,14 @@ function modal({ title, body, actions=[], size='md' }) {
     </div>`;
   iconEl();
   if (!modalKeydownAttached) { document.addEventListener('keydown', modalKeydown, true); modalKeydownAttached = true; }
-  setTimeout(() => {
+  requestAnimationFrame(() => requestAnimationFrame(() => {
     const root = $('#modal-root');
     if (!root) return;
     const preferred = root.querySelector('input:not([type="hidden"]):not([disabled]), textarea:not([disabled]), select:not([disabled])');
     if (preferred) { preferred.focus(); return; }
     const buttons = [...root.querySelectorAll('button:not([disabled])')].filter(b => b.getAttribute('aria-label') !== 'Close');
     if (buttons.length) buttons[0].focus();
-  }, 20);
+  }));
 }
 function closeModal() {
   $('#modal-root').innerHTML='';
@@ -619,48 +646,55 @@ function modalKeydown(e) {
 }
 
 /* ============================================================
-   SHARED UI
+   BRAND LOGO — therabyte (submark style)
+   Green ring · person silhouette · cupping hands · leaf
    ============================================================ */
+let _logoCounter = 0;
 function LogoMark(small) {
-  return `<a href="#/" class="flex items-center gap-2.5 select-none group">
-    <div class="shrink-0 grid place-items-center rounded-lg transition-transform group-hover:scale-[1.03]" style="width:${small?28:32}px;height:${small?28:32}px;background:linear-gradient(135deg,#3B5237,#2E3F2B)">
-      <svg viewBox="0 0 24 24" width="${small?15:17}" height="${small?15:17}" fill="none">
-        <circle cx="12" cy="8" r="3" fill="white"/>
-        <path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="white" stroke-width="2.2" stroke-linecap="round"/>
+  _logoCounter++;
+  const size = small ? 30 : 34;
+  const uid = 'tbLg' + _logoCounter;
+  return `<a href="#/" class="tb-logo-wrap" aria-label="therabyte">
+    <span class="tb-logo-mark" style="width:${size}px;height:${size}px;display:block">
+      <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" aria-hidden="true">
+        <defs>
+          <linearGradient id="${uid}g" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#1B5E20"/>
+            <stop offset="50%" stop-color="#4CAF50"/>
+            <stop offset="100%" stop-color="#8BC34A"/>
+          </linearGradient>
+        </defs>
+        <circle cx="50" cy="50" r="45" fill="none" stroke="url(#${uid}g)" stroke-width="3.5"/>
+        <circle cx="50" cy="31" r="9.5" fill="url(#${uid}g)"/>
+        <path d="M 32 62 C 32 46 40 42 50 42 C 60 42 68 46 68 62 L 68 73 L 32 73 Z" fill="url(#${uid}g)"/>
+        <path d="M 20 76 C 18 70 22 63 30 63 L 36 67 L 42 65 L 46 69 L 44 76 C 38 80 26 80 20 76 Z" fill="url(#${uid}g)"/>
+        <path d="M 80 76 C 82 70 78 63 70 63 L 64 67 L 58 65 L 54 69 L 56 76 C 62 80 74 80 80 76 Z" fill="url(#${uid}g)"/>
+        <path d="M 82 30 Q 92 20 102 28 Q 100 42 88 42 Q 80 38 82 30 Z" fill="#2E7D32"/>
+        <path d="M 86 32 Q 94 30 98 30" stroke="#A3E635" stroke-width="1" fill="none" stroke-linecap="round"/>
       </svg>
-    </div>
-    <div class="font-display font-bold tracking-tight ${small ? 'text-[15px]' : 'text-lg'}">TheraByte</div>
+    </span>
+    <span class="tb-logo-wordmark ${small ? 'tb-logo-wordmark-sm' : 'tb-logo-wordmark-lg'}">therabyte</span>
   </a>`;
 }
 
-/* Small LvDiagnostech credit pill — clickable, opens in new tab */
 function GroupCreditBadge() {
-  return `<a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer"
-    class="group-credit-badge"
-    title="Built by ${esc(CREDIT.name)}">
-    ${icon('zap', 10)}
-    <span>${esc(CREDIT.name)}</span>
-    ${icon('arrow-up-right', 9)}
+  return `<a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer" class="group-credit-badge" title="Built by ${esc(CREDIT.name)}">
+    ${icon('zap', 10)}<span>${esc(CREDIT.name)}</span>${icon('arrow-up-right', 9)}
   </a>`;
 }
-
-/* Inline footer credit line */
 function GroupCreditLine() {
-  return `<a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer"
-    class="text-sage-600 hover:underline font-semibold inline-flex items-center gap-1">
-    ${esc(CREDIT.name)} ${icon('arrow-up-right', 10)}
-  </a>`;
+  return `<a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer" class="text-sage-600 hover:underline font-semibold inline-flex items-center gap-1">${esc(CREDIT.name)} ${icon('arrow-up-right', 10)}</a>`;
 }
 
 const STATUS_STYLE = {
-  confirmed: { bg:'rgba(127,160,122,0.12)', color:'#4A6744', label:'Confirmed', dot:'bg-sage-500' },
+  confirmed: { bg:'rgba(76,175,80,0.12)', color:'#2E7D32', label:'Confirmed', dot:'bg-brand-500' },
   pending:   { bg:'rgba(217,119,6,0.10)', color:'#B45309', label:'Pending', dot:'bg-amber-500' },
   completed: { bg:'rgba(110,118,124,0.10)', color:'#3E484D', label:'Completed', dot:'bg-ink-500' },
   cancelled: { bg:'rgba(184,130,130,0.15)', color:'#7A4A4A', label:'Cancelled', dot:'bg-rose2-500' },
   'no-show': { bg:'rgba(220,38,38,0.10)', color:'#B91C1C', label:'No-show', dot:'bg-red-500' },
-  paid:      { bg:'rgba(127,160,122,0.12)', color:'#4A6744', label:'Paid', dot:'bg-sage-500' },
+  paid:      { bg:'rgba(76,175,80,0.12)', color:'#2E7D32', label:'Paid', dot:'bg-brand-500' },
   overdue:   { bg:'rgba(220,38,38,0.10)', color:'#B91C1C', label:'Overdue', dot:'bg-red-500' },
-  verified:  { bg:'rgba(127,160,122,0.12)', color:'#4A6744', label:'Verified', dot:'bg-sage-500' },
+  verified:  { bg:'rgba(76,175,80,0.12)', color:'#2E7D32', label:'Verified', dot:'bg-brand-500' },
 };
 function statusBadge(k) {
   const s = STATUS_STYLE[k] || STATUS_STYLE.pending;
@@ -728,7 +762,7 @@ function SectionHeader({ title, subtitle, action }) {
   </div>`;
 }
 
-function StatTile({ label, value, hint, iconName, tone = 'sage' }) {
+function StatTile({ label, value, hint, iconName, tone = 'brand' }) {
   return `
   <div class="card p-5">
     <div class="flex items-start justify-between gap-3">
@@ -742,7 +776,7 @@ function StatTile({ label, value, hint, iconName, tone = 'sage' }) {
 
 function EmptyState({ icon: ic, title, description, action }) {
   return `<div class="card p-10 sm:p-12 text-center">
-    <div class="w-12 h-12 rounded-xl bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))] grid place-items-center mx-auto mb-4">${icon(ic, 22)}</div>
+    <div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center mx-auto mb-4">${icon(ic, 22)}</div>
     <div class="type-h3 text-base">${title}</div>
     <p class="type-body muted mt-2 max-w-sm mx-auto leading-relaxed">${description}</p>
     ${action ? `<div class="mt-5 flex justify-center">${action}</div>` : ''}
@@ -764,6 +798,7 @@ function StaticFooter() {
         <div>
           ${LogoMark()}
           <p class="type-small muted mt-4 leading-relaxed max-w-xs">Booking and intake for massage therapists, physiotherapists, and bodyworkers.</p>
+          <p class="text-xs mt-3 italic font-medium text-brand-600">Heal with care, grow with nature.</p>
         </div>
         <div>
           <div class="text-[11px] font-bold tracking-[0.14em] uppercase muted mb-4">Product</div>
@@ -791,7 +826,7 @@ function StaticFooter() {
         </div>
       </div>
       <div class="pt-8 border-t border-[rgb(var(--border))] flex flex-wrap items-center justify-between gap-4 text-xs muted">
-        <span>© ${new Date().getFullYear()} TheraByte · Crafted by ${GroupCreditLine()}</span>
+        <span>© ${new Date().getFullYear()} therabyte · Crafted by ${GroupCreditLine()}</span>
         <span class="flex items-center gap-1.5">${icon('shield', 11)} Privacy-first by default</span>
       </div>
     </div>
@@ -809,7 +844,7 @@ function StaticPageLayout({ active, eyebrow, title, description, lastUpdated, ch
   <div class="min-h-screen flex flex-col">
     <header class="sticky top-0 z-30 backdrop-blur-xl bg-[rgb(var(--bg))]/85 border-b border-[rgb(var(--border))] no-print">
       <div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between gap-3">
-        <a href="#/">${LogoMark()}</a>
+        ${LogoMark()}
         <div class="flex items-center gap-3">
           ${GroupCreditBadge()}
           <div data-theme-toggle class="hidden sm:block"></div>
@@ -823,7 +858,7 @@ function StaticPageLayout({ active, eyebrow, title, description, lastUpdated, ch
         <nav class="flex lg:flex-col gap-1 overflow-x-auto no-scrollbar -mx-1 px-1 lg:mx-0 lg:px-0">
           ${navItems.map(item => {
             const on = item.id === active;
-            return `<a href="${item.href}" class="shrink-0 flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13.5px] font-medium transition whitespace-nowrap ${on ? 'bg-[rgb(var(--surface-2))] text-[rgb(var(--fg))]' : 'muted hover:text-[rgb(var(--fg))] hover:bg-[rgb(var(--surface-2))]'}">${icon(item.icon, 15)}<span>${item.label}</span></a>`;
+            return `<a href="${item.href}" class="shrink-0 flex items-center gap-3 px-3 py-2.5 rounded-lg text-[13.5px] font-medium transition whitespace-nowrap ${on ? 'bg-brand-500/10 text-brand-700 dark:text-brand-300' : 'muted hover:text-[rgb(var(--fg))] hover:bg-[rgb(var(--surface-2))]'}">${icon(item.icon, 15)}<span>${item.label}</span></a>`;
           }).join('')}
         </nav>
       </aside>
@@ -859,13 +894,13 @@ function PageAbout() {
   return StaticPageLayout({
     active: 'about',
     eyebrow: 'Company',
-    title: 'About TheraByte',
-    description: "We built TheraByte because good practitioners deserve better tools.",
+    title: 'About therabyte',
+    description: "We built therabyte because good practitioners deserve better tools.",
     children: `
       ${ContentSection({ title: 'Why we exist', children: `
         ${P("The first ten minutes of a session should not be spent on intake. Not when the client already knows roughly what hurts and would have told you two days ago if there was a way to.")}
         ${P("Bodywork has been underserved by software. The options are built either for large clinics with front desk staff, or for hobbyists. Nothing in between. Nothing that respects a solo practitioner's time or treats clients like adults.")}
-        ${P("TheraByte is our answer. A booking layer that captures the one question you cannot ask over the phone — <em class=\"not-italic font-semibold text-[rgb(var(--fg))]\">where does it hurt?</em> — and delivers it before the client walks in.")}
+        ${P("therabyte is our answer. A booking layer that captures the one question you cannot ask over the phone — <em class=\"not-italic font-semibold text-[rgb(var(--fg))]\">where does it hurt?</em> — and delivers it before the client walks in.")}
       ` })}
       ${ContentSection({ title: 'What we believe', children: UL([
         "The practitioner's expertise is the product. Software should disappear into the work, not compete with it.",
@@ -884,9 +919,9 @@ function PageAbout() {
       ${ContentSection({ title: 'Get in touch', children: `
         ${P("We read every email.")}
         ${UL([
-          `<span class="font-medium text-[rgb(var(--fg))]">General:</span> <a href="mailto:hello@therabyte.example" class="text-sage-600 hover:underline">hello@therabyte.example</a>`,
-          `<span class="font-medium text-[rgb(var(--fg))]">Privacy:</span> <a href="mailto:privacy@therabyte.example" class="text-sage-600 hover:underline">privacy@therabyte.example</a>`,
-          `<span class="font-medium text-[rgb(var(--fg))]">Legal:</span> <a href="mailto:legal@therabyte.example" class="text-sage-600 hover:underline">legal@therabyte.example</a>`,
+          `<span class="font-medium text-[rgb(var(--fg))]">General:</span> <a href="mailto:hello@therabyte.example" class="text-brand-600 hover:underline">hello@therabyte.example</a>`,
+          `<span class="font-medium text-[rgb(var(--fg))]">Privacy:</span> <a href="mailto:privacy@therabyte.example" class="text-brand-600 hover:underline">privacy@therabyte.example</a>`,
+          `<span class="font-medium text-[rgb(var(--fg))]">Legal:</span> <a href="mailto:legal@therabyte.example" class="text-brand-600 hover:underline">legal@therabyte.example</a>`,
         ])}
       ` })}
     `
@@ -903,11 +938,11 @@ function PagePrivacy() {
     description: 'We collect what we need to run the service, and nothing else. Here is exactly what that means.',
     children: `
       ${ContentSection({ title: 'Our commitment', children: `
-        ${P("This policy describes what TheraByte collects, why, how we store it, and what rights you have over it. It is written to be read, not to protect us in court.")}
+        ${P("This policy describes what therabyte collects, why, how we store it, and what rights you have over it. It is written to be read, not to protect us in court.")}
       ` })}
       ${ContentSection({ title: 'What we collect', children: `
         ${P("<span class=\"font-medium text-[rgb(var(--fg))]\">Account information.</span> Your name, email address, and a securely hashed password. Practitioners may also provide a professional title, bio, and credentials.")}
-        ${P("<span class=\"font-medium text-[rgb(var(--fg))]\">Booking information.</span> Services booked, times, locations, focus areas selected on the body map, and any notes you write. This is the core of what TheraByte does.")}
+        ${P("<span class=\"font-medium text-[rgb(var(--fg))]\">Booking information.</span> Services booked, times, locations, focus areas selected on the body map, and any notes you write. This is the core of what therabyte does.")}
         ${P("<span class=\"font-medium text-[rgb(var(--fg))]\">Messages.</span> Messages sent through the platform, so we can deliver them and keep a history.")}
         ${P("<span class=\"font-medium text-[rgb(var(--fg))]\">Technical information.</span> Browser, device, and IP address, used for security and abuse prevention. Retained for 90 days.")}
       ` })}
@@ -927,7 +962,7 @@ function PagePrivacy() {
       ${ContentSection({ title: 'Who can see what', children: `
         ${P("Clients can see their own bookings, messages, invoices, and the public profiles of practitioners. They cannot see session notes.")}
         ${P("Practitioners can see bookings made with them, the client's focus areas for those bookings, their own session notes, and shared messages. They cannot see bookings made with other practitioners.")}
-        ${P("TheraByte staff can see account metadata for support and security. We do not access session notes except when legally compelled, and we will notify you when we are permitted to.")}
+        ${P("therabyte staff can see account metadata for support and security. We do not access session notes except when legally compelled, and we will notify you when we are permitted to.")}
       ` })}
       ${ContentSection({ title: 'Data retention', children: `
         ${P("We keep your data for as long as your account is active. If you delete your account, we permanently delete personal data within 30 days, except where legally required to retain records (typically invoices, for tax purposes, for seven years).")}
@@ -939,14 +974,14 @@ function PagePrivacy() {
           "<span class=\"font-medium text-[rgb(var(--fg))]\">Delete.</span> Permanently remove your account and personal data.",
           "<span class=\"font-medium text-[rgb(var(--fg))]\">Correct.</span> Update any field in your profile.",
         ])}
-        ${P("If you are in a jurisdiction with additional rights — GDPR, CCPA, or the Philippine Data Privacy Act — email <a href=\"mailto:privacy@therabyte.example\" class=\"text-sage-600 hover:underline\">privacy@therabyte.example</a> and we will respond within 30 days.")}
+        ${P("If you are in a jurisdiction with additional rights — GDPR, CCPA, or the Philippine Data Privacy Act — email <a href=\"mailto:privacy@therabyte.example\" class=\"text-brand-600 hover:underline\">privacy@therabyte.example</a> and we will respond within 30 days.")}
       ` })}
       ${ContentSection({ title: 'Security', children: `
         ${P("Passwords are hashed with industry-standard algorithms. Data in transit is encrypted with TLS. Data at rest is encrypted on disk. Production access is limited to a small number of staff with two-factor authentication.")}
         ${P("If we ever experience a breach that affects you, we will tell you within 72 hours of discovering it.")}
       ` })}
       ${ContentSection({ title: 'Contact', children: `
-        ${P("Questions, concerns, or requests: <a href=\"mailto:privacy@therabyte.example\" class=\"text-sage-600 hover:underline\">privacy@therabyte.example</a>.")}
+        ${P("Questions, concerns, or requests: <a href=\"mailto:privacy@therabyte.example\" class=\"text-brand-600 hover:underline\">privacy@therabyte.example</a>.")}
       ` })}
     `
   });
@@ -959,14 +994,14 @@ function PageTerms() {
     eyebrow: 'Legal',
     title: 'Terms of Service',
     lastUpdated: 'October 2026',
-    description: 'The rules for using TheraByte, written plainly and in the order you will encounter them.',
+    description: 'The rules for using therabyte, written plainly and in the order you will encounter them.',
     children: `
       ${ContentSection({ title: 'Acceptance', children: `
-        ${P("By creating an account or using TheraByte, you agree to these terms. If you do not agree, do not use the service.")}
-        ${P("You must be at least 18 years old to have an account. If you are using TheraByte on behalf of an organization, you confirm you have authority to accept these terms on its behalf.")}
+        ${P("By creating an account or using therabyte, you agree to these terms. If you do not agree, do not use the service.")}
+        ${P("You must be at least 18 years old to have an account. If you are using therabyte on behalf of an organization, you confirm you have authority to accept these terms on its behalf.")}
       ` })}
       ${ContentSection({ title: 'The service', children: `
-        ${P("TheraByte is a booking, intake, and record-keeping platform for bodywork practitioners and their clients. We are not a healthcare provider. We do not practice medicine, diagnose conditions, or treat anyone.")}
+        ${P("therabyte is a booking, intake, and record-keeping platform for bodywork practitioners and their clients. We are not a healthcare provider. We do not practice medicine, diagnose conditions, or treat anyone.")}
         ${P("Focus areas selected on a body map are a communication tool, not a medical assessment. Practitioners are solely responsible for the care they provide.")}
       ` })}
       ${ContentSection({ title: 'Your account', children: UL([
@@ -976,18 +1011,18 @@ function PageTerms() {
         "You may close your account at any time from Settings → Data.",
       ]) })}
       ${ContentSection({ title: 'Booking and cancellation', children: `
-        ${P("Clients may book sessions with practitioners. Each booking is a direct agreement between the client and the practitioner. TheraByte facilitates the booking but is not a party to the agreement.")}
+        ${P("Clients may book sessions with practitioners. Each booking is a direct agreement between the client and the practitioner. therabyte facilitates the booking but is not a party to the agreement.")}
         ${P("Cancellation terms are set by individual practitioners and shown on each booking. As a default, cancellations made less than 24 hours before a session may incur a fee at the practitioner's discretion.")}
       ` })}
       ${ContentSection({ title: 'Payment', children: `
-        ${P("Payments for sessions are made directly between the client and the practitioner, or through payment providers linked by the practitioner. TheraByte does not process payments and takes no cut of your bookings.")}
-        ${P("TheraByte's own subscription fee, if applicable, is billed separately and can be cancelled at any time.")}
+        ${P("Payments for sessions are made directly between the client and the practitioner, or through payment providers linked by the practitioner. therabyte does not process payments and takes no cut of your bookings.")}
+        ${P("therabyte's own subscription fee, if applicable, is billed separately and can be cancelled at any time.")}
       ` })}
       ${ContentSection({ title: 'Practitioner obligations', children: `
         ${P("If you register as a practitioner, you confirm that:")}
         ${UL([
           "You hold any licenses or certifications required to practice in your jurisdiction.",
-          "You will not use TheraByte to provide care you are not qualified to provide.",
+          "You will not use therabyte to provide care you are not qualified to provide.",
           "You will handle client information in accordance with applicable privacy law.",
           "You will not harass, discriminate against, or harm clients.",
         ])}
@@ -1001,7 +1036,7 @@ function PageTerms() {
         ])}
       ` })}
       ${ContentSection({ title: 'Content you create', children: `
-        ${P("You retain ownership of any content you create in TheraByte — session notes, messages, profile information. You grant us a limited license to store and display this content to the people you have shared it with, so we can operate the service.")}
+        ${P("You retain ownership of any content you create in therabyte — session notes, messages, profile information. You grant us a limited license to store and display this content to the people you have shared it with, so we can operate the service.")}
         ${P("We will never use your session notes, focus areas, or messages for marketing, training, or any purpose other than running the service for you.")}
       ` })}
       ${ContentSection({ title: 'Availability', children: `
@@ -1009,7 +1044,7 @@ function PageTerms() {
         ${P("If we discontinue the service entirely, we will give you at least 90 days' notice and the ability to export everything you have stored.")}
       ` })}
       ${ContentSection({ title: 'Liability', children: `
-        ${P("TheraByte is provided as-is. We are not liable for the quality of care you receive or provide, for missed appointments, or for any indirect, incidental, or consequential damages.")}
+        ${P("therabyte is provided as-is. We are not liable for the quality of care you receive or provide, for missed appointments, or for any indirect, incidental, or consequential damages.")}
         ${P("Our total liability to you, for any reason, is limited to the amount you paid us in the twelve months preceding the claim.")}
       ` })}
       ${ContentSection({ title: 'Termination', children: `
@@ -1019,7 +1054,7 @@ function PageTerms() {
         ${P("We will notify you by email at least 30 days before any material change takes effect. If you do not agree with the change, you can close your account before it takes effect.")}
       ` })}
       ${ContentSection({ title: 'Contact', children: `
-        ${P("Questions about these terms: <a href=\"mailto:legal@therabyte.example\" class=\"text-sage-600 hover:underline\">legal@therabyte.example</a>.")}
+        ${P("Questions about these terms: <a href=\"mailto:legal@therabyte.example\" class=\"text-brand-600 hover:underline\">legal@therabyte.example</a>.")}
       ` })}
     `
   });
@@ -1093,11 +1128,14 @@ function Landing() {
       </div>
     </header>
 
-    <section class="relative border-b border-[rgb(var(--border))]">
-      <div class="max-w-6xl mx-auto px-5 sm:px-6 pt-16 pb-28 lg:pt-24 lg:pb-36 grid lg:grid-cols-[1.05fr_1fr] gap-14 lg:gap-20 items-center">
+    <section class="relative border-b border-[rgb(var(--border))] hero-mesh">
+      <div class="max-w-6xl mx-auto px-5 sm:px-6 pt-16 pb-28 lg:pt-24 lg:pb-36 grid lg:grid-cols-[1.05fr_1fr] gap-14 lg:gap-20 items-center relative z-10">
         <div>
-          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-sage-600 mb-6">Booking &amp; intake for bodywork</div>
-          <h1 class="type-display text-[2.5rem] sm:text-5xl lg:text-[4.25rem]">Know what to work on<br class="hidden sm:block">before they arrive.</h1>
+          <div class="flex items-center gap-3 mb-6 flex-wrap">
+            <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-brand-600">Booking &amp; intake for bodywork</div>
+            <span class="demo-notice">${icon('info', 10)} Demo — data resets on refresh</span>
+          </div>
+          <h1 class="type-display text-[2.5rem] sm:text-5xl lg:text-[4.25rem] text-brand-700 dark:text-brand-300">Know what to work on<br class="hidden sm:block">before they arrive.</h1>
           <p class="type-body-lg muted mt-7 max-w-lg">
             Booking and intake for massage therapists, physiotherapists, and bodyworkers. Clients mark what hurts on a body map. You see it before they walk in.
           </p>
@@ -1112,39 +1150,46 @@ function Landing() {
           </div>
         </div>
         <div class="relative lg:pl-4">
-          <div class="card p-5 shadow-lift">
+          <div class="card p-5 shadow-lift !border-brand-500/20">
             <div class="flex items-center gap-1.5 pb-4 border-b border-[rgb(var(--border))] mb-5">
               <div class="w-2.5 h-2.5 rounded-full bg-[rgb(var(--border-strong))]"></div>
               <div class="w-2.5 h-2.5 rounded-full bg-[rgb(var(--border-strong))]"></div>
               <div class="w-2.5 h-2.5 rounded-full bg-[rgb(var(--border-strong))]"></div>
               <div class="ml-3 text-[10px] muted type-mono">therabyte.app/book</div>
             </div>
-            <div class="flex items-center justify-between mb-5"><div class="text-[11px] font-bold tracking-[0.12em] uppercase text-sage-600">Where does it hurt?</div><div class="text-[11px] muted">Step 2 of 3</div></div>
+            <div class="flex items-center justify-between mb-5"><div class="text-[11px] font-bold tracking-[0.12em] uppercase text-brand-600">Where does it hurt?</div><div class="text-[11px] muted">Step 2 of 3</div></div>
             <div class="grid grid-cols-[1fr_1.1fr] gap-4 items-center">
               <div class="surface-2 rounded-lg p-3 flex justify-center">${BodyMapSVG(['neck','shoulders','upper-back'])}</div>
-              <div class="space-y-1.5">${[['neck','Neck',true],['shoulders','Shoulders',true],['upper-back','Upper back',true],['lower-back','Lower back',false],['arms','Arms',false],['hands','Hands',false]].map(([id,label,on]) => `<div class="flex items-center gap-2.5 p-2 rounded-lg ${on?'bg-sage-500/12':'surface-2'}"><div class="w-3.5 h-3.5 rounded border-2 grid place-items-center shrink-0 ${on?'bg-sage-500 border-sage-500':'border-[rgb(var(--border-strong))]'}">${on?icon('check', 9, 'text-white'):''}</div><span class="text-xs font-medium ${on?'':'muted'}">${label}</span></div>`).join('')}</div>
+              <div class="space-y-1.5">${[['neck','Neck',true],['shoulders','Shoulders',true],['upper-back','Upper back',true],['lower-back','Lower back',false],['arms','Arms',false],['hands','Hands',false]].map(([id,label,on]) => `<div class="flex items-center gap-2.5 p-2 rounded-lg ${on?'bg-brand-500/12':'surface-2'}"><div class="w-3.5 h-3.5 rounded border-2 grid place-items-center shrink-0 ${on?'bg-brand-500 border-brand-500':'border-[rgb(var(--border-strong))]'}">${on?icon('check', 9, 'text-white'):''}</div><span class="text-xs font-medium ${on?'':'muted'}">${label}</span></div>`).join('')}</div>
             </div>
             <div class="mt-5 pt-5 border-t border-dashed border-[rgb(var(--border))] flex items-center justify-between"><div class="text-xs muted">Total</div><div class="font-display font-bold text-lg">₱1,450</div></div>
           </div>
           <div class="absolute -bottom-8 -left-3 sm:-left-8 card p-4 shadow-lift max-w-[250px] hidden sm:block">
-            <div class="flex items-center gap-2 mb-2.5"><div class="w-1.5 h-1.5 rounded-full bg-sage-500"></div><div class="text-[10px] font-bold tracking-[0.12em] uppercase muted">Practitioner view</div></div>
+            <div class="flex items-center gap-2 mb-2.5"><div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div><div class="text-[10px] font-bold tracking-[0.12em] uppercase muted">Practitioner view</div></div>
             <div class="flex items-center gap-2.5 mb-2.5"><img src="https://i.pravatar.cc/150?img=68" class="w-8 h-8 rounded-full object-cover bg-black/5" alt=""><div class="min-w-0"><div class="text-xs font-semibold truncate">Alex Rivera</div><div class="text-[10px] muted">Today · 10:00 AM</div></div></div>
-            <div class="flex flex-wrap gap-1">${['Neck','Shoulders','Upper back'].map(x => `<span class="text-[9px] px-1.5 py-0.5 rounded bg-sage-500/12 text-sage-700 dark:text-sage-300 font-medium">${x}</span>`).join('')}</div>
+            <div class="flex flex-wrap gap-1">${['Neck','Shoulders','Upper back'].map(x => `<span class="text-[9px] px-1.5 py-0.5 rounded bg-brand-500/12 text-brand-700 dark:text-brand-300 font-medium">${x}</span>`).join('')}</div>
           </div>
         </div>
       </div>
     </section>
 
     <section class="border-b border-[rgb(var(--border))]">
-      <div class="max-w-4xl mx-auto px-5 sm:px-6 py-7 text-center">
-        <p class="type-small muted leading-relaxed">Trusted by solo practitioners and boutique studios across Southeast Asia.</p>
+      <div class="max-w-5xl mx-auto px-5 sm:px-6 py-10 text-center">
+        <p class="text-[10px] font-bold tracking-[0.16em] uppercase muted mb-6">Trusted by practitioners across Southeast Asia</p>
+        <div class="trust-bar">
+          <span class="trust-item">${icon('award', 14)} Certified Practitioners</span>
+          <span class="trust-item">${icon('shield-check', 14)} Privacy-First</span>
+          <span class="trust-item">${icon('heart', 14)} 2,400+ Sessions</span>
+          <span class="trust-item">${icon('sparkles', 14)} 4.9 Avg Rating</span>
+        </div>
+        <p class="type-small font-medium mt-8 text-brand-600 dark:text-brand-300 italic">Heal with care, grow with nature.</p>
       </div>
     </section>
 
     <section id="how" class="border-b border-[rgb(var(--border))]">
       <div class="max-w-6xl mx-auto px-5 sm:px-6 py-24 lg:py-32">
         <div class="max-w-2xl mb-16">
-          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-sage-600 mb-4">The client experience</div>
+          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-brand-600 mb-4">The client experience</div>
           <h2 class="type-h1 text-3xl sm:text-4xl lg:text-[52px]">You shouldn't need an anatomy degree to book a massage.</h2>
           <p class="type-body-lg muted mt-5">Most people cannot name what is wrong. They just know something is. So we ask one question — <em class="not-italic font-semibold text-[rgb(var(--fg))]">where does it hurt?</em></p>
         </div>
@@ -1153,7 +1198,7 @@ function Landing() {
             ['01','Find someone who fits','Browse by service, specialty, and price. Every practitioner shows focus areas, credentials, and real reviews up front — so you pick someone who actually does what you need.','search'],
             ['02','Point to where it hurts','A simple body map. Tap the areas that need attention, no anatomy degree required. The price updates live, so there are no surprises at checkout.','mouse-pointer-click'],
             ['03','Show up. Let them work.','Your practitioner sees your focus areas before you walk in — along with notes from your last visit. No awkward explaining, no starting from scratch.','door-open'],
-          ].map(([num,title,desc,ic]) => `<div class="bg-[rgb(var(--surface))] p-8 lg:p-10"><div class="font-display font-bold text-sage-600 text-[13px] tracking-wider mb-6">${num}</div><div class="flex items-center gap-2.5 mb-3">${icon(ic, 15, 'text-sage-600')}<h3 class="type-h3 text-[17px]">${title}</h3></div><p class="type-small muted leading-relaxed">${desc}</p></div>`).join('')}
+          ].map(([num,title,desc,ic]) => `<div class="bg-[rgb(var(--surface))] p-8 lg:p-10"><div class="font-display font-bold text-brand-600 text-[13px] tracking-wider mb-6">${num}</div><div class="flex items-center gap-2.5 mb-3">${icon(ic, 15, 'text-brand-600')}<h3 class="type-h3 text-[17px]">${title}</h3></div><p class="type-small muted leading-relaxed">${desc}</p></div>`).join('')}
         </div>
       </div>
     </section>
@@ -1161,14 +1206,14 @@ function Landing() {
     <section id="practitioners" class="border-b border-[rgb(var(--border))] bg-[rgb(var(--surface))]/40">
       <div class="max-w-6xl mx-auto px-5 sm:px-6 py-24 lg:py-32 grid lg:grid-cols-[1fr_1.1fr] gap-14 lg:gap-20 items-center">
         <div>
-          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-sage-600 mb-4">For practitioners</div>
+          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-brand-600 mb-4">For practitioners</div>
           <h2 class="type-h1 text-3xl sm:text-4xl lg:text-[52px]">Walk in knowing. Every time.</h2>
           <p class="type-body-lg muted mt-5">Stop spending the first ten minutes of every session on intake. Your client told you what they need the moment they booked.</p>
           <div class="mt-10 space-y-6">${[
             ['Prep before the door opens',"Every appointment arrives on your dashboard with focus areas, notes from the last session, and how many times the client has been in."],
             ['Notes that write themselves','SOAP, DAP, or free-form. Autosave. Private to you. Searchable by client, area, or date.'],
             ['See what your practice is made of',"Which areas clients flag most. Who returns. What is actually earning."],
-          ].map(([t,d]) => `<div class="flex items-start gap-4"><div class="w-9 h-9 rounded-lg bg-sage-500/12 text-sage-600 grid place-items-center shrink-0 mt-0.5">${icon('check', 15)}</div><div><div class="type-h3 text-[15px]">${t}</div><p class="type-small muted mt-1 leading-relaxed">${d}</p></div></div>`).join('')}</div>
+          ].map(([t,d]) => `<div class="flex items-start gap-4"><div class="w-9 h-9 rounded-lg bg-brand-500/12 text-brand-600 grid place-items-center shrink-0 mt-0.5">${icon('check', 15)}</div><div><div class="type-h3 text-[15px]">${t}</div><p class="type-small muted mt-1 leading-relaxed">${d}</p></div></div>`).join('')}</div>
           <div class="mt-10"><a href="#/register" class="btn btn-primary">Set up your practice ${icon('arrow-right', 14)}</a></div>
         </div>
         <div>
@@ -1181,7 +1226,7 @@ function Landing() {
             ].map(([name,time,svc,prep,img]) => `<div class="flex items-center gap-3 p-3 rounded-lg surface-2"><img src="${img}" class="w-10 h-10 rounded-full object-cover bg-black/5" alt=""><div class="flex-1 min-w-0"><div class="text-[13.5px] font-semibold truncate">${name}</div><div class="text-[11px] muted mt-0.5 truncate">${svc} · ${time}</div><div class="text-[10px] muted mt-1 flex items-center gap-1">${icon('clipboard-list', 9)}<span class="truncate">${prep}</span></div></div></div>`).join('')}</div>
             <div class="mt-5 pt-5 border-t border-[rgb(var(--border))]">
               <div class="text-[10px] font-bold tracking-[0.12em] uppercase muted mb-3">What your clients ask for</div>
-              <div class="space-y-2.5">${[['Neck',62],['Shoulders',54],['Lower back',38]].map(([label,pct]) => `<div><div class="flex items-center justify-between text-xs mb-1"><span class="font-medium">${label}</span><span class="muted">${pct}%</span></div><div class="h-1 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full" style="width:${pct}%;background:linear-gradient(90deg,#7FA07A,#5F8259)"></div></div></div>`).join('')}</div>
+              <div class="space-y-2.5">${[['Neck',62],['Shoulders',54],['Lower back',38]].map(([label,pct]) => `<div><div class="flex items-center justify-between text-xs mb-1"><span class="font-medium">${label}</span><span class="muted">${pct}%</span></div><div class="h-1 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full" style="width:${pct}%;background:linear-gradient(90deg,#8BC34A,#2E7D32)"></div></div></div>`).join('')}</div>
             </div>
           </div>
         </div>
@@ -1192,13 +1237,13 @@ function Landing() {
       <div class="max-w-6xl mx-auto px-5 sm:px-6 py-24 lg:py-32">
         <div class="grid lg:grid-cols-[1fr_1.4fr] gap-12 lg:gap-20">
           <div>
-            <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-sage-600 mb-4">Between sessions</div>
+            <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-brand-600 mb-4">Between sessions</div>
             <h2 class="type-h1 text-3xl sm:text-4xl lg:text-[52px]">Self-care guides</h2>
             <p class="type-body muted mt-5 leading-relaxed">Short routines for the most common trouble spots. Written by practitioners, three to five minutes each. No account needed.</p>
-            <a href="#/self-care" class="mt-8 inline-flex items-center gap-2 type-small font-semibold text-sage-600 hover:underline">Browse all guides ${icon('arrow-right', 13)}</a>
+            <a href="#/self-care" class="mt-8 inline-flex items-center gap-2 type-small font-semibold text-brand-600 hover:underline">Browse all guides ${icon('arrow-right', 13)}</a>
           </div>
           <div class="grid sm:grid-cols-2 gap-x-10 gap-y-0">
-            ${GUIDE_AREAS.map(id => { const g = GUIDES[id]; return `<a href="#/self-care/${id}" class="group flex items-center justify-between py-4 border-b border-[rgb(var(--border))]"><div class="min-w-0"><div class="font-medium text-[15px] tracking-tight group-hover:text-sage-600 transition">${esc(g.title)}</div><div class="text-xs muted mt-0.5">${esc(g.duration)}</div></div><span class="muted opacity-0 group-hover:opacity-100 transition shrink-0 ml-3">${icon('arrow-right', 15)}</span></a>`; }).join('')}
+            ${GUIDE_AREAS.map(id => { const g = GUIDES[id]; return `<a href="#/self-care/${id}" class="group flex items-center justify-between py-4 border-b border-[rgb(var(--border))]"><div class="min-w-0"><div class="font-medium text-[15px] tracking-tight group-hover:text-brand-600 transition">${esc(g.title)}</div><div class="text-xs muted mt-0.5">${esc(g.duration)}</div></div><span class="muted opacity-0 group-hover:opacity-100 transition shrink-0 ml-3">${icon('arrow-right', 15)}</span></a>`; }).join('')}
           </div>
         </div>
       </div>
@@ -1207,13 +1252,13 @@ function Landing() {
     <section id="faq" class="border-b border-[rgb(var(--border))]">
       <div class="max-w-5xl mx-auto px-5 sm:px-6 py-24 lg:py-32">
         <div class="text-center mb-14">
-          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-sage-600 mb-4">Questions</div>
+          <div class="text-[11px] font-bold tracking-[0.16em] uppercase text-brand-600 mb-4">Questions</div>
           <h2 class="type-h1 text-3xl sm:text-4xl lg:text-[52px]">Common questions</h2>
         </div>
         <div class="grid md:grid-cols-2 gap-x-10 gap-y-0">
           ${[
-            ['What is TheraByte?','A practice management platform for therapists and bodyworkers. Booking, focus-area tracking, session notes, and client history in one place.'],
-            ['Is it a diagnostic tool?','No. TheraByte does not diagnose, prescribe, or replace professional judgment. It organizes and communicates care.'],
+            ['What is therabyte?','A practice management platform for therapists and bodyworkers. Booking, focus-area tracking, session notes, and client history in one place.'],
+            ['Is it a diagnostic tool?','No. therabyte does not diagnose, prescribe, or replace professional judgment. It organizes and communicates care.'],
             ['How does pricing work?','Each service has a base price set by the practitioner. When a client flags focus areas, a small add-on of ₱50 to ₱150 per area is applied. The total updates live before booking.'],
             ['Can clients book more than one session at a time?','One at a time. Once a session completes, they can book again. This keeps the calendar clean and prevents scheduling mistakes.'],
             ['What are focus areas?','During booking, clients tap the areas on a body map that need attention — neck, shoulders, lower back, and so on. Practitioners see this before the session.'],
@@ -1227,16 +1272,16 @@ function Landing() {
 
     <section>
       <div class="max-w-6xl mx-auto px-5 sm:px-6 py-24 lg:py-32">
-        <div class="rounded-3xl overflow-hidden relative" style="background:linear-gradient(145deg, #3B5237 0%, #2E3F2B 100%)">
-          <div class="absolute inset-0 opacity-30" style="background:radial-gradient(circle at 15% 20%, rgba(127,160,122,0.4) 0%, transparent 55%), radial-gradient(circle at 85% 80%, rgba(168,197,214,0.2) 0%, transparent 55%)"></div>
+        <div class="rounded-3xl overflow-hidden relative" style="background:linear-gradient(135deg, #2E7D32 0%, #1B5E20 60%, #0F2A12 100%)">
+          <div class="absolute inset-0 opacity-40" style="background:radial-gradient(circle at 15% 20%, rgba(139,195,74,0.45) 0%, transparent 55%), radial-gradient(circle at 85% 80%, rgba(165,214,167,0.25) 0%, transparent 55%)"></div>
           <div class="relative p-10 sm:p-16 lg:p-20 grid lg:grid-cols-[1.2fr_1fr] gap-10 items-center">
             <div>
               <h2 class="type-h1 text-white text-3xl sm:text-4xl lg:text-[52px] max-w-xl">Set up your practice in five minutes.</h2>
-              <p class="mt-5 text-white/75 type-body-lg leading-relaxed max-w-lg">Add your services, set your hours, share your booking link. Your first client intake takes care of itself.</p>
+              <p class="mt-5 text-white/80 type-body-lg leading-relaxed max-w-lg">Add your services, set your hours, share your booking link. Your first client intake takes care of itself.</p>
             </div>
             <div class="flex flex-col sm:flex-row lg:flex-col lg:items-end gap-3">
-              <a href="#/register" class="btn btn-lg !bg-white !text-ink-700 hover:!bg-white/95 w-full lg:w-auto">Create your account</a>
-              <a href="#/login" class="btn btn-lg !bg-transparent !text-white !border !border-white/25 hover:!bg-white/10 w-full lg:w-auto">See a live demo</a>
+              <a href="#/register" class="btn btn-lg !bg-white !text-brand-700 hover:!bg-white/95 w-full lg:w-auto shadow-lift">Create your account</a>
+              <a href="#/login" class="btn btn-lg !bg-transparent !text-white !border !border-white/30 hover:!bg-white/10 w-full lg:w-auto">See a live demo</a>
             </div>
           </div>
         </div>
@@ -1246,13 +1291,13 @@ function Landing() {
     <footer class="border-t border-[rgb(var(--border))]">
       <div class="max-w-6xl mx-auto px-5 sm:px-6 py-14">
         <div class="grid sm:grid-cols-2 md:grid-cols-[1.5fr_1fr_1fr_1fr] gap-10 mb-12">
-          <div>${LogoMark()}<p class="type-small muted mt-4 leading-relaxed max-w-xs">Booking and intake for massage therapists, physiotherapists, and bodyworkers.</p></div>
+          <div>${LogoMark()}<p class="type-small muted mt-4 leading-relaxed max-w-xs">Booking and intake for massage therapists, physiotherapists, and bodyworkers.</p><p class="text-xs mt-3 italic font-medium text-brand-600 dark:text-brand-300">Heal with care, grow with nature.</p></div>
           <div><div class="text-[11px] font-bold tracking-[0.14em] uppercase muted mb-4">Product</div><ul class="space-y-2.5 type-small"><li><a href="#how" class="muted hover:text-[rgb(var(--fg))] transition">How it works</a></li><li><a href="#practitioners" class="muted hover:text-[rgb(var(--fg))] transition">For practitioners</a></li><li><a href="#self-care" class="muted hover:text-[rgb(var(--fg))] transition">Self-care guides</a></li><li><a href="#faq" class="muted hover:text-[rgb(var(--fg))] transition">FAQ</a></li></ul></div>
           <div><div class="text-[11px] font-bold tracking-[0.14em] uppercase muted mb-4">Company</div><ul class="space-y-2.5 type-small"><li><a href="#/about" class="muted hover:text-[rgb(var(--fg))] transition">About</a></li><li><a href="#/help" class="muted hover:text-[rgb(var(--fg))] transition">Help Center</a></li><li><a href="#/privacy" class="muted hover:text-[rgb(var(--fg))] transition">Privacy</a></li><li><a href="#/terms" class="muted hover:text-[rgb(var(--fg))] transition">Terms</a></li></ul></div>
           <div><div class="text-[11px] font-bold tracking-[0.14em] uppercase muted mb-4">Contact</div><ul class="space-y-2.5 type-small"><li><a href="mailto:hello@therabyte.example" class="muted hover:text-[rgb(var(--fg))] transition">hello@therabyte.example</a></li><li><a href="mailto:privacy@therabyte.example" class="muted hover:text-[rgb(var(--fg))] transition">privacy@therabyte.example</a></li></ul></div>
         </div>
         <div class="pt-8 border-t border-[rgb(var(--border))] flex flex-wrap items-center justify-between gap-4 text-xs muted">
-          <span>© ${new Date().getFullYear()} TheraByte · Crafted by ${GroupCreditLine()}</span>
+          <span>© ${new Date().getFullYear()} therabyte · Crafted by ${GroupCreditLine()}</span>
           <div class="flex items-center gap-5">
             <a href="#/privacy" class="hover:text-[rgb(var(--fg))] transition">Privacy</a>
             <a href="#/terms" class="hover:text-[rgb(var(--fg))] transition">Terms</a>
@@ -1272,20 +1317,35 @@ function AuthLayout(children) {
   <div class="min-h-screen grid lg:grid-cols-2">
     <div class="hidden lg:flex flex-col justify-between p-10 auth-panel text-white relative">
       <div class="relative z-10">
-        <a href="#/" class="flex items-center gap-2.5">
-          <div class="shrink-0 grid place-items-center rounded-xl bg-white/15 backdrop-blur" style="width:40px;height:40px">
-            <svg viewBox="0 0 24 24" width="22" height="22" fill="none"><circle cx="12" cy="8" r="3" fill="white"/><path d="M5 20c0-3.5 3-6 7-6s7 2.5 7 6" stroke="white" stroke-width="2.2" stroke-linecap="round"/></svg>
+        <a href="#/" class="flex items-center gap-3">
+          <div class="shrink-0 rounded-xl bg-white/15 backdrop-blur grid place-items-center" style="width:44px;height:44px">
+            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" width="32" height="32" aria-hidden="true">
+              <defs>
+                <linearGradient id="tbAuthGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#1B5E20"/>
+                  <stop offset="50%" stop-color="#4CAF50"/>
+                  <stop offset="100%" stop-color="#8BC34A"/>
+                </linearGradient>
+              </defs>
+              <circle cx="50" cy="50" r="45" fill="none" stroke="url(#tbAuthGrad)" stroke-width="3.5"/>
+              <circle cx="50" cy="31" r="9.5" fill="url(#tbAuthGrad)"/>
+              <path d="M 32 62 C 32 46 40 42 50 42 C 60 42 68 46 68 62 L 68 73 L 32 73 Z" fill="url(#tbAuthGrad)"/>
+              <path d="M 20 76 C 18 70 22 63 30 63 L 36 67 L 42 65 L 46 69 L 44 76 C 38 80 26 80 20 76 Z" fill="url(#tbAuthGrad)"/>
+              <path d="M 80 76 C 82 70 78 63 70 63 L 64 67 L 58 65 L 54 69 L 56 76 C 62 80 74 80 80 76 Z" fill="url(#tbAuthGrad)"/>
+              <path d="M 82 30 Q 92 20 102 28 Q 100 42 88 42 Q 80 38 82 30 Z" fill="#A3E635"/>
+            </svg>
           </div>
-          <span class="font-display font-bold text-xl tracking-tight">TheraByte</span>
+          <span class="font-display font-bold text-xl tracking-[-0.04em] lowercase">therabyte</span>
         </a>
       </div>
       <div class="relative z-10 max-w-md">
         <div class="type-display text-4xl xl:text-5xl text-white">Know before<br>they arrive.</div>
-        <p class="mt-5 text-white/75 type-body-lg leading-relaxed">A booking tool that tells you what your clients actually need — before the session starts.</p>
+        <p class="mt-5 text-white/80 type-body-lg leading-relaxed">A booking tool that tells you what your clients actually need — before the session starts.</p>
+        <p class="mt-6 text-white/65 text-sm italic">Heal with care, grow with nature.</p>
       </div>
-      <div class="relative z-10 text-xs text-white/60 flex items-center justify-between">
-        <span>© ${new Date().getFullYear()} TheraByte</span>
-        <a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-white/80 hover:text-white transition font-semibold">${icon('zap', 11)} ${esc(CREDIT.name)}</a>
+      <div class="relative z-10 text-xs text-white/65 flex items-center justify-between">
+        <span>© ${new Date().getFullYear()} therabyte</span>
+        <a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-white/85 hover:text-white transition font-semibold">${icon('zap', 11)} ${esc(CREDIT.name)}</a>
       </div>
     </div>
     <div class="flex flex-col relative overflow-hidden">
@@ -1300,35 +1360,35 @@ function AuthLayout(children) {
 }
 function LoginPage() {
   return AuthLayout(`
-    <div class="mb-8"><h1 class="type-h1 text-3xl">Welcome back</h1><p class="type-small muted mt-2">Log in to continue with TheraByte.</p></div>
+    <div class="mb-8"><h1 class="type-h1 text-3xl">Welcome back</h1><p class="type-small muted mt-2">Log in to continue with therabyte.</p></div>
     <div class="mb-6">
       <div class="text-[11px] font-bold uppercase tracking-wider muted mb-3">Try a demo</div>
-      <div class="space-y-2">${[['p1','Sarah Chen','Practitioner'],['c1','Alex Rivera','Client']].map(([id,name,role]) => `<button type="button" onclick="demoLogin('${id}')" class="w-full flex items-center gap-3 p-3 rounded-xl border border-[rgb(var(--border))] hover:border-[rgb(var(--border-strong))] hover:bg-[rgb(var(--surface-2))] transition text-left">${avatar(getUser(id), 38)}<div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${name}</div><div class="text-xs muted">${role}</div></div>${icon('chevron-right', 15, 'muted')}</button>`).join('')}</div>
+      <div class="space-y-2">${[['p1','Sarah Chen','Practitioner'],['c1','Alex Rivera','Client']].map(([id,name,role]) => `<button type="button" onclick="demoLogin('${id}')" class="w-full flex items-center gap-3 p-3 rounded-xl border border-[rgb(var(--border))] hover:border-brand-500/40 hover:bg-brand-500/5 transition text-left">${avatar(getUser(id), 38)}<div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${name}</div><div class="text-xs muted">${role}</div></div>${icon('chevron-right', 15, 'muted')}</button>`).join('')}</div>
     </div>
     <div class="my-6 relative"><div class="divider"></div><div class="absolute inset-0 flex justify-center -top-2.5"><span class="bg-[rgb(var(--bg))] px-3 text-xs muted">or use your email</span></div></div>
     <form onsubmit="event.preventDefault();handleLogin(this)" class="space-y-4">
       <div><label class="type-small font-medium mb-1.5 block">Email</label><input type="email" name="email" required class="input" placeholder="you@example.com" autocomplete="email"></div>
-      <div><div class="flex items-center justify-between mb-1.5"><label class="type-small font-medium">Password</label><a href="#/forgot" class="text-xs text-sage-600 hover:underline font-medium">Forgot?</a></div><input type="password" name="password" required class="input" placeholder="••••••••" autocomplete="current-password"></div>
+      <div><div class="flex items-center justify-between mb-1.5"><label class="type-small font-medium">Password</label><a href="#/forgot" class="text-xs text-brand-600 hover:underline font-medium">Forgot?</a></div><input type="password" name="password" required class="input" placeholder="••••••••" autocomplete="current-password"></div>
       <button type="submit" class="btn btn-lg btn-primary w-full">Log in</button>
     </form>
-    <p class="mt-6 text-center type-small muted">New to TheraByte? <a href="#/register" class="text-sage-600 font-semibold hover:underline">Create an account</a></p>
+    <p class="mt-6 text-center type-small muted">New to therabyte? <a href="#/register" class="text-brand-600 font-semibold hover:underline">Create an account</a></p>
   `);
 }
 function RegisterPage() {
   return AuthLayout(`
-    <div class="mb-8"><h1 class="type-h1 text-3xl">Create your account</h1><p class="type-small muted mt-2">Choose how you want to use TheraByte.</p></div>
+    <div class="mb-8"><h1 class="type-h1 text-3xl">Create your account</h1><p class="type-small muted mt-2">Choose how you want to use therabyte.</p></div>
     <form onsubmit="event.preventDefault();handleRegister(this)" class="space-y-4">
       <div class="grid grid-cols-2 gap-2">
-        <label class="cursor-pointer"><input type="radio" name="role" value="practitioner" class="peer hidden" checked><div class="p-4 rounded-xl border border-[rgb(var(--border))] peer-checked:border-[rgb(var(--fg))] peer-checked:bg-[rgb(var(--surface-2))] transition"><div class="w-9 h-9 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center mb-2.5">${icon('stethoscope', 16)}</div><div class="type-small font-semibold">Practitioner</div><div class="text-xs muted mt-0.5">Manage my practice</div></div></label>
-        <label class="cursor-pointer"><input type="radio" name="role" value="client" class="peer hidden"><div class="p-4 rounded-xl border border-[rgb(var(--border))] peer-checked:border-[rgb(var(--fg))] peer-checked:bg-[rgb(var(--surface-2))] transition"><div class="w-9 h-9 rounded-lg bg-[rgb(var(--surface-2))] text-sky2-700 grid place-items-center mb-2.5">${icon('user', 16)}</div><div class="type-small font-semibold">Client</div><div class="text-xs muted mt-0.5">Book appointments</div></div></label>
+        <label class="cursor-pointer"><input type="radio" name="role" value="practitioner" class="peer hidden" checked><div class="p-4 rounded-xl border border-[rgb(var(--border))] peer-checked:border-brand-500 peer-checked:bg-brand-500/5 transition"><div class="w-9 h-9 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center mb-2.5">${icon('stethoscope', 16)}</div><div class="type-small font-semibold">Practitioner</div><div class="text-xs muted mt-0.5">Manage my practice</div></div></label>
+        <label class="cursor-pointer"><input type="radio" name="role" value="client" class="peer hidden"><div class="p-4 rounded-xl border border-[rgb(var(--border))] peer-checked:border-brand-500 peer-checked:bg-brand-500/5 transition"><div class="w-9 h-9 rounded-lg bg-sky2-500/10 text-sky2-700 grid place-items-center mb-2.5">${icon('user', 16)}</div><div class="type-small font-semibold">Client</div><div class="text-xs muted mt-0.5">Book appointments</div></div></label>
       </div>
       <div><label class="type-small font-medium mb-1.5 block">Full name</label><input type="text" name="name" required class="input" placeholder="Jane Doe" autocomplete="name"></div>
       <div><label class="type-small font-medium mb-1.5 block">Email</label><input type="email" name="email" required class="input" placeholder="you@example.com" autocomplete="email"></div>
       <div><label class="type-small font-medium mb-1.5 block">Password</label><input type="password" name="password" required minlength="8" class="input" placeholder="At least 8 characters" autocomplete="new-password" oninput="updatePwStrength(this.value)"><div class="flex gap-1 mt-2">${[1,2,3].map(i => `<div id="pw-seg-${i}" class="flex-1 h-0.5 rounded-full bg-[rgb(var(--border))] transition-colors"></div>`).join('')}</div><div class="help-text" id="pw-label">${icon('info',11)} Use 8+ characters with letters and numbers.</div></div>
       <button type="submit" class="btn btn-lg btn-primary w-full">Create account</button>
-      <p class="text-xs muted text-center leading-relaxed">By creating an account you agree to our <a href="#/terms" class="text-sage-600 hover:underline">Terms</a> and <a href="#/privacy" class="text-sage-600 hover:underline">Privacy Policy</a>.</p>
+      <p class="text-xs muted text-center leading-relaxed">By creating an account you agree to our <a href="#/terms" class="text-brand-600 hover:underline">Terms</a> and <a href="#/privacy" class="text-brand-600 hover:underline">Privacy Policy</a>.</p>
     </form>
-    <p class="mt-6 text-center type-small muted">Already have an account? <a href="#/login" class="text-sage-600 font-semibold hover:underline">Log in</a></p>
+    <p class="mt-6 text-center type-small muted">Already have an account? <a href="#/login" class="text-brand-600 font-semibold hover:underline">Log in</a></p>
   `);
 }
 function updatePwStrength(val) {
@@ -1338,7 +1398,7 @@ function updatePwStrength(val) {
   if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
   if (/\d/.test(val) || /[^A-Za-z0-9]/.test(val)) score++;
   score = Math.min(3, score);
-  const colors = ['#DC2626','#A16207','#5F8259'];
+  const colors = ['#DC2626','#A16207','#2E7D32'];
   segs.forEach((s, i) => { if (s) s.style.background = i < score ? colors[score - 1] : 'rgb(var(--border))'; });
   const label = document.getElementById('pw-label');
   if (label) {
@@ -1351,7 +1411,7 @@ function ForgotPage() {
   return AuthLayout(`
     <div class="mb-8"><h1 class="type-h1 text-3xl">Reset password</h1><p class="type-small muted mt-2">We'll send you a reset link.</p></div>
     <form onsubmit="event.preventDefault();toast('Reset link sent to your email');navigate('/login')" class="space-y-4"><div><label class="type-small font-medium mb-1.5 block">Email</label><input type="email" required class="input" placeholder="you@example.com" autocomplete="email"></div><button type="submit" class="btn btn-lg btn-primary w-full">Send reset link</button></form>
-    <p class="mt-6 text-center type-small muted"><a href="#/login" class="text-sage-600 font-semibold hover:underline">Back to log in</a></p>
+    <p class="mt-6 text-center type-small muted"><a href="#/login" class="text-brand-600 font-semibold hover:underline">Back to log in</a></p>
   `);
 }
 function resetBookingFlow() {
@@ -1390,14 +1450,14 @@ function OnboardingPage() {
     if (onboardStep === 0) return `<div class="space-y-4"><div><label class="type-small font-medium mb-1.5 block">Professional title</label><input id="onb-title" class="input" placeholder="e.g., Licensed Massage Therapist"></div><div><label class="type-small font-medium mb-1.5 block">Short bio</label><textarea id="onb-bio" class="input" rows="3" placeholder="Tell clients about your approach."></textarea></div><div><label class="type-small font-medium mb-1.5 block">Where do you practice?</label><input id="onb-loc" class="input" placeholder="City or studio name"></div></div>`;
     if (onboardStep === 1) return `<div class="space-y-4"><div class="type-small muted">Add your first service.</div><div><label class="type-small font-medium mb-1.5 block">Service name</label><input id="onb-svc-name" class="input" placeholder="e.g., Relaxation Massage"></div><div class="grid grid-cols-2 gap-3"><div><label class="type-small font-medium mb-1.5 block">Duration (minutes)</label><input id="onb-svc-dur" type="number" class="input" value="60"></div><div><label class="type-small font-medium mb-1.5 block">Base price (₱)</label><input id="onb-svc-price" type="number" class="input" value="1200"></div></div></div>`;
     if (onboardStep === 2) return `<div class="space-y-3"><div class="type-small muted">Set your working hours.</div>${AVAILABILITY.map((d,i) => `<div class="flex items-center gap-3 p-3 surface-2 rounded-xl flex-wrap"><label class="flex items-center gap-2 flex-1 min-w-[120px]"><input type="checkbox" ${d.enabled?'checked':''} onchange="toggleDay(${i},this.checked)" class="rounded"><span class="type-small font-medium">${d.day}</span></label><input type="time" value="${d.start}" class="input !h-9 !w-28 !text-sm" onchange="AVAILABILITY[${i}].start=this.value;saveAll()"><span class="muted type-small">to</span><input type="time" value="${d.end}" class="input !h-9 !w-28 !text-sm" onchange="AVAILABILITY[${i}].end=this.value;saveAll()"></div>`).join('')}</div>`;
-    return `<div class="text-center py-6"><div class="w-14 h-14 rounded-full bg-sage-500 text-white grid place-items-center mx-auto mb-4 animate-pop">${icon('check', 28)}</div><h3 class="type-h2 text-2xl">You're all set</h3><p class="type-small muted mt-2 max-w-sm mx-auto">Share your booking link with clients. They'll mark their focus areas before they arrive.</p><button onclick="finishOnboard()" class="btn btn-lg btn-primary mt-6">Go to dashboard</button></div>`;
+    return `<div class="text-center py-6"><div class="w-14 h-14 rounded-full grid place-items-center mx-auto mb-4 animate-pop" style="background:linear-gradient(135deg,#4CAF50,#2E7D32);color:white">${icon('check', 28)}</div><h3 class="type-h2 text-2xl">You're all set</h3><p class="type-small muted mt-2 max-w-sm mx-auto">Share your booking link with clients. They'll mark their focus areas before they arrive.</p><button onclick="finishOnboard()" class="btn btn-lg btn-primary mt-6">Go to dashboard</button></div>`;
   }
   return `
   <div class="min-h-screen flex flex-col">
     <header class="border-b border-[rgb(var(--border))]"><div class="max-w-2xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">${LogoMark(true)}<div class="flex items-center gap-2">${GroupCreditBadge()}<div data-theme-toggle></div></div></div></header>
     <div class="max-w-2xl w-full mx-auto px-4 sm:px-6 py-10 flex-1">
       <div class="mb-6"><div class="section-eyebrow mb-1">Step ${onboardStep+1} of ${steps.length}</div><h1 class="type-h2 text-2xl sm:text-3xl">${steps[onboardStep][0]}</h1><p class="type-small muted mt-1">${steps[onboardStep][1]}</p></div>
-      <div class="flex items-center gap-1.5 mb-6">${steps.map((_,i) => `<div class="flex-1 h-1 rounded-full ${i<=onboardStep?'bg-[rgb(var(--fg))]':'bg-[rgb(var(--border))]'} transition-colors"></div>`).join('')}</div>
+      <div class="flex items-center gap-1.5 mb-6">${steps.map((_,i) => `<div class="flex-1 h-1 rounded-full ${i<=onboardStep?'bg-brand-600':'bg-[rgb(var(--border))]'} transition-colors"></div>`).join('')}</div>
       <div class="card p-5 sm:p-8 animate-fadeUp">${body()}</div>
       <div class="flex items-center justify-between mt-6 gap-3"><button onclick="prevOnboard()" class="btn btn-outline" ${onboardStep===0?'disabled':''}>Back</button>${onboardStep < steps.length - 1 ? `<button onclick="nextOnboard()" class="btn btn-primary">Continue ${icon('arrow-right', 13)}</button>` : ''}</div>
     </div>
@@ -1412,7 +1472,7 @@ function nextOnboard() {
   onboardStep++; render();
 }
 function prevOnboard() { if (onboardStep > 0) { onboardStep--; render(); } }
-function finishOnboard() { toast('Welcome to TheraByte'); onboardStep = 0; navigate('/app/dashboard'); }
+function finishOnboard() { toast('Welcome to therabyte'); onboardStep = 0; navigate('/app/dashboard'); }
 
 /* ============================================================
    APP SHELL
@@ -1450,7 +1510,7 @@ function AppShell(page) {
       <nav class="flex-1 overflow-y-auto px-2.5 py-4 space-y-0.5 no-scrollbar">
         ${nav.map(n => {
           const active = path === 'app/' + n.route || path.startsWith('app/' + n.route + '/');
-          return `<a href="#/app/${n.route}" class="nav-item ${active?'active':''}">${icon(n.icon, 16)}<span>${n.label}</span>${n.route === 'messages' && unreadMsgs ? `<span class="ml-auto text-[10px] font-bold text-white bg-sage-500 rounded-full px-1.5 py-0.5 min-w-[18px] text-center">${unreadMsgs}</span>` : ''}</a>`;
+          return `<a href="#/app/${n.route}" class="nav-item ${active?'active':''}">${icon(n.icon, 16)}<span>${n.label}</span>${n.route === 'messages' && unreadMsgs ? `<span class="ml-auto text-[10px] font-bold text-white rounded-full px-1.5 py-0.5 min-w-[18px] text-center" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${unreadMsgs}</span>` : ''}</a>`;
         }).join('')}
         <div class="divider my-3"></div>
         <a href="#/help" class="nav-item">${icon('help-circle', 16)}<span>Help Center</span></a>
@@ -1461,7 +1521,7 @@ function AppShell(page) {
           ${avatar(u, 32)}
           <div class="min-w-0 flex-1">
             <div class="text-[13px] font-semibold truncate">${esc(u.name)}</div>
-            <div class="text-[11px] muted truncate flex items-center gap-1.5">${roleLabel}${u.verified ? `<span class="text-sage-600">· ${icon('badge-check', 9)}</span>` : ''}</div>
+            <div class="text-[11px] muted truncate flex items-center gap-1.5">${roleLabel}${u.verified ? `<span class="text-brand-600">· ${icon('badge-check', 9)}</span>` : ''}</div>
           </div>
         </button>
         <button onclick="logout()" class="w-full mt-1 flex items-center gap-2.5 p-2 rounded-lg hover:bg-[rgb(var(--surface-2))] transition text-left muted hover:text-[rgb(var(--fg))]">
@@ -1478,7 +1538,7 @@ function AppShell(page) {
             <div class="lg:hidden">${GroupCreditBadge()}</div>
             <div data-theme-toggle class="hidden sm:block"></div>
             <a href="#/app/notifications" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Notifications">${icon('bell', 17)}${unreadNotifs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose2-500"></span>' : ''}</a>
-            <a href="#/app/messages" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Messages">${icon('message-circle', 17)}${unreadMsgs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-sage-500"></span>' : ''}</a>
+            <a href="#/app/messages" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Messages">${icon('message-circle', 17)}${unreadMsgs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style="background:#4CAF50"></span>' : ''}</a>
           </div>
         </div>
       </header>
@@ -1501,9 +1561,9 @@ function mobileNavItems(u, path) {
       { route:'/app/settings', label:'Account', icon:'settings' },
     ];
     return items.map(i => {
-      if (i.primary) { const bg = i.locked ? 'bg-ink-700' : 'bg-sage-600'; return `<a href="#${i.route}" class="grid place-items-center"><span class="rounded-2xl ${bg} text-white grid place-items-center -mt-5 shadow-lift" style="width:52px;height:52px">${icon(i.icon, 22)}</span></a>`; }
+      if (i.primary) { const bg = i.locked ? 'bg-ink-700' : ''; const style = i.locked ? '' : 'background:linear-gradient(135deg,#4CAF50,#2E7D32)'; return `<a href="#${i.route}" class="grid place-items-center"><span class="rounded-2xl ${bg} text-white grid place-items-center -mt-5 shadow-lift" style="width:52px;height:52px;${style}">${icon(i.icon, 22)}</span></a>`; }
       const active = '/' + path === i.route || path.startsWith(i.route + '/');
-      return `<a href="#${i.route}" class="flex flex-col items-center justify-center gap-0.5 text-[10px] font-semibold ${active?'text-sage-600':'muted'}">${icon(i.icon, 20)}<span>${i.label}</span></a>`;
+      return `<a href="#${i.route}" class="flex flex-col items-center justify-center gap-0.5 text-[10px] font-semibold ${active?'text-brand-600':'muted'}">${icon(i.icon, 20)}<span>${i.label}</span></a>`;
     }).join('');
   }
   const items = [
@@ -1515,7 +1575,7 @@ function mobileNavItems(u, path) {
   ];
   return items.map(i => {
     const active = '/' + path === i.route || path.startsWith(i.route + '/');
-    return `<a href="#${i.route}" class="flex flex-col items-center justify-center gap-0.5 text-[10px] font-semibold ${active?'text-sage-600':'muted'}">${icon(i.icon, 20)}<span>${i.label}</span></a>`;
+    return `<a href="#${i.route}" class="flex flex-col items-center justify-center gap-0.5 text-[10px] font-semibold ${active?'text-brand-600':'muted'}">${icon(i.icon, 20)}<span>${i.label}</span></a>`;
   }).join('');
 }
 
@@ -1572,25 +1632,25 @@ function PageDashboard() {
                 <div class="type-small font-semibold truncate">${esc(c.name)}</div>
                 <div class="text-xs muted mt-0.5 truncate">${esc(s?.name || '')} · ${a.duration} min</div>
                 <div class="text-[11px] muted mt-1.5 flex items-center gap-1.5">${icon('clipboard-list', 10)}<span class="truncate">${esc(prep)}</span></div>
-                ${areas.length ? `<div class="flex flex-wrap gap-1 mt-2">${areas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-sage-500/12 text-sage-700 dark:text-sage-300 font-medium">${esc(x.label)}</span>`).join('')}</div>` : ''}
+                ${areas.length ? `<div class="flex flex-wrap gap-1 mt-2">${areas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-brand-500/12 text-brand-700 dark:text-brand-300 font-medium">${esc(x.label)}</span>`).join('')}</div>` : ''}
               </div>
               ${icon('chevron-right', 15, 'muted shrink-0 mt-2.5')}
             </div></div>`;
           }).join('')}
         </div>
-      ` : `<div class="card py-12 text-center"><div class="w-11 h-11 rounded-lg bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))] grid place-items-center mx-auto mb-3">${icon('coffee', 20)}</div><div class="type-small font-medium">No appointments today</div><div class="text-xs muted mt-1">Enjoy the quiet.</div></div>`}
+      ` : `<div class="card py-12 text-center"><div class="w-11 h-11 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center mx-auto mb-3">${icon('coffee', 20)}</div><div class="type-small font-medium">No appointments today</div><div class="text-xs muted mt-1">Enjoy the quiet.</div></div>`}
     </div>
 
     ${areaRanked.length ? `
       <div class="card p-6 mb-8">
-        <div class="flex items-center justify-between mb-5 flex-wrap gap-2"><div><div class="type-h3 text-[15px]">What your clients ask for</div><div class="text-xs muted mt-0.5">Across your last ${recent.length} sessions</div></div><a href="#/app/reports" class="text-xs font-semibold text-sage-600 hover:underline flex items-center gap-1">Full report ${icon('arrow-right', 12)}</a></div>
-        <div class="space-y-4">${areaRanked.map(([k, v]) => { const area = getArea(k); if (!area) return ''; return `<div><div class="flex items-center justify-between mb-1.5 type-small"><span class="font-medium">${esc(area.label)}</span><span class="muted text-xs">${v} session${v > 1 ? 's' : ''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full" style="width:${(v/maxCount)*100}%;background:linear-gradient(90deg,#7FA07A,#5F8259)"></div></div></div>`; }).join('')}</div>
+        <div class="flex items-center justify-between mb-5 flex-wrap gap-2"><div><div class="type-h3 text-[15px]">What your clients ask for</div><div class="text-xs muted mt-0.5">Across your last ${recent.length} sessions</div></div><a href="#/app/reports" class="text-xs font-semibold text-brand-600 hover:underline flex items-center gap-1">Full report ${icon('arrow-right', 12)}</a></div>
+        <div class="space-y-4">${areaRanked.map(([k, v]) => { const area = getArea(k); if (!area) return ''; return `<div><div class="flex items-center justify-between mb-1.5 type-small"><span class="font-medium">${esc(area.label)}</span><span class="muted text-xs">${v} session${v > 1 ? 's' : ''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full" style="width:${(v/maxCount)*100}%;background:linear-gradient(90deg,#8BC34A,#2E7D32)"></div></div></div>`; }).join('')}</div>
       </div>
     ` : ''}
 
     ${upcoming.length ? `
       <div>
-        ${SectionHeader({ title:'Coming up', action: `<a href="#/app/appointments" class="text-xs font-semibold text-sage-600 hover:underline flex items-center gap-1">See all ${icon('arrow-right', 12)}</a>` })}
+        ${SectionHeader({ title:'Coming up', action: `<a href="#/app/appointments" class="text-xs font-semibold text-brand-600 hover:underline flex items-center gap-1">See all ${icon('arrow-right', 12)}</a>` })}
         <div class="list-container">
           ${upcoming.map(a => { const c = getUser(a.client); const s = getService(a.service); return `<div class="list-row" onclick="navigate('/app/appointments/${a.id}')"><div class="flex items-center gap-3">${avatar(c, 34)}<div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${esc(c.name)}</div><div class="text-xs muted truncate mt-0.5">${esc(s?.name || '')} · ${fmtDateTime(a.start)}</div></div>${icon('chevron-right', 14, 'muted shrink-0')}</div></div>`; }).join('')}
         </div>
@@ -1620,14 +1680,14 @@ function PageClientDashboard() {
     ${next ? (() => {
       const pr = getUser(next.practitioner); const s = getService(next.service);
       const areas = (next.areas || []).map(x => getArea(x)?.label).filter(Boolean);
-      return `<div class="card p-6 border-l-4 !border-l-sage-500 mb-8">
+      return `<div class="card p-6 border-l-4 !border-l-brand-500 mb-8">
         <div class="flex flex-wrap items-center gap-4">
-          <div class="w-12 h-12 rounded-xl bg-sage-500 text-white grid place-items-center shrink-0">${icon('calendar-check', 22)}</div>
+          <div class="w-12 h-12 rounded-xl grid place-items-center shrink-0 text-white" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${icon('calendar-check', 22)}</div>
           <div class="flex-1 min-w-0">
-            <div class="text-[11px] font-bold tracking-widest uppercase text-sage-600">Your next session</div>
+            <div class="text-[11px] font-bold tracking-widest uppercase text-brand-600">Your next session</div>
             <div class="type-h3 text-[17px] mt-1 truncate">${esc(pr.name)}</div>
             <div class="type-small muted mt-0.5">${esc(s?.name || '')} · ${next.duration} min</div>
-            ${areas.length ? `<div class="flex flex-wrap gap-1 mt-2">${areas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-sage-500/12 text-sage-700 dark:text-sage-300 font-medium">${x}</span>`).join('')}</div>` : ''}
+            ${areas.length ? `<div class="flex flex-wrap gap-1 mt-2">${areas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-brand-500/12 text-brand-700 dark:text-brand-300 font-medium">${x}</span>`).join('')}</div>` : ''}
           </div>
           <div class="text-left sm:text-right"><div class="font-display font-bold">${fmtDate(next.start)}</div><div class="type-small muted">${fmtTime(next.start)}</div></div>
         </div>
@@ -1641,7 +1701,7 @@ function PageClientDashboard() {
       const maxCount = Math.max(...completed.map(a => (a.areas || []).length), 1);
       return `<div class="card p-6 mt-8">
         <div class="flex items-start justify-between mb-6 flex-wrap gap-2"><div><div class="type-h3 text-[15px]">Your care progress</div><div class="text-xs muted mt-0.5">Focus areas worked on per session, over your last ${completed.length} sessions</div></div><div class="text-xs muted">${allAreasWorked.size} unique areas</div></div>
-        <div class="relative"><div class="flex items-end justify-between gap-2 h-40 pb-8 relative"><div class="absolute bottom-8 left-0 right-0 h-px bg-[rgb(var(--border))]"></div>${completed.map((a) => { const count = (a.areas || []).length; const height = (count / maxCount) * 100; const date = new Date(a.start); return `<div class="flex-1 flex flex-col items-center justify-end h-full relative z-10" title="${count} areas: ${(a.areas||[]).map(x => getArea(x)?.label).filter(Boolean).join(', ')}"><div class="text-[10px] font-semibold muted mb-1.5">${count}</div><div class="w-full max-w-[36px] rounded-t-md chart-bar" style="height:${Math.max(height, 5)}%;background:linear-gradient(180deg,#7FA07A,#5F8259);min-height:8px"></div><div class="absolute bottom-0 text-[10px] muted whitespace-nowrap" style="font-size:9px">${fmtDate(date, {month:'short', day:'numeric'})}</div></div>`; }).join('')}</div></div>
+        <div class="relative"><div class="flex items-end justify-between gap-2 h-40 pb-8 relative"><div class="absolute bottom-8 left-0 right-0 h-px bg-[rgb(var(--border))]"></div>${completed.map((a) => { const count = (a.areas || []).length; const height = (count / maxCount) * 100; const date = new Date(a.start); return `<div class="flex-1 flex flex-col items-center justify-end h-full relative z-10" title="${count} areas: ${(a.areas||[]).map(x => getArea(x)?.label).filter(Boolean).join(', ')}"><div class="text-[10px] font-semibold muted mb-1.5">${count}</div><div class="w-full max-w-[36px] rounded-t-md chart-bar" style="height:${Math.max(height, 5)}%;background:linear-gradient(180deg,#8BC34A,#2E7D32);min-height:8px"></div><div class="absolute bottom-0 text-[10px] muted whitespace-nowrap" style="font-size:9px">${fmtDate(date, {month:'short', day:'numeric'})}</div></div>`; }).join('')}</div></div>
         ${(() => {
           const earliest = completed.slice(0, Math.ceil(completed.length/2));
           const latest = completed.slice(Math.ceil(completed.length/2));
@@ -1651,13 +1711,13 @@ function PageClientDashboard() {
           const improvements = [];
           Object.keys(earlyAreas).forEach(k => { const before = earlyAreas[k] || 0; const after = lateAreas[k] || 0; if (before > 0 && after < before) improvements.push({ area: getArea(k)?.label, before, after }); });
           if (!improvements.length) return '';
-          return `<div class="mt-4 pt-4 border-t border-dashed border-[rgb(var(--border))] flex items-start gap-2.5"><div class="w-7 h-7 rounded-lg bg-sage-500/15 text-sage-600 grid place-items-center shrink-0">${icon('trending-down', 13)}</div><div class="text-xs leading-relaxed"><span class="font-semibold text-[rgb(var(--fg))]">Progress note.</span><span class="muted"> ${improvements.slice(0,2).map(i => `${i.area} came up in ${i.before} of your earlier sessions but only ${i.after} recently`).join('. ')}. Keep it up.</span></div></div>`;
+          return `<div class="mt-4 pt-4 border-t border-dashed border-[rgb(var(--border))] flex items-start gap-2.5"><div class="w-7 h-7 rounded-lg bg-brand-500/15 text-brand-600 grid place-items-center shrink-0">${icon('trending-down', 13)}</div><div class="text-xs leading-relaxed"><span class="font-semibold text-[rgb(var(--fg))]">Progress note.</span><span class="muted"> ${improvements.slice(0,2).map(i => `${i.area} came up in ${i.before} of your earlier sessions but only ${i.after} recently`).join('. ')}. Keep it up.</span></div></div>`;
         })()}
       </div>`;
     })() : ''}
 
     <a href="#/app/self-care" class="card card-hover p-5 flex items-center gap-4 mt-8">
-      <div class="w-11 h-11 rounded-xl bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('hand-heart', 20)}</div>
+      <div class="w-11 h-11 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('hand-heart', 20)}</div>
       <div class="flex-1 min-w-0"><div class="type-h3 text-[14px]">Between sessions</div><div class="text-xs muted mt-0.5">Short routines for neck, shoulders, lower back, and more.</div></div>
       ${icon('arrow-right', 14, 'muted')}
     </a>
@@ -1681,7 +1741,7 @@ function PageCalendar() {
   return `
   <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6">
     ${PageHeader({ title:'Calendar', description: fmtDate(date, {month:'long', year:'numeric'}), action: `
-      <input type="date" value="${new Date(date).toISOString().slice(0,10)}" onchange="jumpToDate(this.value)" class="input !h-9 !w-[140px] !text-sm">
+      <input type="date" value="${toDateInputValue(date)}" onchange="jumpToDate(this.value)" class="input !h-9 !w-[140px] !text-sm">
       <div class="flex items-center gap-0.5 p-0.5 surface rounded-lg">${['day','week','month'].map(v => `<button onclick="set({calendarView:'${v}'})" class="tab capitalize ${view===v?'active':''}">${v}</button>`).join('')}</div>
       <button onclick="shiftCalendar(-1)" class="btn btn-sm btn-outline !px-2" aria-label="Previous">${icon('chevron-left', 15)}</button>
       <button onclick="set({calendarDate:new Date()})" class="btn btn-sm btn-outline">Today</button>
@@ -1703,7 +1763,7 @@ function createApptAt(dateStr, hour, minute = 0) {
   modal({
     title: 'New appointment',
     body: `<div class="space-y-4">
-      <div class="p-3 rounded-xl surface-2 flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-sage-500/12 text-sage-600 grid place-items-center shrink-0">${icon('calendar-plus', 14)}</div><div class="min-w-0"><div class="text-xs muted">When</div><div class="type-small font-semibold">${fmtDate(d, {weekday:'long', month:'long', day:'numeric'})} · ${fmtTime(d)}</div></div></div>
+      <div class="p-3 rounded-xl surface-2 flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-brand-500/12 text-brand-600 grid place-items-center shrink-0">${icon('calendar-plus', 14)}</div><div class="min-w-0"><div class="text-xs muted">When</div><div class="type-small font-semibold">${fmtDate(d, {weekday:'long', month:'long', day:'numeric'})} · ${fmtTime(d)}</div></div></div>
       <div><label class="type-small font-medium mb-1.5 block">Client</label><select id="ca-client" class="input">${clientList.map(c => `<option value="${c.id}">${esc(c.name)}</option>`).join('')}</select></div>
       <div><label class="type-small font-medium mb-1.5 block">Service</label><select id="ca-service" class="input">${myActive.map(s => `<option value="${s.id}">${esc(s.name)} · ${s.duration}min · ${fmtMoney(s.price)}</option>`).join('')}</select></div>
     </div>`,
@@ -1733,7 +1793,7 @@ function WeekView(date, appts) {
   const hours = Array.from({length: CAL_END_HOUR - CAL_START_HOUR}, (_,i) => i + CAL_START_HOUR);
   const HOUR_PX = 64;
   return `<div class="overflow-x-auto -mx-3 sm:mx-0 px-3 sm:px-0"><div class="min-w-[720px]">
-    <div class="grid grid-cols-[52px_repeat(7,1fr)] border-b border-[rgb(var(--border))] pb-2"><div></div>${days.map(d => `<div class="text-center py-2 ${isToday(d)?'bg-[rgb(var(--surface-2))] rounded-lg':''}"><div class="text-[10px] muted uppercase tracking-wider">${fmtDate(d,{weekday:'short'})}</div><div class="font-display font-bold text-sm mt-0.5 ${isToday(d)?'text-sage-600':''}">${d.getDate()}</div></div>`).join('')}</div>
+    <div class="grid grid-cols-[52px_repeat(7,1fr)] border-b border-[rgb(var(--border))] pb-2"><div></div>${days.map(d => `<div class="text-center py-2 ${isToday(d)?'bg-brand-500/5 rounded-lg':''}"><div class="text-[10px] muted uppercase tracking-wider">${fmtDate(d,{weekday:'short'})}</div><div class="font-display font-bold text-sm mt-0.5 ${isToday(d)?'text-brand-600':''}">${d.getDate()}</div></div>`).join('')}</div>
     <div class="grid grid-cols-[52px_repeat(7,1fr)] relative">
       <div class="flex flex-col">${hours.map(h => `<div class="h-16 text-[10px] muted text-right pr-2 -mt-2">${hourLabel(h)}</div>`).join('')}</div>
       ${days.map(d => { const dayAppts = appts.filter(a => sameDay(new Date(a.start), d)); return `<div class="relative border-l border-[rgb(var(--border))]">${hours.map(h => `<div class="cal-cell h-16 border-b border-[rgb(var(--border))]/50" onclick="createApptAt('${d.toISOString()}',${h})"><div class="cal-cell-add">${icon('plus', 11)}</div></div>`).join('')}${dayAppts.map(a => { const c = getUser(a.client); const startH = new Date(a.start).getHours() + new Date(a.start).getMinutes()/60; const top = Math.max(0, (startH - CAL_START_HOUR) * HOUR_PX); const rawHeight = (a.duration/60) * HOUR_PX - 3; const maxHeight = (CAL_END_HOUR - CAL_START_HOUR) * HOUR_PX - top - 3; const height = Math.min(rawHeight, maxHeight); const s = STATUS_STYLE[a.status] || STATUS_STYLE.pending; return `<div onclick="event.stopPropagation();navigate('/app/appointments/${a.id}')" class="absolute left-1 right-1 rounded-md px-1.5 py-1 text-xs cursor-pointer hover:scale-[1.02] transition overflow-hidden" style="top:${top}px;height:${height}px;background:${s.bg};border-left:2px solid ${s.color}"><div class="font-semibold truncate text-[11px]" style="color:${s.color}">${esc(c.name.split(' ')[0])}</div><div class="truncate text-[9px] muted">${esc(getService(a.service)?.name?.split(' ')[0] || '')}</div></div>`; }).join('')}</div>`; }).join('')}
@@ -1757,7 +1817,7 @@ function MonthView(date, appts) {
   const start = startOfWeek(first), end = addDays(startOfWeek(last), 6);
   const days = []; for (let d = new Date(start); d <= end; d = addDays(d, 1)) days.push(new Date(d));
   return `<div class="grid grid-cols-7 text-center border-b border-[rgb(var(--border))] pb-2 mb-2">${['S','M','T','W','T','F','S'].map(d => `<div class="text-[10px] muted uppercase tracking-wider">${d}</div>`).join('')}</div>
-    <div class="grid grid-cols-7 gap-1">${days.map(d => { const inMonth = d.getMonth() === m; const dayAppts = appts.filter(a => sameDay(new Date(a.start), d)).sort((a,b)=>new Date(a.start)-new Date(b.start)); const isOff = isDateInTimeOff(d.toISOString()); return `<div class="cal-cell min-h-[80px] sm:min-h-[110px] p-1.5 rounded-lg border border-[rgb(var(--border))] ${isToday(d)?'bg-[rgb(var(--surface-2))]':''} ${!inMonth?'opacity-40':''} ${isOff?'bg-red-500/5':''}" onclick="createApptAt('${d.toISOString()}',10)"><div class="cal-cell-add">${icon('plus', 11)}</div><div class="text-[10px] sm:text-xs font-semibold ${isToday(d)?'text-sage-600':''} ${isOff?'text-red-500':''} mb-1">${d.getDate()}${isOff ? ' · off' : ''}</div><div class="space-y-0.5">${dayAppts.slice(0,2).map(a => { const c = getUser(a.client); const s = STATUS_STYLE[a.status] || STATUS_STYLE.pending; return `<div onclick="event.stopPropagation();navigate('/app/appointments/${a.id}')" class="text-[9px] sm:text-[10px] px-1 py-0.5 rounded truncate cursor-pointer" style="background:${s.bg};color:${s.color}">${esc(c.name.split(' ')[0])}</div>`; }).join('')}${dayAppts.length > 2 ? `<div class="text-[9px] muted">+${dayAppts.length-2}</div>` : ''}</div></div>`; }).join('')}</div>`;
+    <div class="grid grid-cols-7 gap-1">${days.map(d => { const inMonth = d.getMonth() === m; const dayAppts = appts.filter(a => sameDay(new Date(a.start), d)).sort((a,b)=>new Date(a.start)-new Date(b.start)); const isOff = isDateInTimeOff(d.toISOString()); return `<div class="cal-cell min-h-[80px] sm:min-h-[110px] p-1.5 rounded-lg border border-[rgb(var(--border))] ${isToday(d)?'bg-brand-500/5':''} ${!inMonth?'opacity-40':''} ${isOff?'bg-red-500/5':''}" onclick="createApptAt('${d.toISOString()}',10)"><div class="cal-cell-add">${icon('plus', 11)}</div><div class="text-[10px] sm:text-xs font-semibold ${isToday(d)?'text-brand-600':''} ${isOff?'text-red-500':''} mb-1">${d.getDate()}${isOff ? ' · off' : ''}</div><div class="space-y-0.5">${dayAppts.slice(0,2).map(a => { const c = getUser(a.client); const s = STATUS_STYLE[a.status] || STATUS_STYLE.pending; return `<div onclick="event.stopPropagation();navigate('/app/appointments/${a.id}')" class="text-[9px] sm:text-[10px] px-1 py-0.5 rounded truncate cursor-pointer" style="background:${s.bg};color:${s.color}">${esc(c.name.split(' ')[0])}</div>`; }).join('')}${dayAppts.length > 2 ? `<div class="text-[9px] muted">+${dayAppts.length-2}</div>` : ''}</div></div>`; }).join('')}</div>`;
 }
 function shiftCalendar(delta) { const d = new Date(State.calendarDate); if (State.calendarView === 'day') d.setDate(d.getDate() + delta); else if (State.calendarView === 'week') d.setDate(d.getDate() + delta*7); else d.setMonth(d.getMonth() + delta); set({ calendarDate: d }); }
 
@@ -1774,6 +1834,7 @@ function groupByDateLocal(items, getDate, opts = {}) {
   order.forEach(key => {
     const list = buckets[key];
     if (!list.length) return;
+    if (key === 'past') list.reverse();
     out += `<div class="flex items-center gap-3 mt-7 mb-3"><div class="text-[11px] font-bold uppercase tracking-wider muted">${labels[key]}</div><div class="text-[11px] muted">·</div><div class="text-[11px] muted">${list.length}</div><div class="flex-1 h-px bg-[rgb(var(--border))]"></div></div>`;
     out += `<div class="list-container">${list.map(opts.render).join('')}</div>`;
   });
@@ -1791,7 +1852,7 @@ function PageAppointments() {
     const other = getUser(u.role === 'client' ? a.practitioner : a.client);
     const s = getService(a.service);
     const areas = (a.areas || []).slice(0,3).map(x => getArea(x)?.label).filter(Boolean);
-    return `<div class="list-row" onclick="navigate('/app/appointments/${a.id}')"><div class="flex items-center gap-3 flex-wrap">${avatar(other, 40)}<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-small font-semibold truncate">${esc(other.name)}</div>${statusBadge(a.status)}</div><div class="type-small muted mt-0.5">${esc(s?.name || '')} · ${fmtDateTime(a.start)}</div>${areas.length ? `<div class="flex flex-wrap gap-1 mt-1.5">${areas.map(x => `<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-sage-500/12 text-sage-700 dark:text-sage-300">${x}</span>`).join('')}</div>` : ''}</div>${icon('chevron-right', 15, 'muted')}</div></div>`;
+    return `<div class="list-row" onclick="navigate('/app/appointments/${a.id}')"><div class="flex items-center gap-3 flex-wrap">${avatar(other, 40)}<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-small font-semibold truncate">${esc(other.name)}</div>${statusBadge(a.status)}</div><div class="type-small muted mt-0.5">${esc(s?.name || '')} · ${fmtDateTime(a.start)}</div>${areas.length ? `<div class="flex flex-wrap gap-1 mt-1.5">${areas.map(x => `<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-brand-500/12 text-brand-700 dark:text-brand-300">${x}</span>`).join('')}</div>` : ''}</div>${icon('chevron-right', 15, 'muted')}</div></div>`;
   };
   return `
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
@@ -1840,14 +1901,14 @@ function PageAppointmentDetail(id) {
 
     ${canReview ? `<div class="card p-6 border-l-4 !border-l-amber-500 mb-6"><div class="flex flex-wrap items-center justify-between gap-3"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-xl bg-amber-500/12 text-amber-600 grid place-items-center shrink-0">${icon('star', 18)}</div><div><div class="type-h3 text-[15px]">How was your session?</div><div class="text-xs muted mt-0.5">Your feedback helps ${esc(p.first)} and other clients.</div></div></div><button onclick="openReviewModal('${a.id}')" class="btn btn-sm btn-primary">Write a review</button></div></div>` : ''}
 
-    ${existingReview ? `<div class="card p-6 border-l-4 !border-l-sage-500 mb-6"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-xl bg-sage-500/12 text-sage-600 grid place-items-center shrink-0">${icon('check-circle', 18)}</div><div class="flex-1"><div class="type-h3 text-[15px]">Your review</div><div class="mt-1.5">${StarsDisplay(existingReview.rating, 14)}</div><p class="type-small muted mt-2 leading-relaxed">"${esc(existingReview.comment)}"</p></div></div></div>` : ''}
+    ${existingReview ? `<div class="card p-6 border-l-4 !border-l-brand-500 mb-6"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-xl bg-brand-500/12 text-brand-600 grid place-items-center shrink-0">${icon('check-circle', 18)}</div><div class="flex-1"><div class="type-h3 text-[15px]">Your review</div><div class="mt-1.5">${StarsDisplay(existingReview.rating, 14)}</div><p class="type-small muted mt-2 leading-relaxed">"${esc(existingReview.comment)}"</p></div></div></div>` : ''}
 
     <div class="grid md:grid-cols-3 gap-5">
       <div class="md:col-span-2 space-y-5">
         ${a.rescheduleReason ? `<div class="card p-5 border-l-4 !border-l-amber-500"><div class="flex items-start gap-3"><div class="w-8 h-8 rounded-lg bg-amber-500/15 text-amber-600 grid place-items-center shrink-0">${icon('alert-circle', 14)}</div><div class="flex-1"><div class="type-h3 text-[14px]">Reschedule reason</div><div class="type-small muted mt-1 leading-relaxed">${esc(a.rescheduleReason)}</div><div class="text-xs muted mt-1.5">By ${esc(getUser(a.rescheduledBy)?.name || 'Unknown')} · ${a.rescheduledAt ? relTime(a.rescheduledAt) : ''}</div></div></div></div>` : ''}
         ${canManage && (lastSession || priorAreas.length) ? `<div class="card p-5 border-l-4 !border-l-sky2-500">
           <div class="flex items-center gap-2.5 mb-4"><div class="w-8 h-8 rounded-lg bg-sky2-500/15 text-sky2-700 grid place-items-center">${icon('history', 14)}</div><div><div class="type-h3 text-[14px]">Preparation</div><div class="text-xs muted">Context from previous sessions</div></div></div>
-          ${lastSession ? (() => { const ls = getService(lastSession.service); const lsAreas = (lastSession.areas || []).map(x => getArea(x)?.label).filter(Boolean); return `<div class="p-3 rounded-xl surface-2 mb-3"><div class="flex items-center justify-between mb-2 flex-wrap gap-2"><div class="text-xs muted">Last session</div><div class="text-xs muted">${fmtDate(lastSession.start, {weekday:'short', month:'short', day:'numeric'})}</div></div><div class="type-small font-semibold">${esc(ls?.name || '')}</div>${lsAreas.length ? `<div class="flex flex-wrap gap-1 mt-2">${lsAreas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-sage-500/12 text-sage-700 dark:text-sage-300">${x}</span>`).join('')}</div>` : ''}</div>`; })() : ''}
+          ${lastSession ? (() => { const ls = getService(lastSession.service); const lsAreas = (lastSession.areas || []).map(x => getArea(x)?.label).filter(Boolean); return `<div class="p-3 rounded-xl surface-2 mb-3"><div class="flex items-center justify-between mb-2 flex-wrap gap-2"><div class="text-xs muted">Last session</div><div class="text-xs muted">${fmtDate(lastSession.start, {weekday:'short', month:'short', day:'numeric'})}</div></div><div class="type-small font-semibold">${esc(ls?.name || '')}</div>${lsAreas.length ? `<div class="flex flex-wrap gap-1 mt-2">${lsAreas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-brand-500/12 text-brand-700 dark:text-brand-300">${x}</span>`).join('')}</div>` : ''}</div>`; })() : ''}
           ${priorAreas.length ? `<div><div class="text-xs muted mb-2">Also worked on recently</div><div class="flex flex-wrap gap-1.5">${priorAreas.slice(0, 6).map(area => { const alreadyIn = (a.areas || []).includes(area.id); return `<span class="chip ${alreadyIn ? 'chip-on' : 'chip-off'} chip-sm">${alreadyIn ? icon('check', 10) : ''}${esc(area.label)}</span>`; }).join('')}</div></div>` : ''}
         </div>` : ''}
         <div class="card p-5">
@@ -1858,7 +1919,7 @@ function PageAppointmentDetail(id) {
             <div><div class="text-[10px] font-bold uppercase tracking-wider muted mb-2">Price</div><div class="type-small font-semibold">${fmtMoney(basePrice + addOn)}</div><div class="text-xs muted mt-0.5">${fmtMoney(basePrice)} base${addOn > 0 ? ` + ${fmtMoney(addOn)} areas` : ''}</div></div>
           </div>
         </div>
-        ${areas.length ? `<div class="card p-5"><div class="flex items-center justify-between mb-4"><div><div class="type-h3 text-[14px]">Areas to focus on</div><div class="text-xs muted mt-0.5">Selected during booking</div></div>${icon('sparkles', 15, 'text-sage-600')}</div><div class="flex flex-wrap gap-1.5">${areas.map(x => `<span class="chip chip-on !min-h-0 !py-1 !px-3 !text-xs">${esc(x.label)}</span>`).join('')}</div><div class="mt-3 grid sm:grid-cols-2 gap-2 text-xs muted">${areas.map(x => `<div class="p-2.5 rounded-lg surface-2"><span class="font-semibold text-[rgb(var(--fg))]">${esc(x.label)}:</span> ${esc(x.hint)}</div>`).join('')}</div></div>` : ''}
+        ${areas.length ? `<div class="card p-5"><div class="flex items-center justify-between mb-4"><div><div class="type-h3 text-[14px]">Areas to focus on</div><div class="text-xs muted mt-0.5">Selected during booking</div></div>${icon('sparkles', 15, 'text-brand-600')}</div><div class="flex flex-wrap gap-1.5">${areas.map(x => `<span class="chip chip-on !min-h-0 !py-1 !px-3 !text-xs">${esc(x.label)}</span>`).join('')}</div><div class="mt-3 grid sm:grid-cols-2 gap-2 text-xs muted">${areas.map(x => `<div class="p-2.5 rounded-lg surface-2"><span class="font-semibold text-[rgb(var(--fg))]">${esc(x.label)}:</span> ${esc(x.hint)}</div>`).join('')}</div></div>` : ''}
         ${s?.prep ? `<div class="card p-5 border-l-4 !border-l-sky2-500"><div class="flex items-start gap-3"><div class="w-8 h-8 rounded-lg bg-sky2-500/15 text-sky2-700 grid place-items-center shrink-0">${icon('info', 14)}</div><div><div class="type-h3 text-[14px]">Before your session</div><div class="type-small muted mt-1 leading-relaxed">${esc(s.prep)}</div></div></div></div>` : ''}
         ${canManage ? `<div class="card p-5"><div class="flex items-center justify-between mb-4"><div class="type-h3 text-[14px]">Session notes</div><div class="text-[11px] muted flex items-center gap-1">${icon('lock', 10)} Only you can see this</div></div>${renderNoteEditor(a.id, note)}</div>` : ''}
       </div>
@@ -1888,8 +1949,8 @@ function openReschedule(id) {
   modal({
     title: 'Reschedule appointment',
     body: `<div class="space-y-4">
-      <div class="p-3 rounded-xl surface-2 flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-sage-500/12 text-sage-600 grid place-items-center shrink-0">${icon('calendar-clock', 14)}</div><div><div class="text-xs muted">Currently</div><div class="type-small font-semibold">${fmtDate(currentDate, {weekday:'long', month:'long', day:'numeric'})} · ${fmtTime(currentDate)}</div></div></div>
-      <div><label class="type-small font-medium mb-1.5 block">New date</label><input id="rs-date" type="date" class="input" value="${currentDate.toISOString().slice(0,10)}"></div>
+      <div class="p-3 rounded-xl surface-2 flex items-center gap-3"><div class="w-8 h-8 rounded-lg bg-brand-500/12 text-brand-600 grid place-items-center shrink-0">${icon('calendar-clock', 14)}</div><div><div class="text-xs muted">Currently</div><div class="type-small font-semibold">${fmtDate(currentDate, {weekday:'long', month:'long', day:'numeric'})} · ${fmtTime(currentDate)}</div></div></div>
+      <div><label class="type-small font-medium mb-1.5 block">New date</label><input id="rs-date" type="date" class="input" value="${toDateInputValue(currentDate)}"></div>
       <div><label class="type-small font-medium mb-1.5 block">New time</label><div class="grid grid-cols-3 gap-2" id="rs-times">${['9:00 AM','10:00 AM','11:00 AM','1:00 PM','2:00 PM','3:00 PM'].map((t, i) => `<button type="button" data-time="${t}" class="chip ${i === 0 ? 'chip-on' : 'chip-off'} rs-time" onclick="selectRescheduleTime(this)">${t}</button>`).join('')}</div></div>
       <div><label class="type-small font-medium mb-1.5 block">Reason for rescheduling <span class="text-red-600">*</span></label><textarea id="rs-reason" class="input" rows="2" placeholder="e.g., Emergency, schedule conflict, etc." required></textarea></div>
     </div>`,
@@ -1936,10 +1997,7 @@ function confirmCancelAppt(id) {
   const reason = document.getElementById('cancel-reason')?.value?.trim();
   if (reason) {
     let c = CONVERSATIONS.find(x => x.participants.includes(a.client) && x.participants.includes(a.practitioner));
-    if (!c) {
-      c = { id:'cv'+Date.now(), participants:[a.client, a.practitioner], lastAt: new Date().toISOString(), unread:0, messages:[] };
-      CONVERSATIONS.push(c);
-    }
+    if (!c) { c = { id:'cv'+Date.now(), participants:[a.client, a.practitioner], lastAt: new Date().toISOString(), unread:0, messages:[] }; CONVERSATIONS.push(c); }
     c.messages.push({ id:'m'+Date.now(), from: a.client, text: `Cancellation note: ${reason}`, at: new Date().toISOString(), read:false });
     c.lastAt = new Date().toISOString();
     c.unread = (c.unread || 0) + 1;
@@ -1973,7 +2031,6 @@ function sendReminder(apptId) {
   toast(`Reminder sent to ${client.first}`);
 }
 
-/* Review modal */
 function openReviewModal(apptId) {
   const a = getAppt(apptId);
   if (!a) return;
@@ -2055,16 +2112,16 @@ function PageMessages(convoId) {
     <div class="card !rounded-none sm:!rounded-xl overflow-hidden grid grid-cols-1 md:grid-cols-[300px_1fr]" style="height:calc(100dvh - 3.5rem);max-height:calc(100dvh - 3.5rem)">
       <div class="border-r border-[rgb(var(--border))] flex flex-col min-h-0 ${convoId ? 'hidden md:flex' : 'flex'}">
         <div class="p-4 border-b border-[rgb(var(--border))] h-14 flex items-center"><div class="type-h3 text-[14px]">Messages</div></div>
-        <div class="flex-1 overflow-y-auto">${convos.length ? convos.map(c => { const other = getUser(c.participants.find(p => p !== u.id)); const last = c.messages[c.messages.length-1]; const isActive = active?.id === c.id; return `<a href="#/app/messages/${c.id}" class="block p-3 flex items-center gap-3 transition ${isActive?'bg-[rgb(var(--surface-2))]':'hover:bg-[rgb(var(--surface-2))]'}">${avatar(other, 40)}<div class="min-w-0 flex-1"><div class="flex items-center gap-2"><span class="type-small font-semibold truncate">${esc(other.name)}</span><span class="ml-auto text-[11px] muted">${relTime(c.lastAt)}</span></div><div class="text-xs muted truncate mt-0.5">${esc(last?.text || '')}</div></div>${c.unread ? `<span class="badge !bg-sage-500 !text-white">${c.unread}</span>` : ''}</a>`; }).join('') : `<div class="p-6 text-center muted type-small">No conversations yet.</div>`}</div>
+        <div class="flex-1 overflow-y-auto">${convos.length ? convos.map(c => { const other = getUser(c.participants.find(p => p !== u.id)); const last = c.messages[c.messages.length-1]; const isActive = active?.id === c.id; return `<a href="#/app/messages/${c.id}" class="block p-3 flex items-center gap-3 transition ${isActive?'bg-brand-500/5':'hover:bg-[rgb(var(--surface-2))]'}">${avatar(other, 40)}<div class="min-w-0 flex-1"><div class="flex items-center gap-2"><span class="type-small font-semibold truncate">${esc(other.name)}</span><span class="ml-auto text-[11px] muted">${relTime(c.lastAt)}</span></div><div class="text-xs muted truncate mt-0.5">${esc(last?.text || '')}</div></div>${c.unread ? `<span class="badge !text-white" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${c.unread}</span>` : ''}</a>`; }).join('') : `<div class="p-6 text-center muted type-small">No conversations yet.</div>`}</div>
       </div>
       ${active ? (() => {
         const other = getUser(active.participants.find(p => p !== u.id));
         return `<div class="flex flex-col min-h-0">
           <div class="p-3 sm:p-4 border-b border-[rgb(var(--border))] flex items-center gap-3 h-14"><a href="#/app/messages" class="md:hidden btn btn-sm btn-ghost !px-2" aria-label="Back">${icon('arrow-left', 16)}</a>${avatar(other, 34)}<div class="min-w-0 flex-1"><div class="type-small font-semibold truncate">${esc(other.name)}</div><div class="text-xs muted truncate">${other.title || other.email}</div></div></div>
-          <div class="flex-1 overflow-y-auto p-4 space-y-3">${active.messages.map(m => { const me = m.from === u.id; return `<div class="flex ${me?'justify-end':'justify-start'}">${!me ? avatar(other, 26) : ''}<div class="ml-2 max-w-[75%] px-3.5 py-2 rounded-2xl type-small leading-relaxed ${me?'bg-[rgb(var(--fg))] text-[rgb(var(--surface))] rounded-br-md':'surface rounded-bl-md'}">${esc(m.text)}<div class="text-[10px] mt-1 ${me?'text-white/60':'muted'} flex items-center gap-1.5 justify-end">${fmtTime(m.at)}${me && m.read ? ` · ${icon('check-check', 9)} Seen` : ''}</div></div></div>`; }).join('')}</div>
-          <form onsubmit="event.preventDefault();sendMessage(this,'${active.id}')" class="p-3 border-t border-[rgb(var(--border))] flex items-center gap-2"><input id="msg-input" placeholder="Type a message…" class="input !h-11 flex-1" autocomplete="off"><button type="submit" class="w-11 h-11 rounded-lg bg-[rgb(var(--fg))] text-[rgb(var(--surface))] grid place-items-center hover:opacity-90 transition shrink-0" aria-label="Send">${icon('send', 16)}</button></form>
+          <div class="flex-1 overflow-y-auto p-4 space-y-3">${active.messages.map(m => { const me = m.from === u.id; return `<div class="flex ${me?'justify-end':'justify-start'}">${!me ? avatar(other, 26) : ''}<div class="ml-2 max-w-[75%] px-3.5 py-2 rounded-2xl type-small leading-relaxed ${me?'text-white rounded-br-md':'surface rounded-bl-md'}" ${me?'style="background:linear-gradient(135deg,#4CAF50,#2E7D32)"':''}>${esc(m.text)}<div class="text-[10px] mt-1 ${me?'text-white/70':'muted'} flex items-center gap-1.5 justify-end">${fmtTime(m.at)}${me && m.read ? ` · ${icon('check-check', 9)} Seen` : ''}</div></div></div>`; }).join('')}</div>
+          <form onsubmit="event.preventDefault();sendMessage(this,'${active.id}')" class="p-3 border-t border-[rgb(var(--border))] flex items-center gap-2"><input id="msg-input" placeholder="Type a message…" class="input !h-11 flex-1" autocomplete="off"><button type="submit" class="w-11 h-11 rounded-lg text-white grid place-items-center hover:opacity-90 transition shrink-0" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)" aria-label="Send">${icon('send', 16)}</button></form>
         </div>`;
-      })() : `<div class="grid place-items-center"><div class="text-center p-6"><div class="w-12 h-12 rounded-xl bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))] grid place-items-center mx-auto mb-3">${icon('message-square', 22)}</div><div class="type-small font-semibold">Select a conversation</div></div></div>`}
+      })() : `<div class="grid place-items-center"><div class="text-center p-6"><div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center mx-auto mb-3">${icon('message-square', 22)}</div><div class="type-small font-semibold">Select a conversation</div></div></div>`}
     </div>
   </div>`;
 }
@@ -2101,9 +2158,9 @@ function PageClients() {
           return `<div class="list-row" onclick="navigate('/app/clients/${c.id}')"><div class="flex items-center gap-3 flex-wrap">
             ${avatar(c, 44)}
             <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2 flex-wrap"><div class="font-semibold truncate">${esc(c.name)}</div>${nextAppt ? `<span class="badge" style="background:rgba(127,160,122,0.12);color:#4A6744">${isToday(new Date(nextAppt.start)) ? 'Today' : fmtDate(nextAppt.start, {month:'short', day:'numeric'})}</span>` : ''}</div>
+              <div class="flex items-center gap-2 flex-wrap"><div class="font-semibold truncate">${esc(c.name)}</div>${nextAppt ? `<span class="badge" style="background:rgba(76,175,80,0.12);color:#2E7D32">${isToday(new Date(nextAppt.start)) ? 'Today' : fmtDate(nextAppt.start, {month:'short', day:'numeric'})}</span>` : ''}</div>
               <div class="text-xs muted mt-0.5">${completed.length} session${completed.length===1?'':'s'} · last ${appts[0] ? fmtDate(appts[0].start, {month:'short', day:'numeric'}) : 'never'}</div>
-              ${topAreas.length ? `<div class="flex flex-wrap gap-1 mt-2">${topAreas.map(x => `<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-sage-500/12 text-sage-700 dark:text-sage-300">${x}</span>`).join('')}</div>` : ''}
+              ${topAreas.length ? `<div class="flex flex-wrap gap-1 mt-2">${topAreas.map(x => `<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-brand-500/12 text-brand-700 dark:text-brand-300">${x}</span>`).join('')}</div>` : ''}
             </div>
             ${icon('chevron-right', 15, 'muted')}
           </div></div>`;
@@ -2134,14 +2191,14 @@ function PageClientDetail(id) {
       ${StatTile({ label:'Reviews', value: clientReviews.length, iconName:'star' })}
     </div>
 
-    ${areaRanked.length ? `<div class="card p-6 mb-6"><div class="type-h3 text-[15px]">Focus areas</div><div class="text-xs muted mt-0.5 mb-5">What we have worked on across all sessions</div><div class="space-y-4">${areaRanked.slice(0, 6).map(([k,v]) => { const area = getArea(k); if (!area) return ''; return `<div><div class="flex items-center justify-between type-small mb-1.5"><span class="font-medium">${esc(area.label)}</span><span class="muted text-xs">${v} session${v>1?'s':''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full bg-sage-500" style="width:${(v/maxCount)*100}%"></div></div></div>`; }).join('')}</div></div>` : ''}
+    ${areaRanked.length ? `<div class="card p-6 mb-6"><div class="type-h3 text-[15px]">Focus areas</div><div class="text-xs muted mt-0.5 mb-5">What we have worked on across all sessions</div><div class="space-y-4">${areaRanked.slice(0, 6).map(([k,v]) => { const area = getArea(k); if (!area) return ''; return `<div><div class="flex items-center justify-between type-small mb-1.5"><span class="font-medium">${esc(area.label)}</span><span class="muted text-xs">${v} session${v>1?'s':''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full" style="width:${(v/maxCount)*100}%;background:#2E7D32"></div></div></div>`; }).join('')}</div></div>` : ''}
 
     ${clientReviews.length ? `<div class="card p-6 mb-6"><div class="type-h3 text-[15px]">Reviews from this client</div><div class="text-xs muted mt-0.5 mb-5">Their feedback on your sessions together</div><div class="space-y-4">${clientReviews.slice(0, 3).map(r => { const a = getAppt(r.appt); return `<div class="p-4 rounded-xl surface-2"><div class="flex items-center gap-3 mb-2">${StarsDisplay(r.rating, 13)}<span class="text-xs muted">${fmtDate(r.date, {month:'short', day:'numeric'})}</span></div><p class="type-small leading-relaxed">"${esc(r.comment)}"</p>${a ? `<div class="text-xs muted mt-2">${esc(getService(a.service)?.name || '')}</div>` : ''}</div>`; }).join('')}</div></div>` : ''}
 
     <div class="card p-6">
       <div class="type-h3 text-[15px]">Care history</div>
       <div class="text-xs muted mt-0.5 mb-5">Tap any session to open its notes.</div>
-      ${appts.length ? `<div class="timeline">${appts.map(a => { const s = getService(a.service); const areas = (a.areas || []).map(x => getArea(x)?.label).filter(Boolean); const hasNote = !!NOTES[a.id]; return `<div class="timeline-item ${a.status === 'completed' ? 'completed' : ''}" onclick="navigate('/app/appointments/${a.id}')"><div class="flex items-start justify-between gap-3 flex-wrap"><div class="min-w-0"><div class="type-small font-semibold">${esc(s?.name || '')}</div><div class="text-xs muted mt-0.5">${fmtDate(a.start, {weekday:'short', month:'short', day:'numeric', year:'numeric'})} · ${fmtTime(a.start)}</div>${areas.length ? `<div class="flex flex-wrap gap-1 mt-2">${areas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-sage-500/12 text-sage-700 dark:text-sage-300">${x}</span>`).join('')}</div>` : ''}</div><div class="flex flex-col items-end gap-1">${statusBadge(a.status)}${hasNote ? `<span class="text-[10px] muted flex items-center gap-1">${icon('file-text', 9)} has note</span>` : ''}</div></div></div>`; }).join('')}</div>` : `<div class="text-center py-6 muted type-small">No sessions yet.</div>`}
+      ${appts.length ? `<div class="timeline">${appts.map(a => { const s = getService(a.service); const areas = (a.areas || []).map(x => getArea(x)?.label).filter(Boolean); const hasNote = !!NOTES[a.id]; return `<div class="timeline-item ${a.status === 'completed' ? 'completed' : ''}" onclick="navigate('/app/appointments/${a.id}')"><div class="flex items-start justify-between gap-3 flex-wrap"><div class="min-w-0"><div class="type-small font-semibold">${esc(s?.name || '')}</div><div class="text-xs muted mt-0.5">${fmtDate(a.start, {weekday:'short', month:'short', day:'numeric', year:'numeric'})} · ${fmtTime(a.start)}</div>${areas.length ? `<div class="flex flex-wrap gap-1 mt-2">${areas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-brand-500/12 text-brand-700 dark:text-brand-300">${x}</span>`).join('')}</div>` : ''}</div><div class="flex flex-col items-end gap-1">${statusBadge(a.status)}${hasNote ? `<span class="text-[10px] muted flex items-center gap-1">${icon('file-text', 9)} has note</span>` : ''}</div></div></div>`; }).join('')}</div>` : `<div class="text-center py-6 muted type-small">No sessions yet.</div>`}
     </div>
   </div>`;
 }
@@ -2163,12 +2220,11 @@ function PageGuides(areaId) {
       ${State.user && State.user.role === 'client' && !getClientUpcoming() ? `<a href="#/app/book" class="btn btn-primary w-full">Book a session with a practitioner</a>` : ''}
     </div>`;
   }
-  // If a bad areaId was provided, fall through to the index so users aren't stuck on a 404.
   return `
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-8">
     ${PageHeader({ backHref: State.user ? '#/app/dashboard' : '#/', backLabel: State.user ? 'Back' : 'Home', eyebrow:'Between sessions', title:'Self-care guides', description:'Short routines for common trouble spots. Written by practitioners.' })}
     ${areaId ? `<div class="mb-4 p-3 rounded-lg surface-2 text-xs muted flex items-start gap-2">${icon('info', 11)}<span>That guide wasn't found — here are all the available routines.</span></div>` : ''}
-    <div class="grid sm:grid-cols-2 gap-3 mb-5">${GUIDE_AREAS.map(id => { const g = GUIDES[id]; return `<a href="#/self-care/${id}" class="card card-hover p-5 flex items-center gap-4"><div class="w-11 h-11 rounded-xl bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('hand-heart', 20)}</div><div class="flex-1 min-w-0"><div class="font-semibold">${esc(g.title)}</div><div class="text-xs muted mt-0.5">${esc(g.duration)} · ${esc(g.intro)}</div></div>${icon('arrow-right', 15, 'muted')}</a>`; }).join('')}</div>
+    <div class="grid sm:grid-cols-2 gap-3 mb-5">${GUIDE_AREAS.map(id => { const g = GUIDES[id]; return `<a href="#/self-care/${id}" class="card card-hover p-5 flex items-center gap-4"><div class="w-11 h-11 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('hand-heart', 20)}</div><div class="flex-1 min-w-0"><div class="font-semibold">${esc(g.title)}</div><div class="text-xs muted mt-0.5">${esc(g.duration)} · ${esc(g.intro)}</div></div>${icon('arrow-right', 15, 'muted')}</a>`; }).join('')}</div>
     <div class="p-3 rounded-lg surface-2 text-xs muted flex items-start gap-2">${icon('info', 11)}<span>For general wellness only. Not a substitute for professional care.</span></div>
   </div>`;
 }
@@ -2185,7 +2241,7 @@ function PageServices() {
     ${PageHeader({ backHref:'#/app/settings', backLabel:'Settings', title:'Services', description:`${mine.length} total · ${activeCount} active`, action:`<button onclick="openServiceModal()" class="btn btn-sm btn-primary">${icon('plus', 13)} Add service</button>` })}
     ${mine.length === 0 ? EmptyState({ icon:'sparkles', title:'No services yet', description:'Add your first service so clients can book.', action:`<button onclick="openServiceModal()" class="btn btn-primary">Add service</button>` }) : `
       <div class="grid sm:grid-cols-2 gap-3">${mine.map(s => `<div class="card p-5 ${s.active === false ? 'opacity-60' : ''}">
-        <div class="flex items-start justify-between gap-2 mb-3"><div class="w-9 h-9 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center">${icon('sparkles', 16)}</div><button onclick="toggleServiceActive('${s.id}')" class="svc-status ${s.active !== false ? 'on' : 'off'}">${icon(s.active !== false ? 'eye' : 'eye-off', 10)} ${s.active !== false ? 'Active' : 'Hidden'}</button></div>
+        <div class="flex items-start justify-between gap-2 mb-3"><div class="w-9 h-9 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center">${icon('sparkles', 16)}</div><button onclick="toggleServiceActive('${s.id}')" class="svc-status ${s.active !== false ? 'on' : 'off'}">${icon(s.active !== false ? 'eye' : 'eye-off', 10)} ${s.active !== false ? 'Active' : 'Hidden'}</button></div>
         <div class="type-h3 text-[15px]">${esc(s.name)}</div>
         <div class="text-xs muted mt-0.5">${esc(s.category)} · ${s.duration} min</div>
         <p class="type-small muted mt-2 line-clamp-2 leading-relaxed">${esc(s.description)}</p>
@@ -2237,7 +2293,7 @@ function PageAvailability() {
   </div>`;
 }
 function toggleDay(i, v) { AVAILABILITY[i].enabled = v; saveAll(); render(); }
-function openAddTimeOff() { modal({ title:'Add time off', body:`<div class="space-y-3"><div class="grid grid-cols-2 gap-3"><div><label class="type-small font-medium mb-1.5 block">Start</label><input id="to-start" type="date" class="input" value="${new Date().toISOString().slice(0,10)}"></div><div><label class="type-small font-medium mb-1.5 block">End</label><input id="to-end" type="date" class="input" value="${new Date().toISOString().slice(0,10)}"></div></div><div><label class="type-small font-medium mb-1.5 block">Reason (optional)</label><input id="to-reason" class="input" placeholder="e.g., Holiday break"></div></div>`, actions:[{label:'Cancel',variant:'outline',onclick:'closeModal()'},{label:'Add',variant:'primary',onclick:'submitTimeOff()'}] }); }
+function openAddTimeOff() { modal({ title:'Add time off', body:`<div class="space-y-3"><div class="grid grid-cols-2 gap-3"><div><label class="type-small font-medium mb-1.5 block">Start</label><input id="to-start" type="date" class="input" value="${toDateInputValue(new Date())}"></div><div><label class="type-small font-medium mb-1.5 block">End</label><input id="to-end" type="date" class="input" value="${toDateInputValue(new Date())}"></div></div><div><label class="type-small font-medium mb-1.5 block">Reason (optional)</label><input id="to-reason" class="input" placeholder="e.g., Holiday break"></div></div>`, actions:[{label:'Cancel',variant:'outline',onclick:'closeModal()'},{label:'Add',variant:'primary',onclick:'submitTimeOff()'}] }); }
 function submitTimeOff() {
   const startVal = document.getElementById('to-start').value, endVal = document.getElementById('to-end').value, reason = document.getElementById('to-reason').value.trim();
   if (!startVal || !endVal) { toast('Please provide both dates', 'error'); return; }
@@ -2279,12 +2335,12 @@ function PageAnalytics() {
       ${StatTile({ label:'Revenue', value: fmtMoney(revenue), iconName:'wallet' })}
     </div>
     <div class="card p-6 mb-5">
-      <div class="flex items-center gap-3 mb-1"><div class="w-8 h-8 rounded-lg bg-sage-500/12 text-sage-600 grid place-items-center">${icon('sparkles', 14)}</div><div><div class="type-h3 text-[14px]">Popular focus areas</div><div class="text-xs muted">Which body areas your clients flag most</div></div></div>
-      <div class="mt-5 space-y-4">${areaStats.length ? areaStats.slice(0,8).map(([k,v]) => { const a = getArea(k); if (!a) return ''; return `<div><div class="flex items-center justify-between mb-1.5 type-small"><span class="font-medium">${esc(a.label)}</span><span class="muted text-xs">${v} session${v>1?'s':''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full bg-sage-500 rounded-full" style="width:${(v/maxCount)*100}%"></div></div></div>`; }).join('') : `<div class="type-small muted">No data yet.</div>`}</div>
+      <div class="flex items-center gap-3 mb-1"><div class="w-8 h-8 rounded-lg bg-brand-500/12 text-brand-600 grid place-items-center">${icon('sparkles', 14)}</div><div><div class="type-h3 text-[14px]">Popular focus areas</div><div class="text-xs muted">Which body areas your clients flag most</div></div></div>
+      <div class="mt-5 space-y-4">${areaStats.length ? areaStats.slice(0,8).map(([k,v]) => { const a = getArea(k); if (!a) return ''; return `<div><div class="flex items-center justify-between mb-1.5 type-small"><span class="font-medium">${esc(a.label)}</span><span class="muted text-xs">${v} session${v>1?'s':''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full" style="width:${(v/maxCount)*100}%;background:#2E7D32"></div></div></div>`; }).join('') : `<div class="type-small muted">No data yet.</div>`}</div>
     </div>
     <div class="card p-6">
       <div class="type-h3 text-[14px] mb-5">Appointments this week</div>
-      <div class="flex items-end gap-2 h-36">${weeklyCounts.map((h, i) => { const height = weeklyMax ? Math.max((h / weeklyMax) * 100, 4) : 4; const label = fmtDate(addDays(today, i - 6), {weekday:'narrow'}); return `<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end" title="${h} appointment${h===1?'':'s'}"><div class="text-[10px] font-semibold muted">${h || ''}</div><div class="w-full rounded-t-md bg-sage-500/80 transition-all chart-bar" style="height:${height}%;min-height:4px"></div><div class="text-[10px] muted">${label}</div></div>`; }).join('')}</div>
+      <div class="flex items-end gap-2 h-36">${weeklyCounts.map((h, i) => { const height = weeklyMax ? Math.max((h / weeklyMax) * 100, 4) : 4; const label = fmtDate(addDays(today, i - 6), {weekday:'narrow'}); return `<div class="flex-1 flex flex-col items-center gap-1 h-full justify-end" title="${h} appointment${h===1?'':'s'}"><div class="text-[10px] font-semibold muted">${h || ''}</div><div class="w-full rounded-t-md transition-all chart-bar" style="height:${height}%;min-height:4px;background:linear-gradient(180deg,#8BC34A,#2E7D32)"></div><div class="text-[10px] muted">${label}</div></div>`; }).join('')}</div>
     </div>
   </div>`;
 }
@@ -2299,7 +2355,7 @@ function PageVerification() {
   return `
   <div class="max-w-3xl mx-auto px-4 sm:px-6 py-6">
     ${PageHeader({ backHref:'#/app/settings', backLabel:'Settings', title:'Verification', description:'Confirm your professional credentials' })}
-    <div class="card p-6 mb-5"><div class="flex items-start gap-4"><div class="w-11 h-11 rounded-xl ${isVerified?'bg-sage-500/12 text-sage-600':'bg-amber-500/12 text-amber-600'} grid place-items-center shrink-0">${icon(isVerified?'badge-check':'shield-alert', 20)}</div><div class="flex-1"><div class="flex items-center gap-2 flex-wrap"><div class="type-h3 text-[15px]">Status</div>${isVerified ? statusBadge('verified') : `<span class="badge" style="background:rgba(217,119,6,0.10);color:#B45309">Not verified</span>`}</div><p class="type-small muted mt-2 leading-relaxed">${isVerified ? 'Your credentials were reviewed and verified.' : 'Submit your credentials for review by our team.'}</p></div></div></div>
+    <div class="card p-6 mb-5"><div class="flex items-start gap-4"><div class="w-11 h-11 rounded-xl ${isVerified?'bg-brand-500/12 text-brand-600':'bg-amber-500/12 text-amber-600'} grid place-items-center shrink-0">${icon(isVerified?'badge-check':'shield-alert', 20)}</div><div class="flex-1"><div class="flex items-center gap-2 flex-wrap"><div class="type-h3 text-[15px]">Status</div>${isVerified ? statusBadge('verified') : `<span class="badge" style="background:rgba(217,119,6,0.10);color:#B45309">Not verified</span>`}</div><p class="type-small muted mt-2 leading-relaxed">${isVerified ? 'Your credentials were reviewed and verified.' : 'Submit your credentials for review by our team.'}</p></div></div></div>
     <div class="card p-6 mb-5"><div class="type-h3 text-[14px] mb-4">Your credentials</div><div class="space-y-3"><div><label class="type-small font-medium mb-1.5 block">Professional name</label><input id="v-name" class="input" value="${esc(creds.name || u.name)}" onchange="saveCredentials('name', this.value)"></div><div><label class="type-small font-medium mb-1.5 block">Credential ID</label><input id="v-id" class="input" placeholder="e.g., LMT-12345" value="${esc(creds.id || '')}" onchange="saveCredentials('id', this.value)"></div><div><label class="type-small font-medium mb-1.5 block">Issuing authority</label><input id="v-authority" class="input" value="${esc(creds.authority || '')}" onchange="saveCredentials('authority', this.value)"></div></div></div>
     ${u.verificationSubmitted ? `<div class="p-3 rounded-lg surface-2 type-small flex items-start gap-2">${icon('clock', 13)}<span class="muted">Submitted for review. We'll notify you within two business days.</span></div>` : `<button onclick="submitVerification()" class="btn btn-primary w-full">Submit for review</button>`}
   </div>`;
@@ -2319,7 +2375,7 @@ function PageInvoices() {
   return `
   <div class="max-w-4xl mx-auto px-4 sm:px-6 py-6">
     ${PageHeader({ backHref: u.role === 'client' ? '#/app/dashboard' : '#/app/settings', backLabel:'Back', title:'Invoices', description: `${all.length} total` })}
-    <div class="flex gap-1.5 overflow-x-auto pb-2 mb-4 no-scrollbar">${[['all','All',counts.all],['paid','Paid',counts.paid],['pending','Pending',counts.pending],['overdue','Overdue',counts.overdue]].map(([k,l,c]) => `<button onclick="State.invoiceFilter='${k}';render()" class="chip ${filter===k?'chip-on':'chip-off'} chip-sm">${l} <span class="${filter===k?'opacity-70':'muted'} text-[11px]">${c}</span></button>`).join('')}</div>
+    <div class="flex gap-1.5 overflow-x-auto pb-2 mb-4 no-scrollbar">${[['all','All',counts.all],['paid','Paid',counts.paid],['pending','Pending',counts.pending],['overdue','Overdue',counts.overdue]].map(([k,l,c]) => `<button onclick="State.invoiceFilter='${k}';render()" class="chip ${filter===k?'chip-on':'chip-off'} chip-sm">${l} <span class="${filter===k?'opacity-80':'muted'} text-[11px]">${c}</span></button>`).join('')}</div>
     ${list.length === 0 ? EmptyState({ icon:'receipt', title:'No invoices here', description:'Invoices appear here after sessions.' }) : `
       <div class="list-container">${list.map(i => { const c = getUser(i.client); return `<div class="list-row" onclick="openInvoice('${i.id}')"><div class="flex items-center gap-3 flex-wrap"><div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-small font-semibold type-mono">${esc(i.id)}</div>${statusBadge(i.status)}</div><div class="text-xs muted mt-0.5">${esc(c.name)} · ${fmtDate(i.issued)}</div></div><div class="text-right flex items-center gap-3"><div class="font-bold">${fmtMoney(i.amount)}</div>${icon('chevron-right', 14, 'muted')}</div></div></div>`; }).join('')}</div>`}
   </div>`;
@@ -2359,11 +2415,11 @@ function PageNotifications() {
   const list = [...NOTIFICATIONS];
   const card = (n) => {
     const ic = { appointment:'calendar-check', message:'message-circle', payment:'wallet', review:'star', invoice:'receipt', system:'info' }[n.type] || 'bell';
-    return `<div class="list-row-static ${!n.read?'!bg-sage-500/4':''}">
+    return `<div class="list-row-static ${!n.read?'!bg-brand-500/5':''}">
       <div class="flex items-start gap-3">
-        <div class="w-9 h-9 rounded-lg ${n.read?'bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))]':'bg-sage-500/12 text-sage-600'} grid place-items-center shrink-0">${icon(ic, 15)}</div>
+        <div class="w-9 h-9 rounded-lg ${n.read?'bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))]':'bg-brand-500/12 text-brand-600'} grid place-items-center shrink-0">${icon(ic, 15)}</div>
         <div class="flex-1 min-w-0">
-          <div class="flex items-center gap-2 flex-wrap"><div class="type-small font-semibold">${esc(n.title)}</div>${!n.read ? `<span class="w-1.5 h-1.5 rounded-full bg-sage-500"></span>` : ''}</div>
+          <div class="flex items-center gap-2 flex-wrap"><div class="type-small font-semibold">${esc(n.title)}</div>${!n.read ? `<span class="w-1.5 h-1.5 rounded-full" style="background:#4CAF50"></span>` : ''}</div>
           <div class="type-small muted mt-0.5 leading-relaxed">${esc(n.body)}</div>
           ${n.action && !n.actionTaken ? `<div class="flex flex-wrap gap-2 mt-3"><button onclick="handleNotification('${n.id}','${n.action}')" class="btn btn-sm btn-primary !min-h-[30px] !py-0 !px-3 !text-xs">${esc(n.actionLabel)}</button></div>` : n.actionTaken ? `<div class="text-xs muted mt-2 flex items-center gap-1.5">${icon('check', 11)} Done</div>` : ''}
         </div>
@@ -2401,6 +2457,7 @@ function PageSettings() {
   const isPractitioner = u.role === 'practitioner';
   const tab = State.settingsTab || 'profile';
   const notifPrefs = u.notifications || { reminders:true, messages:true, focusAreas: isPractitioner, product:false };
+  const hasSavedAvatar = State.savedAvatar && State.savedAvatar.userId === u.id;
 
   const tabs = [
     { id: 'profile', label: 'Profile', icon: 'user' },
@@ -2416,8 +2473,8 @@ function PageSettings() {
       <div class="card p-6">
         <div class="type-h3 text-[15px] mb-5">Your profile</div>
         <div class="flex items-center gap-5 mb-6">
-          <div class="relative">${avatar(u, 72)}<label for="photo-input" class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-[rgb(var(--fg))] text-[rgb(var(--surface))] grid place-items-center cursor-pointer shadow-lift hover:opacity-90 transition">${icon('camera', 13)}</label><input id="photo-input" type="file" accept="image/*" class="hidden" onchange="handlePhotoChange(this)"></div>
-          <div><label for="photo-input" class="btn btn-sm btn-outline cursor-pointer inline-flex">${icon('upload', 12)} Change photo</label>${State.savedAvatar ? `<button onclick="resetPhoto()" class="text-xs muted hover:text-red-600 ml-2">Reset</button>` : ''}<div class="text-xs muted mt-2">JPG or PNG · up to 5MB</div></div>
+          <div class="relative">${avatar(u, 72)}<label for="photo-input" class="absolute -bottom-1 -right-1 w-8 h-8 rounded-full bg-brand-600 text-white grid place-items-center cursor-pointer shadow-lift hover:opacity-90 transition">${icon('camera', 13)}</label><input id="photo-input" type="file" accept="image/*" class="hidden" onchange="handlePhotoChange(this)"></div>
+          <div><label for="photo-input" class="btn btn-sm btn-outline cursor-pointer inline-flex">${icon('upload', 12)} Change photo</label>${hasSavedAvatar ? `<button onclick="resetPhoto()" class="text-xs muted hover:text-red-600 ml-2">Reset</button>` : ''}<div class="text-xs muted mt-2">JPG or PNG · up to 5MB</div></div>
         </div>
         <div class="space-y-4">
           <div><label class="type-small font-medium mb-1.5 block">Full name</label><input class="input" value="${esc(u.name)}" onchange="saveProfileField('name', this.value)"></div>
@@ -2431,9 +2488,9 @@ function PageSettings() {
         <div class="card p-6">
           <div class="type-h3 text-[15px] mb-4">Sign in</div>
           <div class="space-y-2">
-            <button onclick="openChangePassword()" class="w-full flex items-center justify-between p-3 rounded-xl surface-2 hover:bg-[rgb(var(--surface-2))] transition"><div class="flex items-center gap-3 text-left"><div class="w-8 h-8 rounded-lg bg-[rgb(var(--surface))] text-sage-600 grid place-items-center">${icon('key', 13)}</div><div><div class="type-small font-medium">Change password</div><div class="text-xs muted mt-0.5">Last changed 3 months ago</div></div></div>${icon('chevron-right', 15, 'muted')}</button>
-            <label class="w-full flex items-center justify-between p-3 rounded-xl surface-2 cursor-pointer"><div class="flex items-center gap-3 text-left"><div class="w-8 h-8 rounded-lg bg-[rgb(var(--surface))] text-sage-600 grid place-items-center">${icon('shield-check', 13)}</div><div><div class="type-small font-medium">Two-factor authentication</div><div class="text-xs muted mt-0.5">${u.twoFactorEnabled ? 'Enabled' : 'Optional extra security'}</div></div></div><span class="switch"><input type="checkbox" ${u.twoFactorEnabled ? 'checked' : ''} onchange="toggleTwoFactor(this.checked)"><span class="switch-slider"></span></span></label>
-            <div class="w-full flex items-center justify-between p-3 rounded-xl surface-2"><div class="flex items-center gap-3 text-left"><div class="w-8 h-8 rounded-lg bg-[rgb(var(--surface))] text-sage-600 grid place-items-center">${icon('mail', 13)}</div><div><div class="type-small font-medium">Email address</div><div class="text-xs muted mt-0.5">${esc(u.email)}</div></div></div><span class="badge" style="background:rgba(127,160,122,0.12);color:#4A6744">Verified</span></div>
+            <button onclick="openChangePassword()" class="w-full flex items-center justify-between p-3 rounded-xl surface-2 hover:bg-[rgb(var(--surface-2))] transition"><div class="flex items-center gap-3 text-left"><div class="w-8 h-8 rounded-lg bg-[rgb(var(--surface))] text-brand-600 grid place-items-center">${icon('key', 13)}</div><div><div class="type-small font-medium">Change password</div><div class="text-xs muted mt-0.5">Last changed 3 months ago</div></div></div>${icon('chevron-right', 15, 'muted')}</button>
+            <label class="w-full flex items-center justify-between p-3 rounded-xl surface-2 cursor-pointer"><div class="flex items-center gap-3 text-left"><div class="w-8 h-8 rounded-lg bg-[rgb(var(--surface))] text-brand-600 grid place-items-center">${icon('shield-check', 13)}</div><div><div class="type-small font-medium">Two-factor authentication</div><div class="text-xs muted mt-0.5">${u.twoFactorEnabled ? 'Enabled' : 'Optional extra security'}</div></div></div><span class="switch"><input type="checkbox" ${u.twoFactorEnabled ? 'checked' : ''} onchange="toggleTwoFactor(this.checked)"><span class="switch-slider"></span></span></label>
+            <div class="w-full flex items-center justify-between p-3 rounded-xl surface-2"><div class="flex items-center gap-3 text-left"><div class="w-8 h-8 rounded-lg bg-[rgb(var(--surface))] text-brand-600 grid place-items-center">${icon('mail', 13)}</div><div><div class="type-small font-medium">Email address</div><div class="text-xs muted mt-0.5">${esc(u.email)}</div></div></div><span class="badge" style="background:rgba(76,175,80,0.12);color:#2E7D32">Verified</span></div>
           </div>
         </div>
         <div class="card p-6">
@@ -2444,10 +2501,10 @@ function PageSettings() {
       </div>`;
     if (tab === 'practice' && isPractitioner) return `
       <div class="space-y-3">
-        <a href="#/app/services" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('sparkles', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Services</div><div class="text-xs muted mt-0.5">${SERVICES.filter(s => s.practitioner === u.id && s.active !== false).length} active</div></div>${icon('chevron-right', 15, 'muted')}</a>
-        <a href="#/app/availability" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('clock', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Hours & time off</div><div class="text-xs muted mt-0.5">Weekly schedule, vacation days</div></div>${icon('chevron-right', 15, 'muted')}</a>
-        <a href="#/app/reports" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('bar-chart-3', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Reports</div><div class="text-xs muted mt-0.5">Focus areas, revenue, appointments</div></div>${icon('chevron-right', 15, 'muted')}</a>
-        <a href="#/app/verification" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center shrink-0">${icon('badge-check', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Verification</div><div class="text-xs muted mt-0.5">${u.verified ? 'Your credentials are verified' : u.verificationSubmitted ? 'Submitted, under review' : 'Add your credentials'}</div></div>${u.verified ? statusBadge('verified') : ''}${icon('chevron-right', 15, 'muted')}</a>
+        <a href="#/app/services" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('sparkles', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Services</div><div class="text-xs muted mt-0.5">${SERVICES.filter(s => s.practitioner === u.id && s.active !== false).length} active</div></div>${icon('chevron-right', 15, 'muted')}</a>
+        <a href="#/app/availability" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('clock', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Hours & time off</div><div class="text-xs muted mt-0.5">Weekly schedule, vacation days</div></div>${icon('chevron-right', 15, 'muted')}</a>
+        <a href="#/app/reports" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('bar-chart-3', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Reports</div><div class="text-xs muted mt-0.5">Focus areas, revenue, appointments</div></div>${icon('chevron-right', 15, 'muted')}</a>
+        <a href="#/app/verification" class="card card-hover p-5 flex items-center gap-4"><div class="w-10 h-10 rounded-lg bg-brand-500/10 text-brand-600 grid place-items-center shrink-0">${icon('badge-check', 16)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Verification</div><div class="text-xs muted mt-0.5">${u.verified ? 'Your credentials are verified' : u.verificationSubmitted ? 'Submitted, under review' : 'Add your credentials'}</div></div>${u.verified ? statusBadge('verified') : ''}${icon('chevron-right', 15, 'muted')}</a>
       </div>`;
     if (tab === 'notifications') return `
       <div class="card p-6">
@@ -2457,7 +2514,7 @@ function PageSettings() {
             ['reminders','Appointment reminders','Before every appointment'],
             ['messages','New messages','When someone messages you'],
             ['focusAreas','Focus area updates','When clients add new areas'],
-            ['product','Product updates','Occasional news from TheraByte'],
+            ['product','Product updates','Occasional news from therabyte'],
           ].map(([key, t, s]) => `<label class="flex items-center gap-3 p-3 rounded-xl surface-2 cursor-pointer"><div class="flex-1"><div class="type-small font-medium">${t}</div><div class="text-xs muted mt-0.5">${s}</div></div><span class="switch"><input type="checkbox" ${notifPrefs[key] ? 'checked' : ''} onchange="toggleNotifPref('${key}', this.checked)"><span class="switch-slider"></span></span></label>`).join('')}
         </div>
       </div>`;
@@ -2465,11 +2522,11 @@ function PageSettings() {
       <div class="space-y-4">
         <div class="card p-6">
           <div class="type-h3 text-[15px] mb-4">Who can see what</div>
-          <div class="space-y-2">${[['Profile visibility','Who can see your profile', isPractitioner ? 'Clients only' : 'Practitioners only'],['Message requests','Who can message you','Existing connections'],['Online status','Show when you are active','Off'],['Focus areas','Who sees your focus areas', isPractitioner ? 'You only' : 'Your practitioner only']].map(([t, s, v]) => `<div class="p-3 rounded-xl surface-2 flex items-center justify-between gap-3"><div class="min-w-0"><div class="type-small font-medium">${t}</div><div class="text-xs muted mt-0.5">${s}</div></div><div class="text-xs font-semibold text-sage-600 whitespace-nowrap">${v}</div></div>`).join('')}</div>
+          <div class="space-y-2">${[['Profile visibility','Who can see your profile', isPractitioner ? 'Clients only' : 'Practitioners only'],['Message requests','Who can message you','Existing connections'],['Online status','Show when you are active','Off'],['Focus areas','Who sees your focus areas', isPractitioner ? 'You only' : 'Your practitioner only']].map(([t, s, v]) => `<div class="p-3 rounded-xl surface-2 flex items-center justify-between gap-3"><div class="min-w-0"><div class="type-small font-medium">${t}</div><div class="text-xs muted mt-0.5">${s}</div></div><div class="text-xs font-semibold text-brand-600 whitespace-nowrap">${v}</div></div>`).join('')}</div>
         </div>
         <div class="card p-6">
           <div class="type-h3 text-[15px] mb-3">Consent</div>
-          <label class="flex items-center gap-3 p-3 rounded-xl surface-2 cursor-pointer"><div class="flex-1"><div class="type-small font-medium">Share anonymized usage</div><div class="text-xs muted mt-0.5">Helps us improve TheraByte. No personal data is used.</div></div><span class="switch"><input type="checkbox" ${u.analyticsConsent ? 'checked' : ''} onchange="toggleAnalyticsConsent(this.checked)"><span class="switch-slider"></span></span></label>
+          <label class="flex items-center gap-3 p-3 rounded-xl surface-2 cursor-pointer"><div class="flex-1"><div class="type-small font-medium">Share anonymized usage</div><div class="text-xs muted mt-0.5">Helps us improve therabyte. No personal data is used.</div></div><span class="switch"><input type="checkbox" ${u.analyticsConsent ? 'checked' : ''} onchange="toggleAnalyticsConsent(this.checked)"><span class="switch-slider"></span></span></label>
         </div>
         <div class="card p-6">
           <div class="type-h3 text-[15px] mb-3">Policies</div>
@@ -2505,8 +2562,8 @@ function handlePhotoChange(input) {
   const reader = new FileReader();
   reader.onload = (e) => {
     const dataUrl = e.target.result;
-    State.savedAvatar = dataUrl;
-    localStorage.setItem(STORAGE_KEYS.AVATAR, dataUrl);
+    State.savedAvatar = { userId: State.user.id, dataUrl };
+    localStorage.setItem(STORAGE_KEYS.AVATAR, JSON.stringify(State.savedAvatar));
     if (State.user) {
       State.user.avatar = dataUrl;
       const u = USERS.find(x => x.id === State.user.id);
@@ -2557,7 +2614,7 @@ function BookingHeader(stepNum, totalSteps, title, subtitle) {
   const labels = ['Service','When & focus','Review'];
   return `<div class="mb-7">
     <div class="flex items-center justify-between gap-2 mb-4">${stepNum > 1 ? `<button onclick="bookStep=${stepNum-2};render()" class="btn btn-sm btn-ghost">${icon('arrow-left', 13)} Back</button>` : `<button onclick="navigate('/app/dashboard')" class="btn btn-sm btn-ghost">${icon('x', 13)} Cancel</button>`}<div class="text-xs muted font-medium">Step ${stepNum} of ${totalSteps}</div></div>
-    <div class="flex items-center gap-1 mb-5">${labels.map((l, i) => `<div class="flex-1 h-1 rounded-full ${i < stepNum ? 'bg-[rgb(var(--fg))]' : 'bg-[rgb(var(--border))]'} transition-colors"></div>`).join('')}</div>
+    <div class="flex items-center gap-1 mb-5">${labels.map((l, i) => `<div class="flex-1 h-1 rounded-full ${i < stepNum ? 'bg-brand-600' : 'bg-[rgb(var(--border))]'} transition-colors"></div>`).join('')}</div>
     <div class="section-eyebrow mb-1.5">Booking</div>
     <h1 class="type-h2 text-2xl sm:text-[30px]">${title}</h1>
     ${subtitle ? `<p class="type-small muted mt-2 max-w-2xl leading-relaxed">${subtitle}</p>` : ''}
@@ -2582,7 +2639,7 @@ function BookingSummaryPanel() {
         ${bookState.time ? `<div class="py-2.5 border-b border-dashed border-[rgb(var(--border))]"><div class="text-[10px] uppercase tracking-wider muted font-bold">Time</div><div class="type-small font-semibold mt-1">${bookState.time} <span class="muted font-normal">PST</span></div></div>` : ''}
         ${s ? `<div class="py-3"><div class="text-[10px] uppercase tracking-wider muted font-bold">Total</div><div class="font-display font-bold text-[24px] mt-1 tracking-[-0.02em]">${fmtMoney(total)}</div></div>` : ''}
       </div>
-      ${p?.verified ? `<div class="mt-3 p-3 rounded-lg bg-[rgb(var(--surface-2))] flex items-start gap-2"><span class="text-sage-600 mt-0.5">${icon('shield-check', 12)}</span><div class="text-xs muted leading-relaxed"><span class="font-semibold text-[rgb(var(--fg))]">Verified practitioner.</span> Credentials reviewed.</div></div>` : ''}
+      ${p?.verified ? `<div class="mt-3 p-3 rounded-lg bg-brand-500/5 flex items-start gap-2"><span class="text-brand-600 mt-0.5">${icon('shield-check', 12)}</span><div class="text-xs muted leading-relaxed"><span class="font-semibold text-[rgb(var(--fg))]">Verified practitioner.</span> Credentials reviewed.</div></div>` : ''}
     `}
   </div>`;
 }
@@ -2593,11 +2650,11 @@ function BookStep1() {
   const cats = [...new Set(services.map(s => s.category))];
   return `<div class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
     ${BookingHeader(1, 3, 'What kind of session do you need?', 'Base price shown. Focus areas add ₱50 to ₱150 each.')}
-    ${lastAppt ? (() => { const lp = getUser(lastAppt.practitioner); const ls = getService(lastAppt.service); const lastAreas = (lastAppt.areas || []).map(x => getArea(x)?.label).filter(Boolean); return `<div class="card p-4 mb-4 border-l-4 !border-l-sage-500"><div class="flex items-start gap-3 flex-wrap"><div class="w-9 h-9 rounded-lg bg-sage-500/12 text-sage-600 grid place-items-center shrink-0">${icon('history', 15)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Welcome back — continue with ${esc(lp.first)}?</div><div class="text-xs muted mt-1">Last session: ${esc(ls?.name || '')} on ${fmtDate(lastAppt.start, {month:'short', day:'numeric'})}${lastAreas.length ? ' · ' + lastAreas.join(', ') : ''}</div></div><button onclick="quickRebook()" class="btn btn-sm btn-primary">${icon('zap', 12)} Book again</button></div></div>`; })() : ''}
+    ${lastAppt ? (() => { const lp = getUser(lastAppt.practitioner); const ls = getService(lastAppt.service); const lastAreas = (lastAppt.areas || []).map(x => getArea(x)?.label).filter(Boolean); return `<div class="card p-4 mb-4 border-l-4 !border-l-brand-500"><div class="flex items-start gap-3 flex-wrap"><div class="w-9 h-9 rounded-lg bg-brand-500/12 text-brand-600 grid place-items-center shrink-0">${icon('history', 15)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold">Welcome back — continue with ${esc(lp.first)}?</div><div class="text-xs muted mt-1">Last session: ${esc(ls?.name || '')} on ${fmtDate(lastAppt.start, {month:'short', day:'numeric'})}${lastAreas.length ? ' · ' + lastAreas.join(', ') : ''}</div></div><button onclick="quickRebook()" class="btn btn-sm btn-primary">${icon('zap', 12)} Book again</button></div></div>`; })() : ''}
     <div class="grid lg:grid-cols-[1fr_280px] gap-6">
       <div class="space-y-4">
         <div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar"><button onclick="bookCat='';render()" class="chip ${!bookCat ? 'chip-on' : 'chip-off'} chip-sm">All</button>${cats.map(c => `<button onclick="bookCat='${c}';render()" class="chip ${bookCat === c ? 'chip-on' : 'chip-off'} chip-sm">${c}</button>`).join('')}</div>
-        <div class="space-y-3">${services.filter(s => !bookCat || s.category === bookCat).map(s => { const p = getUser(s.practitioner); const isLast = lastAppt && s.practitioner === lastAppt.practitioner; return `<button onclick="selectService('${s.id}')" class="w-full card card-hover p-5 text-left ${isLast ? '!border-sage-500/40 !ring-1 !ring-sage-500/20' : ''}"><div class="flex items-start gap-4">${avatar(p, 44)}<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-h3 text-[15px]">${esc(s.name)}</div>${isLast ? `<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-sage-500 text-white font-semibold">Last time</span>` : ''}</div><div class="text-xs muted mt-0.5">with <span class="font-medium text-[rgb(var(--fg))]">${esc(p.name)}</span></div><p class="type-small muted mt-2 leading-relaxed">${esc(s.description)}</p><div class="mt-3 flex flex-wrap items-center gap-3 text-xs muted"><span class="flex items-center gap-1">${icon('clock', 11)} ${s.duration} min</span><span class="flex items-center gap-1">${icon('map-pin', 11)} ${esc((p.location || '').split(',')[0])}</span></div></div><div class="text-right shrink-0"><div class="font-display font-bold text-base">${fmtMoney(s.price)}</div><div class="text-[10px] muted mt-0.5">base + areas</div><div class="text-[11px] mt-1.5 flex items-center gap-1 justify-end font-semibold text-sage-600">Choose ${icon('arrow-right', 10)}</div></div></div></button>`; }).join('')}</div>
+        <div class="space-y-3">${services.filter(s => !bookCat || s.category === bookCat).map(s => { const p = getUser(s.practitioner); const isLast = lastAppt && s.practitioner === lastAppt.practitioner; return `<button onclick="selectService('${s.id}')" class="w-full card card-hover p-5 text-left ${isLast ? '!border-brand-500/40 !ring-1 !ring-brand-500/20' : ''}"><div class="flex items-start gap-4">${avatar(p, 44)}<div class="flex-1 min-w-0"><div class="flex items-center gap-2 flex-wrap"><div class="type-h3 text-[15px]">${esc(s.name)}</div>${isLast ? `<span class="text-[10px] px-1.5 py-0.5 rounded-md text-white font-semibold" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">Last time</span>` : ''}</div><div class="text-xs muted mt-0.5">with <span class="font-medium text-[rgb(var(--fg))]">${esc(p.name)}</span></div><p class="type-small muted mt-2 leading-relaxed">${esc(s.description)}</p><div class="mt-3 flex flex-wrap items-center gap-3 text-xs muted"><span class="flex items-center gap-1">${icon('clock', 11)} ${s.duration} min</span><span class="flex items-center gap-1">${icon('map-pin', 11)} ${esc((p.location || '').split(',')[0])}</span></div></div><div class="text-right shrink-0"><div class="font-display font-bold text-base">${fmtMoney(s.price)}</div><div class="text-[10px] muted mt-0.5">base + areas</div><div class="text-[11px] mt-1.5 flex items-center gap-1 justify-end font-semibold text-brand-600">Choose ${icon('arrow-right', 10)}</div></div></div></button>`; }).join('')}</div>
       </div>
       <div class="hidden lg:block">${BookingSummaryPanel()}</div>
     </div>
@@ -2633,15 +2690,15 @@ function BookStep2() {
     ${BookingHeader(2, 3, 'When, and what hurts?', 'Pick a time, then mark the areas that need attention. The total updates live.')}
     <div class="grid lg:grid-cols-[1fr_280px] gap-6">
       <div class="space-y-4">
-        <div class="card p-4 flex items-center gap-3">${avatar(p, 40)}<div class="min-w-0 flex-1"><div class="text-xs muted mb-0.5">Booking with</div><div class="type-small font-semibold truncate">${esc(p.name)}</div><div class="text-xs muted truncate mt-0.5">${esc(s.name)} · ${s.duration} min · base ${fmtMoney(s.price)}</div></div><button onclick="bookStep=0;render()" class="text-xs text-sage-600 font-semibold hover:underline">Change</button></div>
-        ${nextAvail ? `<button onclick="bookState.date='${nextAvail.date.toISOString()}';bookViewMonth=null;bookState.time='${nextAvail.time}';render()" class="w-full card card-hover p-4 text-left border-l-4 !border-l-sage-500"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg bg-sage-500 text-white grid place-items-center shrink-0">${icon('zap', 15)}</div><div class="flex-1 min-w-0"><div class="text-[10px] font-bold tracking-widest uppercase text-sage-600">Next available</div><div class="type-small font-semibold mt-0.5">${fmtDate(nextAvail.date, {weekday:'long', month:'short', day:'numeric'})} at ${nextAvail.time}</div></div>${icon('arrow-right', 14, 'muted')}</div></button>` : ''}
+        <div class="card p-4 flex items-center gap-3">${avatar(p, 40)}<div class="min-w-0 flex-1"><div class="text-xs muted mb-0.5">Booking with</div><div class="type-small font-semibold truncate">${esc(p.name)}</div><div class="text-xs muted truncate mt-0.5">${esc(s.name)} · ${s.duration} min · base ${fmtMoney(s.price)}</div></div><button onclick="bookStep=0;render()" class="text-xs text-brand-600 font-semibold hover:underline">Change</button></div>
+        ${nextAvail ? `<button onclick="bookState.date='${nextAvail.date.toISOString()}';bookViewMonth=null;bookState.time='${nextAvail.time}';render()" class="w-full card card-hover p-4 text-left border-l-4 !border-l-brand-500"><div class="flex items-center gap-3"><div class="w-9 h-9 rounded-lg text-white grid place-items-center shrink-0" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${icon('zap', 15)}</div><div class="flex-1 min-w-0"><div class="text-[10px] font-bold tracking-widest uppercase text-brand-600">Next available</div><div class="type-small font-semibold mt-0.5">${fmtDate(nextAvail.date, {weekday:'long', month:'short', day:'numeric'})} at ${nextAvail.time}</div></div>${icon('arrow-right', 14, 'muted')}</div></button>` : ''}
         <div class="card p-5">
-          <div class="flex items-start gap-3 mb-4"><div class="w-9 h-9 rounded-lg bg-sage-500 text-white grid place-items-center shrink-0">${icon('sparkles', 15)}</div><div class="flex-1 min-w-0"><div class="type-h3 text-[14px] flex items-center gap-2 flex-wrap">Where does it hurt?<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-[rgb(var(--surface-2))] muted font-semibold uppercase tracking-wider">Optional</span></div><div class="text-xs muted mt-1">Tap the body, or the list. Each area adds ₱50 to ₱150 on the base price.</div>${areas.length ? `<div class="text-xs font-semibold text-sage-600 mt-2">${areas.length} area${areas.length>1?'s':''} · +${fmtMoney(areas.reduce((acc, id) => acc + areaAddOn(id), 0))}</div>` : ''}</div></div>
-          ${lastAreas.length && !areas.length ? `<div class="mb-4 p-3 rounded-lg surface-2"><div class="text-xs muted mb-2">From your last session with ${esc(p.first)}:</div><div class="flex flex-wrap gap-1.5 mb-2">${lastAreas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-sage-500/12 text-sage-700 dark:text-sage-300">${x}</span>`).join('')}</div><button onclick="applyLastAreas()" class="text-xs text-sage-600 font-semibold hover:underline flex items-center gap-1">${icon('rotate-ccw', 11)} Use these again</button></div>` : ''}
+          <div class="flex items-start gap-3 mb-4"><div class="w-9 h-9 rounded-lg text-white grid place-items-center shrink-0" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${icon('sparkles', 15)}</div><div class="flex-1 min-w-0"><div class="type-h3 text-[14px] flex items-center gap-2 flex-wrap">Where does it hurt?<span class="text-[10px] px-1.5 py-0.5 rounded-md bg-[rgb(var(--surface-2))] muted font-semibold uppercase tracking-wider">Optional</span></div><div class="text-xs muted mt-1">Tap the body, or the list. Each area adds ₱50 to ₱150 on the base price.</div>${areas.length ? `<div class="text-xs font-semibold text-brand-600 mt-2">${areas.length} area${areas.length>1?'s':''} · +${fmtMoney(areas.reduce((acc, id) => acc + areaAddOn(id), 0))}</div>` : ''}</div></div>
+          ${lastAreas.length && !areas.length ? `<div class="mb-4 p-3 rounded-lg surface-2"><div class="text-xs muted mb-2">From your last session with ${esc(p.first)}:</div><div class="flex flex-wrap gap-1.5 mb-2">${lastAreas.map(x => `<span class="text-[10px] px-2 py-0.5 rounded-md bg-brand-500/12 text-brand-700 dark:text-brand-300">${x}</span>`).join('')}</div><button onclick="applyLastAreas()" class="text-xs text-brand-600 font-semibold hover:underline flex items-center gap-1">${icon('rotate-ccw', 11)} Use these again</button></div>` : ''}
           <div class="flex flex-wrap gap-2 mb-5">${BODY_PACKS.map(pk => { const pkTotal = pk.areas.reduce((acc, id) => acc + areaAddOn(id), 0); return `<button onclick="applyPack('${pk.id}')" class="chip chip-off chip-sm !gap-1.5">${icon(pk.icon, 11)} ${pk.label} <span class="text-[10px] muted">+${fmtMoney(pkTotal)}</span></button>`; }).join('')}${areas.length ? `<button onclick="bookState.areas=[];render()" class="chip chip-off chip-sm">${icon('x', 11)} Clear</button>` : ''}</div>
           <div class="grid md:grid-cols-[220px_1fr] gap-5">
             <div class="surface-2 rounded-xl p-4 flex justify-center">${BodyMapSVG(areas, true, true)}</div>
-            <div class="max-h-[440px] overflow-y-auto pr-1 space-y-1.5">${BODY_AREAS.map(a => { const on = areas.includes(a.id); return `<button onclick="toggleArea('${a.id}')" class="w-full flex items-start gap-3 p-3 rounded-lg text-left transition ${on?'bg-sage-500/12 border border-sage-500/30':'surface-2 hover:bg-sage-500/5 border border-transparent'}"><div class="w-4 h-4 rounded border-2 shrink-0 mt-0.5 grid place-items-center ${on?'bg-sage-500 border-sage-500':'border-[rgb(var(--border-strong))]'}">${on?icon('check', 10, 'text-white'):''}</div><div class="flex-1 min-w-0"><div class="type-small font-medium flex items-center flex-wrap">${esc(a.label)}<span class="area-price">+₱${areaAddOn(a.id)}</span></div><div class="text-xs muted mt-0.5">${esc(a.hint)}</div></div></button>`; }).join('')}</div>
+            <div class="max-h-[440px] overflow-y-auto pr-1 space-y-1.5">${BODY_AREAS.map(a => { const on = areas.includes(a.id); return `<button onclick="toggleArea('${a.id}')" class="w-full flex items-start gap-3 p-3 rounded-lg text-left transition ${on?'bg-brand-500/10 border border-brand-500/30':'surface-2 hover:bg-brand-500/5 border border-transparent'}"><div class="w-4 h-4 rounded border-2 shrink-0 mt-0.5 grid place-items-center ${on?'bg-brand-500 border-brand-500':'border-[rgb(var(--border-strong))]'}">${on?icon('check', 10, 'text-white'):''}</div><div class="flex-1 min-w-0"><div class="type-small font-medium flex items-center flex-wrap">${esc(a.label)}<span class="area-price">+₱${areaAddOn(a.id)}</span></div><div class="text-xs muted mt-0.5">${esc(a.hint)}</div></div></button>`; }).join('')}</div>
           </div>
         </div>
         <div class="grid md:grid-cols-2 gap-4">
@@ -2715,12 +2772,12 @@ function BookStep3() {
     <div class="card overflow-hidden mb-4">
       <div class="p-5 flex items-center gap-4 border-b border-[rgb(var(--border))]">${avatar(p, 48)}<div class="min-w-0 flex-1"><div class="type-h3 text-[15px] truncate">${esc(p.name)}</div><div class="text-xs muted truncate mt-0.5">${esc(p.title)} · ${esc(p.location)}</div></div></div>
       <div class="p-5 grid grid-cols-2 gap-4 type-small"><div><div class="text-xs muted mb-1">Service</div><div class="font-medium">${esc(s.name)}</div><div class="text-xs muted mt-0.5">${s.duration} min</div></div><div><div class="text-xs muted mb-1">When</div><div class="font-medium">${fmtDate(d, {weekday:'short', month:'short', day:'numeric'})}</div><div class="text-xs muted mt-0.5">${bookState.time} PST</div></div></div>
-      ${areas.length ? `<div class="p-5 border-t border-dashed border-[rgb(var(--border))]"><div class="text-xs muted mb-2">Focus areas</div><div class="flex flex-wrap gap-1.5">${areas.map(a => `<span class="chip chip-on !min-h-0 !py-1 !px-3 !text-xs">${esc(a.label)} <span class="opacity-80 ml-1">+₱${areaAddOn(a.id)}</span></span>`).join('')}</div></div>` : ''}
+      ${areas.length ? `<div class="p-5 border-t border-dashed border-[rgb(var(--border))]"><div class="text-xs muted mb-2">Focus areas</div><div class="flex flex-wrap gap-1.5">${areas.map(a => `<span class="chip chip-on !min-h-0 !py-1 !px-3 !text-xs">${esc(a.label)} <span class="opacity-85 ml-1">+₱${areaAddOn(a.id)}</span></span>`).join('')}</div></div>` : ''}
       <div class="p-5 border-t border-dashed border-[rgb(var(--border))] space-y-2"><div class="flex items-center justify-between type-small"><span class="muted">Base</span><span>${fmtMoney(base)}</span></div>${addOn > 0 ? `<div class="flex items-center justify-between type-small"><span class="muted">Focus areas (${areas.length})</span><span>+${fmtMoney(addOn)}</span></div>` : ''}<div class="divider my-2"></div><div class="flex items-center justify-between"><div class="type-h3 text-[14px]">Total</div><div class="font-display font-bold text-xl tracking-[-0.02em]">${fmtMoney(total)}</div></div></div>
     </div>
     <div class="p-3 rounded-lg surface-2 text-xs muted flex items-start gap-2 mb-4">${icon('info', 11)}<span>Free cancellation up to 24 hours before. Reminders go out 24 hours and 2 hours ahead.</span></div>
     <button onclick="confirmBooking()" class="btn btn-lg btn-primary w-full">Confirm booking · ${fmtMoney(total)}</button>
-    <p class="text-xs muted text-center mt-4 leading-relaxed">By confirming, you agree to our <a href="#/terms" class="text-sage-600 hover:underline">Terms</a> and <a href="#/privacy" class="text-sage-600 hover:underline">Privacy Policy</a>.</p>
+    <p class="text-xs muted text-center mt-4 leading-relaxed">By confirming, you agree to our <a href="#/terms" class="text-brand-600 hover:underline">Terms</a> and <a href="#/privacy" class="text-brand-600 hover:underline">Privacy Policy</a>.</p>
   </div>`;
 }
 function BookSuccess() {
@@ -2734,7 +2791,7 @@ function BookSuccess() {
   const total = base + addOn;
   return `<div class="max-w-lg mx-auto px-4 sm:px-6 py-10">
     <div class="text-center mb-8">
-      <div class="w-16 h-16 rounded-full bg-sage-500 text-white grid place-items-center mx-auto mb-4 animate-pop">${icon('check', 30)}</div>
+      <div class="w-16 h-16 rounded-full text-white grid place-items-center mx-auto mb-4 animate-pop" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${icon('check', 30)}</div>
       <h1 class="type-h2 text-3xl">You're all set</h1>
       <p class="type-small muted mt-2">Details sent to your email.</p>
       <div class="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-lg surface-2 text-xs type-mono">${icon('hash', 10)} ${esc(ref || '')}</div>
@@ -2746,7 +2803,7 @@ function BookSuccess() {
       <div class="pt-4 mt-4 border-t border-dashed border-[rgb(var(--border))] flex items-center justify-between"><div class="type-h3 text-[14px]">Total</div><div class="font-display font-bold text-lg">${fmtMoney(total)}</div></div>
     </div>
     <a href="#/app/appointments" class="btn btn-outline w-full">View my sessions</a>
-    <a href="#/app/dashboard" class="btn btn-ghost w-full mt-2 text-sage-600 font-semibold">Back to home</a>
+    <a href="#/app/dashboard" class="btn btn-ghost w-full mt-2 text-brand-600 font-semibold">Back to home</a>
   </div>`;
 }
 function PageBook() {
@@ -2754,7 +2811,7 @@ function PageBook() {
   if (upcoming) {
     const pr = getUser(upcoming.practitioner); const s = getService(upcoming.service);
     return `<div class="max-w-xl mx-auto px-4 sm:px-6 py-12"><div class="card p-8 text-center">
-      <div class="w-14 h-14 rounded-xl bg-[rgb(var(--surface-2))] text-sage-600 grid place-items-center mx-auto mb-4">${icon('calendar-check', 26)}</div>
+      <div class="w-14 h-14 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center mx-auto mb-4">${icon('calendar-check', 26)}</div>
       <h1 class="type-h2 text-2xl">You already have an upcoming session</h1>
       <p class="type-small muted mt-2 max-w-md mx-auto leading-relaxed">Book again once this one is done. One session at a time keeps your calendar clear.</p>
       <div class="mt-6 p-4 rounded-xl surface-2 text-left"><div class="flex items-center gap-3 mb-3">${avatar(pr, 38)}<div class="min-w-0 flex-1"><div class="type-small font-semibold truncate">${esc(pr.name)}</div><div class="text-xs muted truncate mt-0.5">${esc(s?.name || '')}</div></div></div><div class="type-small"><strong>${fmtDate(upcoming.start, {weekday:'long', month:'long', day:'numeric'})}</strong> · ${fmtTime(upcoming.start)}</div></div>
@@ -2809,9 +2866,9 @@ function confirmBooking() {
    404
    ============================================================ */
 function Page404() { return `<div class="min-h-screen flex flex-col">
-  <header class="border-b border-[rgb(var(--border))]"><div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between"><a href="#/">${LogoMark()}</a><div class="flex items-center gap-3">${GroupCreditBadge()}<div data-theme-toggle></div><a href="${State.user ? '#/app/dashboard' : '#/login'}" class="btn btn-sm ${State.user ? 'btn-outline' : 'btn-primary'}">${State.user ? 'Back to app' : 'Sign in'}</a></div></div></header>
+  <header class="border-b border-[rgb(var(--border))]"><div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">${LogoMark()}<div class="flex items-center gap-3">${GroupCreditBadge()}<div data-theme-toggle></div><a href="${State.user ? '#/app/dashboard' : '#/login'}" class="btn btn-sm ${State.user ? 'btn-outline' : 'btn-primary'}">${State.user ? 'Back to app' : 'Sign in'}</a></div></div></header>
   <div class="flex-1 grid place-items-center px-4 py-20"><div class="text-center max-w-md">
-    <div class="w-16 h-16 rounded-xl bg-[rgb(var(--surface-2))] text-[rgb(var(--muted))] grid place-items-center mx-auto mb-6">${icon('compass', 30)}</div>
+    <div class="w-16 h-16 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center mx-auto mb-6">${icon('compass', 30)}</div>
     <div class="font-display font-bold text-5xl tracking-tight">404</div>
     <div class="type-h3 text-lg mt-3">Page not found</div>
     <p class="type-small muted mt-3">Let's get you back on track.</p>
@@ -2821,13 +2878,14 @@ function Page404() { return `<div class="min-h-screen flex flex-col">
 </div>`; }
 
 /* ============================================================
-   RENDER — FIXED ROUTER
+   RENDER
    ============================================================ */
 function render() {
   const root = $('#root');
   const { path, parts } = getRoute();
   const top = parts[0] || '';
   const sub = parts.slice(1);
+  _logoCounter = 0;
 
   if (!path || path === '') root.innerHTML = Landing();
   else if (top === 'login') root.innerHTML = LoginPage();
@@ -2876,8 +2934,6 @@ function render() {
   });
 }
 
-/* Track the previous route so we can reset the booking flow when the user
-   re-enters /app/book fresh (avoids showing a stale success screen). */
 let prevRouteKey = null;
 function currentRouteKey() { const { path, parts } = getRoute(); return path + '|' + parts.join('/'); }
 window.addEventListener('hashchange', () => {
