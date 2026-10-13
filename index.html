@@ -7,6 +7,13 @@
 <meta name="author" content="LvDiagnostech">
 <meta name="description" content="Booking and intake for bodywork practitioners. Heal with care, grow with nature.">
 <meta name="theme-color" content="#2E7D32">
+<meta name="color-scheme" content="light dark">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="therabyte — Know what to work on before they arrive">
+<meta property="og:description" content="Booking and intake for massage therapists, physiotherapists, and bodyworkers. Clients mark what hurts on a body map.">
+<meta property="og:url" content="https://fawn-ten-82.vercel.app/">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='100%25' x2='100%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%231B5E20'/%3E%3Cstop offset='50%25' stop-color='%234CAF50'/%3E%3Cstop offset='100%25' stop-color='%238BC34A'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='url(%23g)' stroke-width='3.5'/%3E%3Ccircle cx='50' cy='31' r='9.5' fill='url(%23g)'/%3E%3Cpath d='M 32 62 C 32 46 40 42 50 42 C 60 42 68 46 68 62 L 68 73 L 32 73 Z' fill='url(%23g)'/%3E%3Cpath d='M 20 76 C 18 70 22 63 30 63 L 36 67 L 42 65 L 46 69 L 44 76 C 38 80 26 80 20 76 Z' fill='url(%23g)'/%3E%3Cpath d='M 80 76 C 82 70 78 63 70 63 L 64 67 L 58 65 L 54 69 L 56 76 C 62 80 74 80 80 76 Z' fill='url(%23g)'/%3E%3Cpath d='M 82 30 Q 92 20 102 28 Q 100 42 88 42 Q 80 38 82 30 Z' fill='%232E7D32'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -378,6 +385,14 @@ body.scrolled header.sticky { box-shadow: 0 6px 24px -10px rgba(20,23,25,0.10); 
 
 /* Error boundary */
 .error-boundary { max-width: 520px; margin: 80px auto; text-align: center; }
+
+/* ---------- a11y + touch polish ---------- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+button, .chip, .tab, .nav-item { touch-action: manipulation; }
+body.modal-open { overflow: hidden; }
 
 @media print { .no-print { display: none !important; } body { background: white; } }
 </style>
@@ -762,7 +777,6 @@ function renderThemeToggle() {
 function toast(msg, kind='success') {
   const k = { success:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'}, error:{bg:'#B91C1C',ic:'alert-circle'}, info:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'info'}, warning:{bg:'#A16207',ic:'alert-triangle'} }[kind] || { success:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'} }[kind] || {bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'};
   const root = $('#toast-root');
-  // Cap: if 3+ toasts, remove the oldest
   while (root.children.length >= 3) root.removeChild(root.firstElementChild);
   const el = document.createElement('div');
   el.className = 'pointer-events-auto surface shadow-lift rounded-xl px-4 py-3 flex items-center gap-3';
@@ -2317,21 +2331,17 @@ async function sendMessage(form, convoId) {
   if (!text) return;
   const c = CONVERSATIONS.find(x => x.id === convoId);
   if (!c) return;
-  // Optimistic: append locally first
   const optimistic = { id:'m'+Date.now(), from: State.user.id, text, at: new Date().toISOString(), read: false, _pending: true };
   c.messages.push(optimistic);
   c.lastAt = optimistic.at;
   c.unread = 0;
   persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS);
   input.value = '';
-  // Render immediately (optimistic UI)
   render();
-  // Then reconcile
   try {
     await API.sendMessage(convoId, State.user.id, text);
   } catch (e) {
     toast('Message failed to send', 'error');
-    // Roll back the optimistic message
     const cc = CONVERSATIONS.find(x => x.id === convoId);
     if (cc) cc.messages = cc.messages.filter(m => m.id !== optimistic.id);
     persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS);
@@ -3164,10 +3174,8 @@ function render() {
       z.addEventListener('click', fire);
       z.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); fire(); } });
     });
-    // Auto-scroll message thread to bottom
     const thread = document.querySelector('[data-thread]');
     if (thread) requestAnimationFrame(() => { thread.scrollTop = thread.scrollHeight; });
-    // Scroll reveal
     requestAnimationFrame(setupReveals);
   } catch (e) {
     renderError(e);
@@ -3243,5 +3251,155 @@ requestAnimationFrame(() => {
   if (root) { root.classList.add('page-enter'); setTimeout(() => root.classList.remove('page-enter'), 500); }
 });
 </script>
+
+<div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true"></div>
+<script>
+/* ============================================================
+   POLISH LAYER
+   Patches applied on top of the main script.
+   1. UTC date drift fix for YYYY-MM-DD strings
+   2. Per-route document title
+   3. Screen reader announcements
+   4. Focus management on navigation
+   5. Toast container aria-live
+   6. Modal background isolation (WCAG 2.1.2)
+   7. Email sanity check for register
+   ============================================================ */
+(function () {
+  'use strict';
+
+  /* --- 1. Fix UTC date drift for YYYY-MM-DD strings --- */
+  var ISO_DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
+  function asLocalDate(d) {
+    if (typeof d === 'string' && ISO_DATE_ONLY.test(d)) {
+      var p = d.split('-').map(Number);
+      return new Date(p[0], p[1] - 1, p[2]);
+    }
+    return d;
+  }
+  var _fmtDate = window.fmtDate;
+  window.fmtDate = function (d, o) { return _fmtDate(asLocalDate(d), o); };
+
+  var _fmtTime = window.fmtTime;
+  window.fmtTime = function (d) { return _fmtTime(asLocalDate(d)); };
+
+  var _toDateInputValue = window.toDateInputValue;
+  window.toDateInputValue = function (d) { return _toDateInputValue(asLocalDate(d)); };
+
+  /* --- 2. Per-route document title --- */
+  var TITLES = {
+    '': 'therabyte — Booking & intake for bodywork',
+    'login': 'Sign in — therabyte',
+    'register': 'Create account — therabyte',
+    'forgot': 'Reset password — therabyte',
+    'about': 'About — therabyte',
+    'help': 'Help Center — therabyte',
+    'privacy': 'Privacy Policy — therabyte',
+    'terms': 'Terms of Service — therabyte',
+    'onboard': 'Get started — therabyte',
+    'self-care': 'Self-care guides — therabyte'
+  };
+  var APP_TITLES = {
+    dashboard: 'Home', calendar: 'Calendar', appointments: 'Appointments',
+    clients: 'Clients', services: 'Services', availability: 'Hours',
+    reports: 'Reports', verification: 'Verification', invoices: 'Invoices',
+    notifications: 'Notifications', messages: 'Messages', settings: 'Settings',
+    book: 'Book a session', 'self-care': 'Self-care'
+  };
+  function applyTitle() {
+    var path = (location.hash.replace(/^#\/?/, '').split('?')[0] || '');
+    var parts = path.split('/').filter(Boolean);
+    var top = parts[0] || '';
+    var title = TITLES[top];
+    if (!title && top === 'app') {
+      title = (APP_TITLES[parts[1]] || 'App') + ' — therabyte';
+    }
+    if (title) document.title = title;
+  }
+
+  /* --- 3. Screen reader announcements --- */
+  function announce(msg) {
+    var el = document.getElementById('sr-announcer');
+    if (!el) return;
+    el.textContent = '';
+    requestAnimationFrame(function () { el.textContent = msg; });
+  }
+
+  /* --- 4. Focus management on navigation --- */
+  var lastHash = location.hash;
+  function onRouteChange() {
+    if (location.hash === lastHash) return;
+    lastHash = location.hash;
+    applyTitle();
+    announce(document.title);
+    requestAnimationFrame(function () {
+      var main = document.querySelector('main') || document.getElementById('root');
+      if (!main) return;
+      if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
+      try { main.focus({ preventScroll: true }); } catch (e) { main.focus(); }
+    });
+    window.scrollTo({ top: 0, behavior: 'auto' });
+  }
+  window.addEventListener('hashchange', onRouteChange);
+  applyTitle();
+
+  /* --- 5. Toast container aria-live --- */
+  var toastRoot = document.getElementById('toast-root');
+  if (toastRoot) {
+    toastRoot.setAttribute('role', 'status');
+    toastRoot.setAttribute('aria-live', 'polite');
+    toastRoot.setAttribute('aria-atomic', 'false');
+  }
+
+  /* --- 6. Modal isolates the background (WCAG 2.1.2) --- */
+  var appRoot = document.getElementById('root');
+  var supportsInert = 'inert' in HTMLElement.prototype;
+  function lockBackground() {
+    if (!appRoot) return;
+    if (supportsInert) {
+      appRoot.inert = true;
+    } else {
+      appRoot.setAttribute('aria-hidden', 'true');
+    }
+    document.body.classList.add('modal-open');
+  }
+  function unlockBackground() {
+    if (!appRoot) return;
+    if (supportsInert) {
+      appRoot.inert = false;
+    } else {
+      appRoot.removeAttribute('aria-hidden');
+    }
+    document.body.classList.remove('modal-open');
+  }
+  var _modal = window.modal;
+  window.modal = function (opts) {
+    _modal(opts);
+    lockBackground();
+    var root = document.getElementById('modal-root');
+    var dialog = root && root.querySelector('[role="dialog"]');
+    if (dialog && !dialog.hasAttribute('tabindex')) dialog.setAttribute('tabindex', '-1');
+  };
+  var _closeModal = window.closeModal;
+  window.closeModal = function () {
+    _closeModal();
+    unlockBackground();
+  };
+
+  /* --- 7. Email sanity check for register --- */
+  var _handleRegister = window.handleRegister;
+  var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  window.handleRegister = function (form) {
+    var email = (form.email.value || '').trim();
+    if (!EMAIL_RE.test(email)) {
+      window.toast('Please enter a valid email address', 'error');
+      return;
+    }
+    return _handleRegister(form);
+  };
+
+  console.info('[therabyte] polish layer active — date drift, a11y, focus, modal isolation.');
+})();
+</script>
 </body>
-  </html>
+</html>
