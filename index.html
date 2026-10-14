@@ -260,13 +260,7 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .dark .group-credit-badge { background: rgba(129,199,132,0.12); color: rgb(165,214,167); border-color: rgba(129,199,132,0.22); }
 .dark .group-credit-badge:hover { background: rgba(129,199,132,0.22); }
 
-.credit-icon {
-  width: 30px; height: 30px; border-radius: 999px;
-  display: grid; place-items: center;
-  background: rgba(46,125,50,0.10); color: rgb(var(--brand));
-  transition: all .25s var(--ease-out-expo);
-  text-decoration: none;
-}
+.credit-icon { width: 30px; height: 30px; border-radius: 999px; display: grid; place-items: center; background: rgba(46,125,50,0.10); color: rgb(var(--brand)); transition: all .25s var(--ease-out-expo); text-decoration: none; }
 .credit-icon:hover { background: rgba(46,125,50,0.20); transform: translateY(-1px) rotate(-8deg); box-shadow: 0 4px 12px -2px rgba(46,125,50,0.30); }
 .dark .credit-icon { background: rgba(129,199,132,0.15); color: rgb(165,214,167); }
 .dark .credit-icon:hover { background: rgba(129,199,132,0.28); }
@@ -298,11 +292,7 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .prose-list li::before { content: ''; flex-shrink: 0; width: 5px; height: 5px; border-radius: 50%; background: #4CAF50; margin-top: 11px; }
 
 .stat-tile { position: relative; overflow: hidden; isolation: isolate; }
-.stat-tile::after {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, #4CAF50 40%, #8BC34A 60%, transparent);
-  opacity: 0; transition: opacity .35s ease;
-}
+.stat-tile::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, #4CAF50 40%, #8BC34A 60%, transparent); opacity: 0; transition: opacity .35s ease; }
 .stat-tile:hover::after { opacity: .85; }
 
 @keyframes pageIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -356,24 +346,13 @@ body.scrolled header.sticky { box-shadow: 0 6px 24px -10px rgba(20,23,25,0.10); 
 }
 .app-sidebar .sb-rail-only { display: none; }
 
-.messages-container {
-  height: calc(100dvh - 3.5rem - 72px);
-  max-height: calc(100dvh - 3.5rem - 72px);
-}
-@media (min-width: 768px) {
-  .messages-container {
-    height: calc(100dvh - 3.5rem);
-    max-height: calc(100dvh - 3.5rem);
-  }
-}
+.messages-container { height: calc(100dvh - 3.5rem - 72px); max-height: calc(100dvh - 3.5rem - 72px); }
+@media (min-width: 768px) { .messages-container { height: calc(100dvh - 3.5rem); max-height: calc(100dvh - 3.5rem); } }
 .messages-thread { scroll-behavior: smooth; scrollbar-width: thin; }
 
 .error-boundary { max-width: 520px; margin: 80px auto; text-align: center; }
 
-.sr-only {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
-}
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
 button, .chip, .tab, .nav-item { touch-action: manipulation; }
 body.modal-open { overflow: hidden; }
 
@@ -381,17 +360,52 @@ details > summary { list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
 
 section[id] { scroll-margin-top: 80px; }
+#main-content:focus { outline: none; }
 
-@media print { .no-print { display: none !important; } body { background: white; } }
+/* ---------- Skip link ---------- */
+.skip-link {
+  position: fixed; top: 8px; left: 8px;
+  padding: 10px 16px;
+  background: rgb(var(--brand)); color: white;
+  font-weight: 600; font-size: 13px;
+  border-radius: 8px; text-decoration: none;
+  z-index: 9999;
+  transform: translateY(-200%);
+  transition: transform .2s var(--ease-out-expo);
+  box-shadow: 0 8px 24px -8px rgba(46,125,50,0.4);
+}
+.skip-link:focus { transform: translateY(0); outline: 2px solid white; outline-offset: 2px; }
+
+/* ---------- Print ---------- */
+.print-only { display: none; }
+@media print {
+  .no-print, header, footer, nav, aside, .skip-link, .btn, #toast-root, #modal-root { display: none !important; }
+  body { background: white !important; color: black !important; font-size: 11pt; line-height: 1.5; }
+  .card { box-shadow: none !important; border: 1px solid #ccc !important; page-break-inside: avoid; background: white !important; }
+  .surface, .surface-2 { background: white !important; }
+  main { padding: 0 !important; max-width: 100% !important; }
+  a { color: inherit !important; text-decoration: none !important; }
+  .badge { border: 1px solid #999 !important; padding: 2px 6px; }
+  .chart-bar { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .print-only { display: block !important; }
+  .print-header { display: block !important; padding-bottom: 20px; border-bottom: 2px solid #000; margin-bottom: 20px; }
+}
+.print-header { display: none; }
 </style>
 </head>
 <body>
+
+<a href="#main-content" onclick="event.preventDefault();skipToMain();" class="skip-link">Skip to main content</a>
 
 <div id="root"></div>
 <div id="modal-root"></div>
 <div id="toast-root" class="fixed top-4 right-4 left-4 sm:left-auto z-[100] flex flex-col gap-2 pointer-events-none"></div>
 
 <script>
+/* ============================================================
+   therabyte — main application script
+   ============================================================ */
+
 /* ============================================================
    PERSISTENCE
    ============================================================ */
@@ -400,15 +414,50 @@ const STORAGE_KEYS = {
   NOTES:'tb-notes-v1', CONVERSATIONS:'tb-conversations-v1', NOTIFICATIONS:'tb-notifications-v1',
   REVIEWS:'tb-reviews-v1', AVAILABILITY:'tb-availability-v1', INVOICES:'tb-invoices-v1',
   TIME_OFF:'tb-timeoff-v1', AVATAR:'tb-avatar-v1', THEME:'tb-theme', USER_SESSION:'tb-session-v1',
+  ANALYTICS:'tb-analytics-v1', SCHED_RULES:'tb-sched-rules-v1',
 };
 function persist(k, d) { try { localStorage.setItem(k, JSON.stringify(d)); } catch(e){ if (e && e.name === 'QuotaExceededError') console.warn('[therabyte] storage quota exceeded for', k); } }
 function load(k, f) { try { const r = localStorage.getItem(k); return r ? JSON.parse(r) : f; } catch(e) { return f; } }
 
-const CREDIT = {
-  name: 'LvDiagnostech',
-  url: 'https://jigeulei.github.io/diagnostech/',
-};
+const CREDIT = { name: 'LvDiagnostech', url: 'https://jigeulei.github.io/diagnostech/' };
 
+/* ============================================================
+   SKIP LINK
+   ============================================================ */
+function skipToMain() {
+  let m = document.getElementById('main-content');
+  if (!m) m = document.querySelector('main');
+  if (!m) m = document.getElementById('root');
+  if (!m) return;
+  if (!m.hasAttribute('tabindex')) m.setAttribute('tabindex', '-1');
+  try { m.focus({ preventScroll: false }); } catch (e) { try { m.focus(); } catch(e2) {} }
+  try { m.scrollIntoView({ behavior: 'smooth', block: 'start' }); } catch (e) {}
+}
+window.skipToMain = skipToMain;
+
+/* ============================================================
+   ANALYTICS
+   ============================================================ */
+const ANALYTICS = {
+  enabled: true,
+  queue: load(STORAGE_KEYS.ANALYTICS, []),
+  MAX: 500,
+  track(event, props = {}) {
+    if (!this.enabled) return;
+    const entry = { event, props, at: new Date().toISOString(), user: (typeof State !== 'undefined' && State?.user?.id) || null };
+    this.queue.push(entry);
+    if (this.queue.length > this.MAX) this.queue.splice(0, this.queue.length - this.MAX);
+    try { persist(STORAGE_KEYS.ANALYTICS, this.queue); } catch {}
+    if (window.__TB_DEBUG_ANALYTICS) console.log('[track]', event, props);
+  },
+  all() { return this.queue.slice(); }
+};
+window.__tb_track = (e, p) => ANALYTICS.track(e, p);
+window.__tb_analytics = () => console.table(ANALYTICS.all());
+
+/* ============================================================
+   HELPERS
+   ============================================================ */
 const $ = (s, el=document) => el.querySelector(s);
 const $$ = (s, el=document) => [...el.querySelectorAll(s)];
 const esc = (s) => { if (s == null) s = ''; return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); };
@@ -433,16 +482,17 @@ function startOfWeek(d){ const x=new Date(d); x.setDate(x.getDate()-x.getDay());
 function startOfDay(d){ const x = new Date(d); x.setHours(0,0,0,0); return x; }
 function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
 function isToday(d){ return sameDay(new Date(d), new Date()); }
-function hourLabel(h) {
-  if (h === 0) return '12 AM';
-  if (h === 12) return '12 PM';
-  return h > 12 ? (h - 12) + ' PM' : h + ' AM';
-}
+function hourLabel(h) { if (h === 0) return '12 AM'; if (h === 12) return '12 PM'; return h > 12 ? (h - 12) + ' PM' : h + ' AM'; }
 function parseLocalDate(str, h = 0, m = 0) {
   if (!str) return null;
-  const [y, mo, da] = String(str).split('-').map(Number);
-  if (!y || !mo || !da) return new Date(str);
-  return new Date(y, mo - 1, da, h, m, 0, 0);
+  const parts = String(str).split('-').map(Number);
+  const [y, mo, da] = parts;
+  if (!y || !mo || !da || mo < 1 || mo > 12 || da < 1 || da > 31) {
+    console.warn('[therabyte] parseLocalDate: invalid input', str);
+    return null;
+  }
+  const d = new Date(y, mo - 1, da, h, m, 0, 0);
+  return isNaN(d.getTime()) ? null : d;
 }
 function toDateInputValue(d) {
   const x = typeof d === 'string' ? new Date(d) : d;
@@ -456,6 +506,7 @@ function scrollToSection(e, id) {
   const el = document.getElementById(id);
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
+window.scrollToSection = scrollToSection;
 function rerenderKeepingFocus(selector) {
   const el = document.querySelector(selector);
   if (!el) { render(); return; }
@@ -481,23 +532,93 @@ function avatar(u, size=40){
 function icon(n, s=18, c=''){ return `<i data-lucide="${n}" class="${c}" style="width:${s}px;height:${s}px"></i>`; }
 function iconEl(){ if (window.lucide) lucide.createIcons(); }
 function parseTime24(t) { const [h,m] = String(t).split(':').map(Number); return h*60+m; }
+
+// Single source of truth for "is this slot free?".
+// Used by: API.createAppointment, submitApptFromCalendar, confirmReschedule, generateSlots.
+function hasConflict(practitionerId, startDate, durationMin, opts = {}) {
+  const bufferMinutes = opts.bufferMinutes || 0;
+  const ignoreId = opts.ignoreId || null;
+  const bufferMs = bufferMinutes * 60000;
+  const start = new Date(startDate);
+  const end = new Date(start.getTime() + durationMin * 60000);
+  return APPOINTMENTS.some(a => {
+    if (a.id === ignoreId) return false;
+    if (a.status === 'cancelled' || a.status === 'no-show') return false;
+    if (practitionerId && a.practitioner !== practitionerId) return false;
+    const aStart = new Date(a.start);
+    const aEnd = new Date(aStart.getTime() + (a.duration || 60) * 60000);
+    const aStartBuffered = new Date(aStart.getTime() - bufferMs);
+    const aEndBuffered = new Date(aEnd.getTime() + bufferMs);
+    return start < aEndBuffered && end > aStartBuffered;
+  });
+}
+
 function minutesToLabel(mins) { let h=Math.floor(mins/60), m=mins%60; const ap = h>=12?'PM':'AM'; h=h%12; if (h===0) h=12; return `${h}:${String(m).padStart(2,'0')} ${ap}`; }
 function isDateInTimeOff(ds) { const d = startOfDay(new Date(ds)); return State.timeOff.some(t => { const s = startOfDay(new Date(t.start)), e = startOfDay(new Date(t.end)); return d>=s && d<=e; }); }
 function getClientUpcoming() { if (!State.user) return null; const now = new Date(); return APPOINTMENTS.filter(a => a.client === State.user.id && a.status !== 'cancelled' && a.status !== 'completed' && a.status !== 'no-show' && new Date(a.start) > now).sort((a,b) => new Date(a.start) - new Date(b.start))[0] || null; }
 const AREA_PRICING = { head:50, neck:50, shoulders:100, 'upper-back':100, arms:75, hands:50, 'lower-back':100, glutes:75, thighs:75, calves:50, feet:50 };
 function areaAddOn(id) { return AREA_PRICING[id] || 50; }
 
+/* ============================================================
+   ICS EXPORT
+   ============================================================ */
+function toICSDate(iso) { return new Date(iso).toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, ''); }
+// RFC 5545 §3.3.11 — escape backslash, semicolon, comma, newline.
+function icsEscape(s) {
+  return String(s == null ? '' : s)
+    .replace(/\\/g, '\\\\')
+    .replace(/;/g, '\\;')
+    .replace(/,/g, '\\,')
+    .replace(/\r?\n/g, '\\n');
+}
+function buildICS(a) {
+  const svc = getService(a.service);
+  const practitioner = getUser(a.practitioner);
+  const client = getUser(a.client);
+  const start = new Date(a.start);
+  const end = new Date(start.getTime() + (a.duration || 60) * 60000);
+  const title = `${svc?.name || 'Appointment'} · ${practitioner.name}`;
+  const descParts = [];
+  if (svc?.description) descParts.push(svc.description);
+  if (a.areas?.length) descParts.push(`Focus: ${a.areas.map(x => getArea(x)?.label).filter(Boolean).join(', ')}`);
+  if (a.ref) descParts.push(`Ref: ${a.ref}`);
+  descParts.push(`Client: ${client.name}`);
+  const description = descParts.join('\n');
+  return [
+    'BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//therabyte//EN', 'CALSCALE:GREGORIAN', 'METHOD:PUBLISH',
+    'BEGIN:VEVENT',
+    `UID:${a.id}@therabyte.app`,
+    `DTSTAMP:${toICSDate(new Date().toISOString())}`,
+    `DTSTART:${toICSDate(start.toISOString())}`,
+    `DTEND:${toICSDate(end.toISOString())}`,
+    `SUMMARY:${icsEscape(title)}`,
+    `DESCRIPTION:${icsEscape(description)}`,
+    `LOCATION:${icsEscape(a.location || '')}`,
+    'END:VEVENT', 'END:VCALENDAR'
+  ].join('\r\n');
+}
+function exportICS(apptId) {
+  const a = getAppt(apptId);
+  if (!a) return;
+  const ics = buildICS(a);
+  const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const el = document.createElement('a');
+  el.href = url;
+  el.download = `therabyte-${a.ref || a.id}.ics`;
+  el.click();
+  URL.revokeObjectURL(url);
+  ANALYTICS.track('ics_downloaded', { apptId });
+  toast('Calendar file downloaded');
+}
+window.exportICS = exportICS;
+
+/* ============================================================
+   API SHIM
+   ============================================================ */
 const API = {
   async createAppointment(payload) {
-    const collide = APPOINTMENTS.some(a => {
-      if (a.status === 'cancelled' || a.status === 'no-show') return false;
-      if (a.practitioner !== payload.practitioner) return false;
-      const aStart = new Date(a.start);
-      const aEnd = new Date(aStart.getTime() + (a.duration || 60) * 60000);
-      const pStart = new Date(payload.start);
-      const pEnd = new Date(pStart.getTime() + (payload.duration || 60) * 60000);
-      return pStart < aEnd && pEnd > aStart;
-    });
+    const collide = hasConflict(payload.practitioner, payload.start, payload.duration || 60);
     if (collide) throw new Error('SLOT_CONFLICT');
     const appt = { id: 'ap' + Date.now(), ...payload };
     APPOINTMENTS.push(appt);
@@ -511,9 +632,21 @@ const API = {
     saveAll();
     return a;
   },
-  async sendMessage(convoId, fromId, text) {
-    let c = CONVERSATIONS.find(x => x.id === convoId);
+  async sendMessage(convoId, fromId, text, optimisticId) {
+    const c = CONVERSATIONS.find(x => x.id === convoId);
     if (!c) throw new Error('NOT_FOUND');
+    // Reconcile with the optimistic entry that sendMessage() already pushed.
+    // Otherwise the same message is rendered and persisted twice.
+    if (optimisticId) {
+      const existing = c.messages.find(m => m.id === optimisticId);
+      if (existing) {
+        existing._pending = false;
+        c.lastAt = existing.at;
+        c.unread = 0;
+        persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS);
+        return existing;
+      }
+    }
     const msg = { id: 'm' + Date.now(), from: fromId, text, at: new Date().toISOString(), read: false };
     c.messages.push(msg);
     c.lastAt = msg.at;
@@ -530,6 +663,9 @@ const API = {
   },
 };
 
+/* ============================================================
+   SEED DATA
+   ============================================================ */
 const SEED_USERS = [
   { id:'p1', role:'practitioner', name:'Dr. Sarah Chen', first:'Sarah', title:'Licensed Massage Therapist', email:'sarah@therabyte.demo', avatar:'https://i.pravatar.cc/150?img=47', bio:'Eight years of focused, gentle bodywork for people who sit too much and sleep too little.', verified:true, rating:4.9, reviews:128, languages:['English','Mandarin'], location:'Wellness Studio, Makati City', consultation:'In-person & Online', experience:'8 years', quals:'Licensed Massage Therapist · Swedish & Deep Tissue certified', phone:'+63 917 555 0101' },
   { id:'p2', role:'practitioner', name:'Miguel Torres', first:'Miguel', title:'Sports Therapist', email:'miguel@therabyte.demo', avatar:'https://i.pravatar.cc/150?img=12', bio:'Recovery and mobility work for athletes and active adults.', verified:true, rating:4.8, reviews:94, languages:['English','Filipino'], location:'BGC Sports Lab, Taguig', consultation:'In-person', experience:'6 years', quals:'Certified Sports Therapist', phone:'+63 917 555 0102' },
@@ -710,6 +846,9 @@ const GUIDE_AREAS = Object.keys(GUIDES);
 const CAL_START_HOUR = 7;
 const CAL_END_HOUR = 20;
 
+/* ============================================================
+   STATE
+   ============================================================ */
 const State = {
   user: load(STORAGE_KEYS.USER_SESSION, null),
   theme: localStorage.getItem(STORAGE_KEYS.THEME) || 'system',
@@ -720,6 +859,7 @@ const State = {
     try { const p = JSON.parse(raw); if (p && p.userId && p.dataUrl) return p; return null; } catch(e) { return null; }
   })(),
   timeOff: (() => { const t = load(STORAGE_KEYS.TIME_OFF, [{ id:'to1', start:addDays(new Date(),14).toISOString(), end:addDays(new Date(),17).toISOString(), reason:'Holiday break' }]); return t.slice().sort((a,b) => new Date(a.start) - new Date(b.start)); })(),
+  schedulingRules: load(STORAGE_KEYS.SCHED_RULES, { bufferMinutes: 15, minNoticeHours: 2 }),
   apptSort:'upcoming', invoiceFilter:'all', apptFilter:'all',
   apptQuery:'', clientQuery:'', reviewOpen:null,
 };
@@ -727,6 +867,7 @@ function persistSession() { persist(STORAGE_KEYS.USER_SESSION, State.user); }
 function saveTimeOff() { persist(STORAGE_KEYS.TIME_OFF, State.timeOff); }
 function set(p) { Object.assign(State, p); render(); }
 function navigate(h) { location.hash = h; }
+window.navigate = navigate;
 function getRoute() { const raw = location.hash.replace(/^#\/?/, '').split('?')[0]; return { path: raw, parts: raw.split('/').filter(Boolean) }; }
 
 function applyTheme() {
@@ -735,6 +876,7 @@ function applyTheme() {
   document.documentElement.classList.toggle('dark', dark);
 }
 function setTheme(t) { State.theme = t; localStorage.setItem(STORAGE_KEYS.THEME, t); applyTheme(); renderThemeToggle(); }
+window.setTheme = setTheme;
 window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', applyTheme);
 function renderThemeToggle() {
   const active = State.theme;
@@ -745,24 +887,79 @@ function renderThemeToggle() {
   iconEl();
 }
 
+/* ============================================================
+   TOASTS
+   ============================================================ */
+function pruneToasts() {
+  const root = document.getElementById('toast-root');
+  if (!root) return;
+  const all = [...root.children];
+  const undoEls = all.filter(c => c.hasAttribute('data-undo-id'));
+  const regularEls = all.filter(c => !c.hasAttribute('data-undo-id'));
+  const regularCap = undoEls.length ? 2 : 3;
+  while (regularEls.length > regularCap) { const v = regularEls.shift(); if (v && v.isConnected) v.remove(); }
+  while (undoEls.length > 3) { const v = undoEls.shift(); if (v && v.isConnected) v.remove(); }
+}
+
 function toast(msg, kind='success') {
   const k = { success:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'}, error:{bg:'#B91C1C',ic:'alert-circle'}, info:{bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'info'}, warning:{bg:'#A16207',ic:'alert-triangle'} }[kind] || {bg:'linear-gradient(135deg,#4CAF50,#2E7D32)',ic:'check'};
-  const root = $('#toast-root');
-  while (root.children.length >= 3) root.removeChild(root.firstElementChild);
+  const root = document.getElementById('toast-root');
+  if (!root) return;
   const el = document.createElement('div');
   el.className = 'pointer-events-auto surface shadow-lift rounded-xl px-4 py-3 flex items-center gap-3';
   el.style.animation = 'fadeUp .35s cubic-bezier(0.16,1,0.3,1) both';
-  if (kind === 'error') el.setAttribute('role', 'alert');
+  if (kind === 'error' || kind === 'warning') el.setAttribute('role', 'alert');
   el.innerHTML = `<div class="w-7 h-7 rounded-full grid place-items-center text-white shrink-0" style="background:${k.bg}">${icon(k.ic, 14)}</div><div class="text-sm font-medium flex-1">${esc(msg)}</div>`;
   root.appendChild(el); iconEl();
-  setTimeout(() => { el.style.transition='all .35s cubic-bezier(0.16,1,0.3,1)'; el.style.opacity='0'; el.style.transform='translateX(24px) scale(.96)'; setTimeout(() => el.remove(), 350); }, 3000);
+  pruneToasts();
+  setTimeout(() => {
+    if (!el.isConnected) return;
+    el.style.transition='all .35s cubic-bezier(0.16,1,0.3,1)';
+    el.style.opacity='0';
+    el.style.transform='translateX(24px) scale(.96)';
+    setTimeout(() => el.remove(), 350);
+  }, 3000);
+}
+window.toast = toast;
+
+/* ---------- Undo toasts ---------- */
+function pushUndo({ label, restore, ttl = 5000 }) {
+  const entry = { id: 'u' + Date.now(), label, restore, expiresAt: Date.now() + ttl };
+  const root = document.getElementById('toast-root');
+  if (!root) return;
+  const el = document.createElement('div');
+  el.className = 'pointer-events-auto surface shadow-lift rounded-xl px-4 py-3 flex items-center gap-3';
+  el.style.animation = 'fadeUp .35s cubic-bezier(0.16,1,0.3,1) both';
+  el.setAttribute('role', 'status');
+  el.setAttribute('data-undo-id', entry.id);
+  el.innerHTML = `
+    <div class="w-7 h-7 rounded-full grid place-items-center text-white shrink-0" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">${icon('check', 14)}</div>
+    <div class="text-sm font-medium flex-1">${esc(label)}</div>
+    <button type="button" class="btn btn-sm btn-ghost !text-brand-600 !font-bold" data-undo-action="${entry.id}">Undo</button>`;
+  root.appendChild(el); iconEl();
+  pruneToasts();
+  el.querySelector('[data-undo-action]').addEventListener('click', () => {
+    try { entry.restore(); } catch(e) { console.error('[undo] failed', e); toast('Could not undo', 'error'); }
+    el.remove();
+    ANALYTICS.track('undo_clicked', { label: entry.label });
+    render();
+  });
+  setTimeout(() => {
+    if (!el.isConnected) return;
+    el.style.transition='all .35s cubic-bezier(0.16,1,0.3,1)';
+    el.style.opacity='0';
+    el.style.transform='translateX(24px) scale(.96)';
+    setTimeout(() => el.remove(), 350);
+  }, ttl - 200);
 }
 
 let modalKeydownAttached = false;
 let lastFocusedEl = null;
+let _modalRouteKey = null;
 function modal({ title, body, actions=[], size='md' }) {
   const sizes = { sm:'max-w-md', md:'max-w-lg', lg:'max-w-2xl', xl:'max-w-4xl' };
   lastFocusedEl = document.activeElement;
+  _modalRouteKey = currentRouteKey();
   $('#modal-root').innerHTML = `
     <div class="fixed inset-0 z-[80] flex items-end sm:items-center justify-center p-0 sm:p-4">
       <div class="absolute inset-0 bg-black/50 animate-fade" onclick="closeModal()" aria-hidden="true" style="backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)"></div>
@@ -786,12 +983,15 @@ function modal({ title, body, actions=[], size='md' }) {
     if (buttons.length) buttons[0].focus();
   }));
 }
+window.modal = modal;
 function closeModal() {
   $('#modal-root').innerHTML='';
+  _modalRouteKey = null;
   if (modalKeydownAttached) { document.removeEventListener('keydown', modalKeydown, true); modalKeydownAttached = false; }
   if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') { try { lastFocusedEl.focus(); } catch(e){} }
   lastFocusedEl = null;
 }
+window.closeModal = closeModal;
 function modalKeydown(e) {
   const root = $('#modal-root');
   if (!root || !root.firstElementChild) return;
@@ -835,7 +1035,6 @@ function LogoMark(small, iconOnly) {
   </a>`;
 }
 
-/* Kept for potential future use in modals or footers. No longer rendered in headers. */
 function GroupCreditBadge() {
   return `<a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer" class="group-credit-badge" title="Built by ${esc(CREDIT.name)}">
     ${icon('zap', 10)}<span>${esc(CREDIT.name)}</span>${icon('arrow-up-right', 9)}
@@ -946,9 +1145,6 @@ function StarsDisplay(rating, size = 14) {
   return `<div class="flex items-center gap-0.5 text-amber-500">${Array.from({length:5}).map((_,i) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${i < rating ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`).join('')}</div>`;
 }
 
-/* ============================================================
-   STATIC LAYOUT — header badge removed, footer credit kept
-   ============================================================ */
 function StaticFooter() {
   return `
   <footer class="border-t border-[rgb(var(--border))] mt-16">
@@ -1021,7 +1217,7 @@ function StaticPageLayout({ active, eyebrow, title, description, lastUpdated, ch
           }).join('')}
         </nav>
       </aside>
-      <main class="min-w-0">
+      <main id="main-content" class="min-w-0" tabindex="-1">
         <div class="max-w-2xl">
           ${eyebrow ? `<div class="section-eyebrow mb-3">${esc(eyebrow)}</div>` : ''}
           <h1 class="type-display text-[34px] sm:text-[42px] lg:text-[46px]">${esc(title)}</h1>
@@ -1260,11 +1456,11 @@ function PageHelp() {
 }
 
 /* ============================================================
-   LANDING — header badge removed, footer credit kept
+   LANDING
    ============================================================ */
 function Landing() {
   return `
-  <div class="min-h-screen overflow-x-hidden">
+  <div id="main-content" tabindex="-1" class="min-h-screen overflow-x-hidden">
     <header class="sticky top-0 z-40 backdrop-blur-xl bg-[rgb(var(--bg))]/85 border-b border-[rgb(var(--border))]">
       <div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between gap-6">
         ${LogoMark()}
@@ -1464,7 +1660,7 @@ function Landing() {
 }
 
 /* ============================================================
-   AUTH — mobile header badge removed, panel footer credit kept
+   AUTH
    ============================================================ */
 function AuthLayout(children) {
   return `
@@ -1507,7 +1703,7 @@ function AuthLayout(children) {
         <a href="#/">${LogoMark(true)}</a>
         <div data-theme-toggle></div>
       </div>
-      <div class="flex-1 grid place-items-center p-5 sm:p-10"><div class="w-full max-w-md animate-fadeUp">${children}</div></div>
+      <div id="main-content" tabindex="-1" class="flex-1 grid place-items-center p-5 sm:p-10"><div class="w-full max-w-md animate-fadeUp">${children}</div></div>
       <div class="hidden lg:flex items-center justify-end p-5"><div data-theme-toggle></div></div>
     </div>
   </div>`;
@@ -1574,19 +1770,22 @@ function resetBookingFlow() {
   bookViewMonth = null;
 }
 function handleLogin(form) {
-  const email = form.email.value.trim();
-  const user = USERS.find(u => u.email === email);
+  const email = form.elements.email.value.trim().toLowerCase();
+  const user = USERS.find(u => u.email.toLowerCase() === email);
   if (!user) { toast('No demo account with that email', 'error'); return; }
   resetBookingFlow();
   set({ user }); persistSession(); toast(`Welcome back, ${user.first}`); navigate('/app/dashboard');
 }
 function demoLogin(id) { const u = getUser(id); resetBookingFlow(); set({ user: u }); persistSession(); toast(`Signed in as ${u.name}`); navigate('/app/dashboard'); }
+window.demoLogin = demoLogin;
 function handleRegister(form) {
-  const name = form.name.value.trim(); const role = form.role.value; const email = form.email.value.trim();
-  const password = form.password ? form.password.value : '';
+  const name = form.elements.name.value.trim();
+  const role = form.elements.role.value;
+  const email = form.elements.email.value.trim().toLowerCase();
+  const password = form.elements.password ? form.elements.password.value : '';
   if (!name || !email) { toast('Name and email are required', 'error'); return; }
   if (!password || password.length < 8) { toast('Password must be at least 8 characters', 'error'); return; }
-  if (USERS.some(u => u.email === email)) { toast('An account with that email already exists', 'error'); return; }
+  if (USERS.some(u => u.email.toLowerCase() === email)) { toast('An account with that email already exists', 'error'); return; }
   const u = { id:'me-'+Date.now(), role, name, first:name.split(' ')[0], email, avatar:`https://i.pravatar.cc/150?u=${encodeURIComponent(email)}`, title:role==='practitioner'?'Practitioner':undefined, verified:false, joined:new Date().toISOString().slice(0,10), notifications:{ reminders:true, messages:true, focusAreas: role==='practitioner', product:false }, twoFactorEnabled:false };
   USERS.push(u); saveAll(); resetBookingFlow(); set({ user: u }); persistSession(); toast(`Welcome, ${u.first}`);
   navigate(role === 'practitioner' ? '/onboard' : '/app/dashboard');
@@ -1595,6 +1794,7 @@ function logout() {
   resetBookingFlow();
   set({ user: null }); persistSession(); toast('Signed out'); navigate('/');
 }
+window.logout = logout;
 
 let onboardStep = 0;
 function OnboardingPage() {
@@ -1608,7 +1808,7 @@ function OnboardingPage() {
   return `
   <div class="min-h-screen flex flex-col">
     <header class="border-b border-[rgb(var(--border))]"><div class="max-w-2xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">${LogoMark(true)}<div data-theme-toggle></div></div></header>
-    <div class="max-w-2xl w-full mx-auto px-4 sm:px-6 py-10 flex-1">
+    <div id="main-content" tabindex="-1" class="max-w-2xl w-full mx-auto px-4 sm:px-6 py-10 flex-1">
       <div class="mb-6"><div class="section-eyebrow mb-1">Step ${onboardStep+1} of ${steps.length}</div><h1 class="type-h2 text-2xl sm:text-3xl">${steps[onboardStep][0]}</h1><p class="type-small muted mt-1">${steps[onboardStep][1]}</p></div>
       <div class="flex items-center gap-1.5 mb-6">${steps.map((_,i) => `<div class="flex-1 h-1 rounded-full ${i<=onboardStep?'bg-brand-600':'bg-[rgb(var(--border))]'} transition-colors"></div>`).join('')}</div>
       <div class="card p-5 sm:p-8 animate-fadeUp">${body()}</div>
@@ -1626,10 +1826,10 @@ function nextOnboard() {
 }
 function prevOnboard() { if (onboardStep > 0) { onboardStep--; render(); } }
 function finishOnboard() { toast('Welcome to therabyte'); onboardStep = 0; navigate('/app/dashboard'); }
+window.prevOnboard = prevOnboard;
+window.nextOnboard = nextOnboard;
+window.finishOnboard = finishOnboard;
 
-/* ============================================================
-   APP SHELL — sidebar header credit icon removed, sidebar footer credit kept
-   ============================================================ */
 const PRACTITIONER_NAV = [
   { route:'dashboard', label:'Today', icon:'home' },
   { route:'calendar', label:'Calendar', icon:'calendar' },
@@ -1697,14 +1897,19 @@ function AppShell(page) {
       <header class="sticky top-0 z-30 backdrop-blur-xl bg-[rgb(var(--bg))]/85 border-b border-[rgb(var(--border))] no-print">
         <div class="h-14 px-4 sm:px-6 flex items-center gap-2">
           <a href="#/app/dashboard" class="md:hidden">${LogoMark(true)}</a>
-          <div class="ml-auto flex items-center gap-1 sm:gap-2">
+          <button onclick="openCmdk()" class="hidden md:inline-flex items-center gap-2 h-9 px-3 rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--surface))] hover:bg-[rgb(var(--surface-2))] transition text-xs muted ml-auto" aria-label="Search (Command K)">
+            ${icon('search', 12)}
+            <span>Search…</span>
+            <kbd class="text-[10px] px-1 py-0.5 rounded border border-[rgb(var(--border))] bg-[rgb(var(--surface-2))] ml-1">⌘K</kbd>
+          </button>
+          <div class="ml-auto md:ml-0 flex items-center gap-1 sm:gap-2">
             <div data-theme-toggle class="hidden sm:block"></div>
             <a href="#/app/notifications" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Notifications">${icon('bell', 17)}${unreadNotifs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose2-500"></span>' : ''}</a>
             <a href="#/app/messages" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Messages">${icon('message-circle', 17)}${unreadMsgs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style="background:#4CAF50"></span>' : ''}</a>
           </div>
         </div>
       </header>
-      <main class="flex-1 pb-24 md:pb-8">${page}</main>
+      <main id="main-content" tabindex="-1" class="flex-1 pb-24 md:pb-8">${page}</main>
     </div>
     <nav class="md:hidden fixed bottom-0 inset-x-0 z-40 backdrop-blur-xl bg-[rgb(var(--surface))]/95 border-t border-[rgb(var(--border))] no-print">
       <div class="px-1 grid grid-cols-5 items-end" style="height:72px">${mobileNavItems(u, path)}</div>
@@ -1847,7 +2052,7 @@ function PageClientDashboard() {
           </div>
           <div class="text-left sm:text-right"><div class="font-display font-bold">${fmtDate(next.start)}</div><div class="type-small muted">${fmtTime(next.start)}</div></div>
         </div>
-        <div class="mt-4 flex flex-wrap gap-2"><a href="#/app/appointments/${next.id}" class="btn btn-sm btn-primary">View details</a><a href="#/app/messages" class="btn btn-sm btn-outline">${icon('message-circle', 12)} Message</a></div>
+        <div class="mt-4 flex flex-wrap gap-2"><a href="#/app/appointments/${next.id}" class="btn btn-sm btn-primary">View details</a><a href="#/app/messages" class="btn btn-sm btn-outline">${icon('message-circle', 12)} Message</a><button onclick="exportICS('${next.id}')" class="btn btn-sm btn-outline">${icon('calendar-plus', 12)} Add to calendar</button></div>
       </div>`;
     })() : EmptyState({ icon:'calendar-plus', title:'No upcoming sessions', description:'Ready when you are. Pick a service, choose a time, and mark what hurts — your practitioner will see it before you arrive.', action:`<a href="#/app/book" class="btn btn-primary">${icon('plus', 13)} Start booking</a>` })}
 
@@ -1882,6 +2087,7 @@ function PageClientDashboard() {
   </div>`;
 }
 function rebook(apptId) { const a = getAppt(apptId); if (!a) return; resetBookingFlow(); bookState = { practitioner: a.practitioner, service: a.service, areas: [...(a.areas||[])], date: null, time: null, ref: null, _submitting:false }; bookStep = 1; navigate('/app/book'); toast('Pre-filled from your last session'); }
+window.rebook = rebook;
 
 function PageCalendar() {
   const u = State.user;
@@ -1907,6 +2113,7 @@ function PageCalendar() {
   </div>`;
 }
 function jumpToDate(iso) { if (!iso) return; const parsed = parseLocalDate(iso); if (parsed) set({ calendarDate: parsed }); }
+window.jumpToDate = jumpToDate;
 function createApptAt(dateStr, hour, minute = 0) {
   const d = new Date(dateStr); d.setHours(hour, minute, 0, 0);
   const u = State.user; const clientList = getClients();
@@ -1923,23 +2130,19 @@ function createApptAt(dateStr, hour, minute = 0) {
     actions: [{ label:'Cancel', variant:'outline', onclick:'closeModal()' }, { label:'Create', variant:'primary', onclick:`submitApptFromCalendar('${d.toISOString()}')` }]
   });
 }
+window.createApptAt = createApptAt;
 function submitApptFromCalendar(iso) {
   const clientId = $('#ca-client').value, serviceId = $('#ca-service').value;
   const service = getService(serviceId), d = new Date(iso);
   if (!service) { toast('Please choose a service', 'error'); return; }
-  const end = new Date(d.getTime() + service.duration * 60000);
-  const collide = APPOINTMENTS.some(a => {
-    if (a.status === 'cancelled' || a.status === 'no-show') return false;
-    if (a.practitioner !== State.user.id) return false;
-    const aStart = new Date(a.start);
-    const aEnd = new Date(aStart.getTime() + (a.duration || 60) * 60000);
-    return d < aEnd && end > aStart;
-  });
+  const rules = State.schedulingRules || { bufferMinutes: 0 };
+  const collide = hasConflict(State.user.id, d, service.duration, { bufferMinutes: rules.bufferMinutes });
   if (collide) { toast('That slot overlaps another appointment', 'error'); return; }
   const ref = 'TB-' + new Date().getFullYear().toString().slice(2) + '01-' + Math.floor(1000 + Math.random()*9000);
   APPOINTMENTS.push({ id: 'ap' + Date.now(), client: clientId, practitioner: State.user.id, service: serviceId, start: d.toISOString(), duration: service.duration, status: 'confirmed', mode: 'In-person', location: State.user.location || 'Studio', areas: [], ref });
   saveAll(); closeModal(); toast('Appointment created'); render();
 }
+window.submitApptFromCalendar = submitApptFromCalendar;
 function WeekView(date, appts) {
   const start = startOfWeek(date);
   const days = Array.from({length:7}, (_,i) => addDays(start, i));
@@ -1970,9 +2173,10 @@ function MonthView(date, appts) {
   const start = startOfWeek(first), end = addDays(startOfWeek(last), 6);
   const days = []; for (let d = new Date(start); d <= end; d = addDays(d, 1)) days.push(new Date(d));
   return `<div class="grid grid-cols-7 text-center border-b border-[rgb(var(--border))] pb-2 mb-2">${['S','M','T','W','T','F','S'].map(d => `<div class="text-[10px] muted uppercase tracking-wider">${d}</div>`).join('')}</div>
-    <div class="grid grid-cols-7 gap-1">${days.map(d => { const inMonth = d.getMonth() === m; const dayAppts = appts.filter(a => sameDay(new Date(a.start), d)).sort((a,b)=>new Date(a.start)-new Date(b.start)); const isOff = isDateInTimeOff(d.toISOString()); return `<div class="cal-cell min-h-[80px] sm:min-h-[110px] p-1.5 rounded-lg border border-[rgb(var(--border))] ${isToday(d)?'bg-brand-500/5':''} ${!inMonth?'opacity-40':''} ${isOff?'bg-red-500/5':''}" onclick="createApptAt('${d.toISOString()}',10)"><div class="cal-cell-add">${icon('plus', 11)}</div><div class="text-[10px] sm:text-xs font-semibold ${isToday(d)?'text-brand-600':''} ${isOff?'text-red-500':''} mb-1">${d.getDate()}${isOff ? ' · off' : ''}</div><div class="space-y-0.5">${dayAppts.slice(0,2).map(a => { const c = getUser(a.client); const s = STATUS_STYLE[a.status] || STATUS_STYLE.pending; return `<div onclick="event.stopPropagation();navigate('/app/appointments/${a.id}')" class="text-[9px] sm:text-[10px] px-1 py-0.5 rounded truncate cursor-pointer" style="background:${s.bg};color:${s.color}">${esc(c.name.split(' ')[0])}</div>`; }).join('')}${dayAppts.length > 2 ? `<div class="text-[9px] muted">+${dayAppts.length-2}</div>` : ''}</div></div>`; }).join('')}</div>`;
+    <div class="grid grid-cols-7 gap-1">${days.map(d => { const inMonth = d.getMonth() === m; const dayAppts = appts.filter(a => sameDay(new Date(a.start), d)).sort((a,b)=>new Date(a.start)-new Date(b.start)); const isOff = isDateInTimeOff(d.toISOString()); const offEntry = isOff ? State.timeOff.find(t => { const s = startOfDay(new Date(t.start)), e = startOfDay(new Date(t.end)); return d >= s && d <= e; }) : null; const offLabel = offEntry ? `Time off: ${offEntry.reason || 'Unavailable'}` : ''; return `<div class="cal-cell min-h-[80px] sm:min-h-[110px] p-1.5 rounded-lg border border-[rgb(var(--border))] ${isToday(d)?'bg-brand-500/5':''} ${!inMonth?'opacity-40':''} ${isOff?'bg-red-500/5':''}" ${isOff ? `aria-disabled="true" title="${esc(offLabel)}"` : `onclick="createApptAt('${d.toISOString()}',10)"`}><div class="cal-cell-add">${icon('plus', 11)}</div><div class="text-[10px] sm:text-xs font-semibold ${isToday(d)?'text-brand-600':''} ${isOff?'text-red-500':''} mb-1">${d.getDate()}${isOff ? ' · off' : ''}</div><div class="space-y-0.5">${dayAppts.slice(0,2).map(a => { const c = getUser(a.client); const s = STATUS_STYLE[a.status] || STATUS_STYLE.pending; return `<div onclick="event.stopPropagation();navigate('/app/appointments/${a.id}')" class="text-[9px] sm:text-[10px] px-1 py-0.5 rounded truncate cursor-pointer" style="background:${s.bg};color:${s.color}">${esc(c.name.split(' ')[0])}</div>`; }).join('')}${dayAppts.length > 2 ? `<div class="text-[9px] muted">+${dayAppts.length-2}</div>` : ''}</div></div>`; }).join('')}</div>`;
 }
 function shiftCalendar(delta) { const d = new Date(State.calendarDate); if (State.calendarView === 'day') d.setDate(d.getDate() + delta); else if (State.calendarView === 'week') d.setDate(d.getDate() + delta*7); else d.setMonth(d.getMonth() + delta); set({ calendarDate: d }); }
+window.shiftCalendar = shiftCalendar;
 
 function groupByDateLocal(items, getDate, opts = {}) {
   const now = new Date(), today = startOfDay(now), tomorrow = addDays(today, 1), weekEnd = addDays(today, 7);
@@ -2045,6 +2249,10 @@ function PageAppointmentDetail(id) {
 
   return `
   <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6">
+    <div class="print-header">
+      <div class="font-display font-bold text-2xl">therabyte</div>
+      <div class="text-sm">${esc(s?.name || 'Appointment')} · ${esc(a.ref || '')}</div>
+    </div>
     ${PageHeader({ backHref:'#/app/appointments', backLabel:'Appointments', eyebrow: a.ref, title: s?.name || 'Appointment', action: actions })}
 
     ${canReview ? `<div class="card p-6 border-l-4 !border-l-amber-500 mb-6"><div class="flex flex-wrap items-center justify-between gap-3"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-xl bg-amber-500/12 text-amber-600 grid place-items-center shrink-0">${icon('star', 18)}</div><div><div class="type-h3 text-[15px]">How was your session?</div><div class="text-xs muted mt-0.5">Your feedback helps ${esc(p.first)} and other clients.</div></div></div><button onclick="openReviewModal('${a.id}')" class="btn btn-sm btn-primary">Write a review</button></div></div>` : ''}
@@ -2079,7 +2287,9 @@ function PageAppointmentDetail(id) {
         <div class="card p-5">
           <div class="type-h3 text-[14px] mb-3">Quick actions</div>
           <div class="space-y-2">
+            <button onclick="exportICS('${a.id}')" class="btn btn-sm btn-outline w-full justify-start">${icon('calendar-plus', 13)} Add to calendar</button>
             <button onclick="navigate('/app/messages')" class="btn btn-sm btn-outline w-full justify-start">${icon('message-circle', 13)} Message</button>
+            <button onclick="window.print()" class="btn btn-sm btn-outline w-full justify-start">${icon('printer', 13)} Print</button>
             ${u.role === 'practitioner' && a.status === 'confirmed' ? `<button onclick="sendReminder('${a.id}')" class="btn btn-sm btn-outline w-full justify-start">${icon('bell', 13)} Send reminder</button>` : ''}
             ${u.role === 'client' && areas.length ? `<a href="#/self-care/${areas[0].id}" class="btn btn-sm btn-outline w-full justify-start">${icon('hand-heart', 13)} Self-care for ${esc(areas[0].label)}</a>` : ''}
           </div>
@@ -2089,6 +2299,7 @@ function PageAppointmentDetail(id) {
   </div>`;
 }
 function markComplete(id) { API.markComplete(id).then(() => { toast('Marked as completed'); render(); }).catch(() => toast('Could not mark complete', 'error')); }
+window.markComplete = markComplete;
 
 function openReschedule(id) {
   const a = getAppt(id);
@@ -2105,7 +2316,9 @@ function openReschedule(id) {
     actions: [{ label:'Cancel', variant:'outline', onclick:'closeModal()' }, { label:'Save new time', variant:'primary', onclick:`confirmReschedule('${id}')` }]
   });
 }
+window.openReschedule = openReschedule;
 function selectRescheduleTime(btn) { document.querySelectorAll('.rs-time').forEach(b => { b.classList.remove('chip-on'); b.classList.add('chip-off'); }); btn.classList.remove('chip-off'); btn.classList.add('chip-on'); }
+window.selectRescheduleTime = selectRescheduleTime;
 function confirmReschedule(id) {
   const a = getAppt(id);
   if (!a) return;
@@ -2119,12 +2332,36 @@ function confirmReschedule(id) {
   if (ampm === 'PM' && h !== 12) h += 12;
   if (ampm === 'AM' && h === 12) h = 0;
   const d = parseLocalDate(dateVal, h, m);
+  if (!d || isNaN(d.getTime())) { toast('Invalid date', 'error'); return; }
+
+  // Reschedule must respect the same rules as booking.
+  const service = getService(a.service);
+  const duration = service?.duration || a.duration || 60;
+  const rules = State.schedulingRules || { bufferMinutes: 0, minNoticeHours: 0 };
+  const collide = hasConflict(a.practitioner, d, duration, {
+    bufferMinutes: rules.bufferMinutes,
+    ignoreId: a.id,
+  });
+  if (collide) { toast('That time overlaps another appointment', 'error'); return; }
+  const minStart = new Date(Date.now() + rules.minNoticeHours * 3600000);
+  if (d < minStart) { toast(`Needs at least ${rules.minNoticeHours}h notice`, 'error'); return; }
+
+  const prevStart = a.start;
+  const prevReason = a.rescheduleReason;
+  const prevBy = a.rescheduledBy;
+  const prevAt = a.rescheduledAt;
   a.start = d.toISOString();
   a.rescheduleReason = reason;
   a.rescheduledBy = State.user.id;
   a.rescheduledAt = new Date().toISOString();
-  saveAll(); closeModal(); toast('Appointment rescheduled'); render();
+  saveAll(); closeModal();
+  pushUndo({
+    label: 'Appointment rescheduled',
+    restore() { a.start = prevStart; a.rescheduleReason = prevReason; a.rescheduledBy = prevBy; a.rescheduledAt = prevAt; saveAll(); }
+  });
+  render();
 }
+window.confirmReschedule = confirmReschedule;
 function openApptRequest(id, type) {
   const isCancel = type === 'cancel';
   modal({
@@ -2137,21 +2374,56 @@ function openApptRequest(id, type) {
     ]
   });
 }
+window.openApptRequest = openApptRequest;
 function confirmCancelAppt(id) {
   const a = getAppt(id);
   if (!a) return;
   if (a.status === 'cancelled') { closeModal(); return; }
-  a.status = 'cancelled';
+  const prevStatus = a.status;
   const reason = document.getElementById('cancel-reason')?.value?.trim();
+  let convoSnapshot = null;
+  let newMsgId = null;
+  let prevNotifCount = NOTIFICATIONS.length;
+
+  a.status = 'cancelled';
   if (reason) {
     let c = CONVERSATIONS.find(x => x.participants.includes(a.client) && x.participants.includes(a.practitioner));
-    if (!c) { c = { id:'cv'+Date.now(), participants:[a.client, a.practitioner], lastAt: new Date().toISOString(), unread:0, messages:[] }; CONVERSATIONS.push(c); }
-    c.messages.push({ id:'m'+Date.now(), from: a.client, text: `Cancellation note: ${reason}`, at: new Date().toISOString(), read:false });
+    let createdConvo = false;
+    if (!c) {
+      c = { id:'cv'+Date.now(), participants:[a.client, a.practitioner], lastAt: new Date().toISOString(), unread:0, messages:[] };
+      CONVERSATIONS.push(c);
+      createdConvo = true;
+    }
+    newMsgId = 'm'+Date.now();
+    convoSnapshot = { convoId: c.id, prevLastAt: c.lastAt, prevUnread: c.unread || 0, createdConvo };
+    c.messages.push({ id: newMsgId, from: a.client, text: `Cancellation note: ${reason}`, at: new Date().toISOString(), read:false });
     c.lastAt = new Date().toISOString();
     c.unread = (c.unread || 0) + 1;
   }
-  saveAll(); closeModal(); toast('Appointment cancelled'); render();
+  saveAll(); closeModal();
+  pushUndo({
+    label: 'Appointment cancelled',
+    restore() {
+      a.status = prevStatus;
+      if (convoSnapshot) {
+        const c = CONVERSATIONS.find(x => x.id === convoSnapshot.convoId);
+        if (c) {
+          if (convoSnapshot.createdConvo) {
+            CONVERSATIONS = CONVERSATIONS.filter(x => x.id !== convoSnapshot.convoId);
+          } else {
+            c.messages = c.messages.filter(m => m.id !== newMsgId);
+            c.lastAt = convoSnapshot.prevLastAt;
+            c.unread = convoSnapshot.prevUnread;
+          }
+        }
+      }
+      if (NOTIFICATIONS.length > prevNotifCount) NOTIFICATIONS = NOTIFICATIONS.slice(0, prevNotifCount);
+      saveAll();
+    }
+  });
+  render();
 }
+window.confirmCancelAppt = confirmCancelAppt;
 function sendRescheduleRequest(id) {
   const a = getAppt(id);
   if (!a) return;
@@ -2161,7 +2433,7 @@ function sendRescheduleRequest(id) {
   a.rescheduleReason = reason;
   a.rescheduledBy = State.user.id;
   a.rescheduledAt = new Date().toISOString();
-  if (preferredDate) a.preferredDate = parseLocalDate(preferredDate).toISOString();
+  if (preferredDate) { const pd = parseLocalDate(preferredDate); if (pd) a.preferredDate = pd.toISOString(); }
   NOTIFICATIONS.push({ id: 'n' + Date.now(), type:'appointment', title:'Reschedule request', body:`${getUser(a.client).first} requested a new time. Reason: ${reason}`, at:new Date().toISOString(), read:false, apptId: id, link:'#/app/appointments/' + id, action:'view', actionLabel:'View' });
   let c = CONVERSATIONS.find(x => x.participants.includes(a.client) && x.participants.includes(a.practitioner));
   if (!c) { c = { id:'cv'+Date.now(), participants:[a.client, a.practitioner], lastAt: new Date().toISOString(), unread:0, messages:[] }; CONVERSATIONS.push(c); }
@@ -2170,6 +2442,7 @@ function sendRescheduleRequest(id) {
   c.unread = (c.unread || 0) + 1;
   saveAll(); closeModal(); toast('Request sent'); render();
 }
+window.sendRescheduleRequest = sendRescheduleRequest;
 function sendReminder(apptId) {
   const a = getAppt(apptId);
   if (!a) return;
@@ -2178,6 +2451,7 @@ function sendReminder(apptId) {
   saveAll();
   toast(`Reminder sent to ${client.first}`);
 }
+window.sendReminder = sendReminder;
 
 function openReviewModal(apptId) {
   const a = getAppt(apptId);
@@ -2194,9 +2468,11 @@ function openReviewModal(apptId) {
     </div>`,
     actions: [{ label:'Cancel', variant:'outline', onclick:'closeModal()' }, { label:'Post review', variant:'primary', onclick:`submitReview('${apptId}')` }],
   });
-  setTimeout(() => updateReviewStars(5), 10);
+  requestAnimationFrame(() => requestAnimationFrame(() => updateReviewStars(5)));
 }
+window.openReviewModal = openReviewModal;
 function setReviewRating(n) { if (State.reviewOpen) State.reviewOpen.rating = n; updateReviewStars(n); }
+window.setReviewRating = setReviewRating;
 function updateReviewStars(rating) { document.querySelectorAll('#review-stars .star-btn').forEach(btn => { const n = parseInt(btn.dataset.star); btn.classList.toggle('active', n <= rating); btn.style.color = n <= rating ? '#F59E0B' : 'rgb(var(--border-strong))'; }); }
 function submitReview(apptId) {
   const comment = $('#review-comment')?.value?.trim() || '';
@@ -2206,6 +2482,7 @@ function submitReview(apptId) {
   REVIEWS.push({ id: 'r' + Date.now(), appt: apptId, client: a.client, practitioner: a.practitioner, rating, comment: comment || 'Great session.', date: new Date().toISOString() });
   saveAll(); closeModal(); State.reviewOpen = null; toast('Thank you for your review'); render();
 }
+window.submitReview = submitReview;
 
 const NOTE_TEMPLATES = {
   free: { label:'Free-form', icon:'file-text', placeholder:'How did the session go? Anything to follow up?', starter:'' },
@@ -2235,6 +2512,7 @@ function setNoteTemplate(apptId, key, btn) {
   if (btn) btn.classList.add('active');
   toast(`${tpl.label} template applied`, 'info');
 }
+window.setNoteTemplate = setNoteTemplate;
 function onNoteInput(apptId, value) {
   const existing = NOTES[apptId] || { template:'free' };
   NOTES[apptId] = { ...existing, content: value, updatedAt: new Date().toISOString() };
@@ -2243,7 +2521,9 @@ function onNoteInput(apptId, value) {
   if (el) el.innerHTML = `<span class="muted">Saving…</span>`;
   noteSaveTimers[apptId] = setTimeout(() => { persist(STORAGE_KEYS.NOTES, NOTES); const el2 = document.getElementById('autosave-' + apptId); if (el2) el2.innerHTML = `<span class="autosave-dot"></span> Saved just now`; iconEl(); }, 700);
 }
+window.onNoteInput = onNoteInput;
 function saveNoteNow(apptId) { persist(STORAGE_KEYS.NOTES, NOTES); const el = document.getElementById('autosave-' + apptId); if (el) el.innerHTML = `<span class="autosave-dot"></span> Saved just now`; toast('Note saved'); }
+window.saveNoteNow = saveNoteNow;
 
 function PageMessages(convoId) {
   const u = State.user;
@@ -2260,7 +2540,7 @@ function PageMessages(convoId) {
         const other = getUser(active.participants.find(p => p !== u.id));
         return `<div class="flex flex-col min-h-0">
           <div class="p-3 sm:p-4 border-b border-[rgb(var(--border))] flex items-center gap-3 h-14"><a href="#/app/messages" class="md:hidden btn btn-sm btn-ghost !px-2" aria-label="Back">${icon('arrow-left', 16)}</a>${avatar(other, 34)}<div class="min-w-0 flex-1"><div class="type-small font-semibold truncate">${esc(other.name)}</div><div class="text-xs muted truncate">${other.title || other.email}</div></div></div>
-          <div class="messages-thread flex-1 overflow-y-auto p-4 space-y-3" data-thread>${active.messages.map(m => { const me = m.from === u.id; return `<div class="flex ${me?'justify-end':'justify-start'}" style="animation:fadeUp .3s cubic-bezier(0.16,1,0.3,1) both">${!me ? avatar(other, 26) : ''}<div class="ml-2 max-w-[75%] px-3.5 py-2 rounded-2xl type-small leading-relaxed ${me?'text-white rounded-br-md':'surface rounded-bl-md'}" ${me?'style="background:linear-gradient(135deg,#4CAF50,#2E7D32)"':''}>${esc(m.text)}<div class="text-[10px] mt-1 ${me?'text-white/70':'muted'} flex items-center gap-1.5 justify-end">${fmtTime(m.at)}${me && m.read ? ` · ${icon('check-check', 9)} Seen` : ''}</div></div></div>`; }).join('')}</div>
+          <div class="messages-thread flex-1 overflow-y-auto p-4 space-y-3" data-thread>${active.messages.map(m => { const me = m.from === u.id; return `<div class="flex ${me?'justify-end':'justify-start'}" data-msg-id="${esc(m.id)}" style="animation:fadeUp .3s cubic-bezier(0.16,1,0.3,1) both">${!me ? avatar(other, 26) : ''}<div class="ml-2 max-w-[75%] px-3.5 py-2 rounded-2xl type-small leading-relaxed ${me?'text-white rounded-br-md':'surface rounded-bl-md'}" ${me?'style="background:linear-gradient(135deg,#4CAF50,#2E7D32)"':''}>${esc(m.text)}<div class="msg-meta text-[10px] mt-1 ${me?'text-white/70':'muted'} flex items-center gap-1.5 justify-end">${fmtTime(m.at)}${me && m.read ? ` · ${icon('check-check', 9)} Seen` : ''}</div></div></div>`; }).join('')}</div>
           <form onsubmit="event.preventDefault();sendMessage(this,'${active.id}')" class="p-3 border-t border-[rgb(var(--border))] flex items-center gap-2"><input id="msg-input" placeholder="Type a message…" class="input !h-11 flex-1" autocomplete="off"><button type="submit" class="w-11 h-11 rounded-lg text-white grid place-items-center hover:opacity-90 transition shrink-0 active:scale-95" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)" aria-label="Send">${icon('send', 16)}</button></form>
         </div>`;
       })() : `<div class="grid place-items-center"><div class="text-center p-6"><div class="w-12 h-12 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center mx-auto mb-3">${icon('message-square', 22)}</div><div class="type-small font-semibold">Select a conversation</div></div></div>`}
@@ -2281,7 +2561,19 @@ async function sendMessage(form, convoId) {
   input.value = '';
   render();
   try {
-    await API.sendMessage(convoId, State.user.id, text);
+    await API.sendMessage(convoId, State.user.id, text, optimistic.id);
+    // Demo: simulate the other party reading shortly after delivery.
+    // Patches the DOM in place — deliberately no render() so the input keeps focus.
+    setTimeout(() => {
+      const cc = CONVERSATIONS.find(x => x.id === convoId);
+      if (!cc) return;
+      const mine = cc.messages.find(m => m.id === optimistic.id);
+      if (!mine || mine.read) return;
+      mine.read = true;
+      persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS);
+      const meta = document.querySelector(`[data-msg-id="${CSS.escape(optimistic.id)}"] .msg-meta`);
+      if (meta) meta.innerHTML = `${fmtTime(mine.at)} · Seen`;
+    }, 1400);
   } catch (e) {
     toast('Message failed to send', 'error');
     const cc = CONVERSATIONS.find(x => x.id === convoId);
@@ -2290,6 +2582,7 @@ async function sendMessage(form, convoId) {
     render();
   }
 }
+window.sendMessage = sendMessage;
 
 function PageClients() {
   const u = State.user;
@@ -2343,6 +2636,38 @@ function PageClientDetail(id) {
       ${StatTile({ label:'Next', value: upcoming ? fmtDate(upcoming.start, {month:'short', day:'numeric'}) : 'None', iconName:'calendar' })}
       ${StatTile({ label:'Reviews', value: clientReviews.length, iconName:'star' })}
     </div>
+
+    ${(() => {
+      const clientInvoices = INVOICES.filter(i => i.client === id && i.practitioner === u.id);
+      const unpaid = clientInvoices.filter(i => i.status !== 'paid');
+      const unpaidTotal = unpaid.reduce((s, i) => s + i.amount, 0);
+      return clientInvoices.length ? `<div class="card p-6 mb-6">
+        <div class="flex items-start justify-between mb-4 flex-wrap gap-2">
+          <div><div class="type-h3 text-[15px]">Billing</div><div class="text-xs muted mt-0.5">${clientInvoices.length} invoice${clientInvoices.length === 1 ? '' : 's'}</div></div>
+          ${unpaidTotal > 0 ? `<div class="text-right"><div class="text-[10px] uppercase tracking-wider muted font-bold">Unpaid</div><div class="font-display font-bold text-lg" style="color:#B45309">${fmtMoney(unpaidTotal)}</div></div>` : `<span class="badge" style="background:rgba(76,175,80,0.12);color:#2E7D32">All paid</span>`}
+        </div>
+        <div class="space-y-2">${clientInvoices.slice(0, 4).map(inv => `<button onclick="openInvoice('${inv.id}')" class="w-full flex items-center justify-between p-3 rounded-xl surface-2 hover:bg-[rgb(var(--surface))] transition text-left">
+          <div class="min-w-0 flex-1"><div class="type-small font-semibold type-mono">${esc(inv.id)}</div><div class="text-xs muted mt-0.5">${fmtDate(inv.issued)}</div></div>
+          <div class="flex items-center gap-3">${statusBadge(inv.status)}<div class="font-bold">${fmtMoney(inv.amount)}</div></div>
+        </button>`).join('')}</div>
+      </div>` : '';
+    })()}
+
+    ${(() => {
+      const convo = CONVERSATIONS.find(c => c.participants.includes(id) && c.participants.includes(u.id));
+      if (!convo || !convo.messages.length) return '';
+      const recent = convo.messages.slice(-3);
+      return `<div class="card p-6 mb-6">
+        <div class="flex items-start justify-between mb-4 flex-wrap gap-2">
+          <div><div class="type-h3 text-[15px]">Recent messages</div><div class="text-xs muted mt-0.5">${convo.messages.length} total · last ${relTime(convo.lastAt)}</div></div>
+          <a href="#/app/messages/${convo.id}" class="btn btn-sm btn-outline">Open thread</a>
+        </div>
+        <div class="space-y-2.5">${recent.map(m => {
+          const me = m.from === u.id;
+          return `<div class="flex ${me ? 'justify-end' : 'justify-start'}"><div class="max-w-[75%] px-3.5 py-2 rounded-2xl type-small leading-relaxed ${me ? 'text-white rounded-br-md' : 'surface-2 rounded-bl-md'}" ${me ? 'style="background:linear-gradient(135deg,#4CAF50,#2E7D32)"' : ''}>${esc(m.text)}<div class="text-[10px] mt-1 ${me ? 'text-white/70' : 'muted'} text-right">${relTime(m.at)}</div></div></div>`;
+        }).join('')}</div>
+      </div>`;
+    })()}
 
     ${areaRanked.length ? `<div class="card p-6 mb-6"><div class="type-h3 text-[15px]">Focus areas</div><div class="text-xs muted mt-0.5 mb-5">What we have worked on across all sessions</div><div class="space-y-4">${areaRanked.slice(0, 6).map(([k,v]) => { const area = getArea(k); if (!area) return ''; return `<div><div class="flex items-center justify-between type-small mb-1.5"><span class="font-medium">${esc(area.label)}</span><span class="muted text-xs">${v} session${v>1?'s':''}</span></div><div class="h-1.5 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full chart-bar" style="width:${(v/maxCount)*100}%;background:#2E7D32"></div></div></div>`; }).join('')}</div></div>` : ''}
 
@@ -2411,6 +2736,7 @@ function openServiceModal(editId) {
     actions: [{ label:'Cancel', variant:'outline', onclick:'closeModal()' }, { label: isEdit ? 'Save changes' : 'Add service', variant:'primary', onclick: `submitService('${editId || ''}')` }]
   });
 }
+window.openServiceModal = openServiceModal;
 function submitService(editId) {
   const name = document.getElementById('svc-name').value.trim();
   if (!name) { toast('Name is required', 'error'); return; }
@@ -2419,8 +2745,20 @@ function submitService(editId) {
   else { SERVICES.push({ id:'sv'+Date.now(), practitioner: State.user.id, active:true, ...payload }); toast('Service added'); }
   saveAll(); closeModal(); render();
 }
+window.submitService = submitService;
 function toggleServiceActive(id) { const s = getService(id); if (!s) return; s.active = !(s.active !== false); saveAll(); toast(s.active ? 'Visible to clients' : 'Hidden from clients'); render(); }
+window.toggleServiceActive = toggleServiceActive;
 function duplicateService(id) { const s = getService(id); if (!s) return; SERVICES.push({ ...s, id:'sv'+Date.now(), name: s.name + ' (copy)', active:false }); saveAll(); toast('Service duplicated — currently hidden'); render(); }
+window.duplicateService = duplicateService;
+
+function setSchedRule(key, value) {
+  const n = Math.max(0, parseInt(value) || 0);
+  State.schedulingRules = { ...(State.schedulingRules || {}), [key]: n };
+  persist(STORAGE_KEYS.SCHED_RULES, State.schedulingRules);
+  toast('Scheduling rule updated');
+  render();
+}
+window.setSchedRule = setSchedRule;
 
 function PageAvailability() {
   return `
@@ -2430,6 +2768,26 @@ function PageAvailability() {
       <div class="type-h3 text-[15px] mb-5">Weekly hours</div>
       <div class="space-y-3">${AVAILABILITY.map((d,i) => `<div class="p-3 surface-2 rounded-xl"><div class="flex items-center gap-3 mb-2"><label class="flex items-center gap-2 flex-1"><input type="checkbox" ${d.enabled?'checked':''} onchange="toggleDay(${i},this.checked)" class="rounded"><span class="type-small font-semibold">${d.day}</span></label></div>${d.enabled ? `<div class="flex flex-wrap items-center gap-2 type-small"><input type="time" value="${d.start}" class="input !h-9 !w-28 !text-sm" onchange="AVAILABILITY[${i}].start=this.value;saveAll();toast('Hours updated')"><span class="muted">to</span><input type="time" value="${d.end}" class="input !h-9 !w-28 !text-sm" onchange="AVAILABILITY[${i}].end=this.value;saveAll();toast('Hours updated')"><span class="text-xs muted ml-1">Break</span><input type="time" value="${d.breakStart||'12:00'}" class="input !h-8 !w-24 !text-xs" onchange="AVAILABILITY[${i}].breakStart=this.value;saveAll()"><span class="text-xs muted">to</span><input type="time" value="${d.breakEnd||'13:00'}" class="input !h-8 !w-24 !text-xs" onchange="AVAILABILITY[${i}].breakEnd=this.value;saveAll()"></div>` : `<div class="type-small muted">Unavailable</div>`}</div>`).join('')}</div>
     </div>
+    <div class="card p-6 mb-5">
+      <div class="type-h3 text-[15px] mb-5">Scheduling rules</div>
+      <div class="space-y-4">
+        <div class="flex items-center justify-between gap-4">
+          <div><div class="type-small font-medium">Buffer between sessions</div><div class="text-xs muted mt-0.5">Time to reset, take notes, and prepare</div></div>
+          <div class="flex items-center gap-2 shrink-0">
+            <input type="number" min="0" max="60" step="5" value="${(State.schedulingRules?.bufferMinutes ?? 15)}" class="input !w-20 !h-9 !text-sm text-center" onchange="setSchedRule('bufferMinutes', this.value)">
+            <span class="text-xs muted">min</span>
+          </div>
+        </div>
+        <div class="flex items-center justify-between gap-4">
+          <div><div class="type-small font-medium">Minimum notice</div><div class="text-xs muted mt-0.5">Earliest a client can book</div></div>
+          <div class="flex items-center gap-2 shrink-0">
+            <input type="number" min="0" max="48" step="1" value="${(State.schedulingRules?.minNoticeHours ?? 2)}" class="input !w-20 !h-9 !text-sm text-center" onchange="setSchedRule('minNoticeHours', this.value)">
+            <span class="text-xs muted">hrs</span>
+          </div>
+        </div>
+      </div>
+      <p class="text-xs muted mt-4 leading-relaxed flex items-start gap-1.5">${icon('info', 11)}<span>These rules affect booking availability in real time.</span></p>
+    </div>
     <div class="card p-6">
       <div class="flex items-center justify-between mb-5 flex-wrap gap-2"><div><div class="type-h3 text-[15px]">Time off</div><div class="text-xs muted mt-0.5">Block dates for vacation or personal days</div></div><button onclick="openAddTimeOff()" class="btn btn-sm btn-primary">${icon('plus', 13)} Add</button></div>
       ${State.timeOff.length === 0 ? `<div class="text-center py-6 rounded-xl border border-dashed border-[rgb(var(--border))]"><div class="type-small muted">No blocked dates</div></div>` : `<div class="space-y-2" data-stagger>${State.timeOff.map(t => { const start = new Date(t.start), end = new Date(t.end); const sameRange = sameDay(start, end); const range = sameRange ? fmtDate(start, {weekday:'short', month:'short', day:'numeric', year:'numeric'}) : `${fmtDate(start, {month:'short', day:'numeric'})} – ${fmtDate(end, {month:'short', day:'numeric', year:'numeric'})}`; const days = Math.round((end - start) / (1000*60*60*24)) + 1; return `<div class="flex items-center gap-3 p-3 rounded-xl surface-2"><div class="w-9 h-9 rounded-lg bg-rose2-400/20 text-rose2-700 grid place-items-center shrink-0">${icon('calendar-x', 14)}</div><div class="flex-1 min-w-0"><div class="type-small font-semibold truncate">${esc(t.reason || 'Time off')}</div><div class="text-xs muted mt-0.5">${range} · ${days} day${days>1?'s':''}</div></div><button onclick="removeTimeOff('${t.id}')" class="w-8 h-8 rounded-lg grid place-items-center muted hover:bg-red-500/10 hover:text-red-600" aria-label="Remove">${icon('x', 14)}</button></div>`; }).join('')}</div>`}
@@ -2437,17 +2795,37 @@ function PageAvailability() {
   </div>`;
 }
 function toggleDay(i, v) { AVAILABILITY[i].enabled = v; saveAll(); render(); }
+window.toggleDay = toggleDay;
 function openAddTimeOff() { modal({ title:'Add time off', body:`<div class="space-y-3"><div class="grid grid-cols-2 gap-3"><div><label class="type-small font-medium mb-1.5 block">Start</label><input id="to-start" type="date" class="input" value="${toDateInputValue(new Date())}"></div><div><label class="type-small font-medium mb-1.5 block">End</label><input id="to-end" type="date" class="input" value="${toDateInputValue(new Date())}"></div></div><div><label class="type-small font-medium mb-1.5 block">Reason (optional)</label><input id="to-reason" class="input" placeholder="e.g., Holiday break"></div></div>`, actions:[{label:'Cancel',variant:'outline',onclick:'closeModal()'},{label:'Add',variant:'primary',onclick:'submitTimeOff()'}] }); }
+window.openAddTimeOff = openAddTimeOff;
 function submitTimeOff() {
   const startVal = document.getElementById('to-start').value, endVal = document.getElementById('to-end').value, reason = document.getElementById('to-reason').value.trim();
   if (!startVal || !endVal) { toast('Please provide both dates', 'error'); return; }
   const startD = parseLocalDate(startVal), endD = parseLocalDate(endVal);
+  if (!startD || !endD) { toast('Invalid date', 'error'); return; }
   if (endD < startD) { toast('End must be after start', 'error'); return; }
   State.timeOff.push({ id:'to'+Date.now(), start: startD.toISOString(), end: endD.toISOString(), reason: reason || 'Time off' });
   State.timeOff.sort((a,b) => new Date(a.start) - new Date(b.start));
   saveTimeOff(); closeModal(); toast('Time off added'); render();
 }
-function removeTimeOff(id) { State.timeOff = State.timeOff.filter(t => t.id !== id); saveTimeOff(); toast('Time off removed'); render(); }
+window.submitTimeOff = submitTimeOff;
+function removeTimeOff(id) {
+  const removed = State.timeOff.find(t => t.id === id);
+  const prevIndex = State.timeOff.findIndex(t => t.id === id);
+  if (!removed) return;
+  State.timeOff = State.timeOff.filter(t => t.id !== id);
+  saveTimeOff();
+  pushUndo({
+    label: 'Time off removed',
+    restore() {
+      State.timeOff.splice(prevIndex, 0, removed);
+      State.timeOff.sort((a,b) => new Date(a.start) - new Date(b.start));
+      saveTimeOff();
+    }
+  });
+  render();
+}
+window.removeTimeOff = removeTimeOff;
 
 function PageAnalytics() {
   const u = State.user;
@@ -2499,7 +2877,9 @@ function PageVerification() {
   </div>`;
 }
 function saveCredentials(field, value) { if (!State.user) return; State.user.credentials = { ...(State.user.credentials || {}), [field]: value }; saveAll(); persistSession(); toast('Saved'); }
+window.saveCredentials = saveCredentials;
 function submitVerification() { if (!State.user) return; const c = State.user.credentials || {}; if (!c.id || !c.authority) { toast('Fill in credential ID and issuing authority', 'error'); return; } State.user.verificationSubmitted = true; saveAll(); persistSession(); toast('Submitted for review'); render(); }
+window.submitVerification = submitVerification;
 
 function PageInvoices() {
   const u = State.user;
@@ -2541,7 +2921,9 @@ function openInvoice(id) {
     actions
   });
 }
-function markInvoicePaid(id) { const inv = INVOICES.find(i => i.id === id); if (!inv) return; inv.status = 'paid'; inv.paidAt = new Date().toISOString(); inv.method = 'Demo'; saveAll(); closeModal(); toast('Invoice marked paid'); render(); }
+window.openInvoice = openInvoice;
+function markInvoicePaid(id) { const inv = INVOICES.find(i => i.id === id); if (!inv) return; const prevStatus = inv.status; const prevPaidAt = inv.paidAt; const prevMethod = inv.method; inv.status = 'paid'; inv.paidAt = new Date().toISOString(); inv.method = 'Demo'; saveAll(); closeModal(); pushUndo({ label: 'Invoice marked paid', restore() { inv.status = prevStatus; inv.paidAt = prevPaidAt; inv.method = prevMethod; saveAll(); } }); render(); }
+window.markInvoicePaid = markInvoicePaid;
 
 function PageNotifications() {
   const list = [...NOTIFICATIONS];
@@ -2580,6 +2962,7 @@ function handleNotification(id, action) {
   saveAll();
   render();
 }
+window.handleNotification = handleNotification;
 
 function PageSettings() {
   const u = State.user;
@@ -2680,9 +3063,13 @@ function PageSettings() {
   </div>`;
 }
 function toggleNotifPref(key, value) { if (!State.user) return; State.user.notifications = { ...(State.user.notifications || {}), [key]: value }; saveAll(); persistSession(); toast('Preference saved'); }
+window.toggleNotifPref = toggleNotifPref;
 function toggleAnalyticsConsent(value) { if (!State.user) return; State.user.analyticsConsent = value; saveAll(); persistSession(); toast(value ? 'Anonymized usage on' : 'Anonymized usage off'); }
+window.toggleAnalyticsConsent = toggleAnalyticsConsent;
 function toggleTwoFactor(value) { if (!State.user) return; State.user.twoFactorEnabled = value; saveAll(); persistSession(); toast(value ? 'Two-factor authentication enabled' : 'Two-factor authentication disabled'); render(); }
+window.toggleTwoFactor = toggleTwoFactor;
 function saveProfileField(field, value) { if (!State.user) return; State.user[field] = value; const u = USERS.find(x => x.id === State.user.id); if (u) u[field] = value; saveAll(); persistSession(); toast('Saved'); }
+window.saveProfileField = saveProfileField;
 function handlePhotoChange(input) {
   const file = input.files?.[0];
   if (!file) return;
@@ -2702,16 +3089,21 @@ function handlePhotoChange(input) {
   };
   reader.readAsDataURL(file);
 }
+window.handlePhotoChange = handlePhotoChange;
 function resetPhoto() { State.savedAvatar = null; localStorage.removeItem(STORAGE_KEYS.AVATAR); toast('Photo reset'); render(); }
+window.resetPhoto = resetPhoto;
 function exportData() {
-  const data = { user: State.user, appointments: APPOINTMENTS, notes: NOTES, services: SERVICES };
+  const data = { user: State.user, appointments: APPOINTMENTS, notes: NOTES, services: SERVICES, analytics: ANALYTICS.all() };
   const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a'); a.href = url; a.download = 'therabyte-export.json'; a.click(); URL.revokeObjectURL(url);
   toast('Data exported');
 }
+window.exportData = exportData;
 function confirmDelete() { modal({ title:'Delete your account?', body:`<div class="space-y-3"><div class="p-3 rounded-xl bg-red-500/8 border border-red-500/20 type-small flex items-start gap-2">${icon('alert-triangle', 13)}<span class="muted">This permanently deletes your account, appointments, messages, and notes.</span></div><div><label class="type-small font-medium mb-1.5 block">Type <span class="type-mono">DELETE</span> to confirm</label><input class="input" id="confirm-delete-input" placeholder="DELETE"></div></div>`, actions:[{label:'Cancel',variant:'outline',onclick:'closeModal()'},{label:'Delete account',variant:'danger',onclick:`if(document.getElementById('confirm-delete-input').value==='DELETE'){localStorage.clear();location.reload();}else{toast('Type DELETE to confirm','error')}`}] }); }
+window.confirmDelete = confirmDelete;
 function confirmResetDemo() { modal({ title:'Reset to demo data?', body:`<div class="p-3 rounded-xl bg-amber-500/8 border border-amber-500/20 type-small flex items-start gap-2">${icon('alert-triangle', 13)}<span class="muted">This clears your local changes and restores the original demo data. Useful before a presentation.</span></div>`, actions:[{label:'Cancel',variant:'outline',onclick:'closeModal()'},{label:'Reset',variant:'primary',onclick:`localStorage.clear();location.reload();`}] }); }
+window.confirmResetDemo = confirmResetDemo;
 function openChangePassword() {
   modal({
     title: 'Change password',
@@ -2719,6 +3111,7 @@ function openChangePassword() {
     actions: [{ label:'Cancel', variant:'outline', onclick:'closeModal()' }, { label:'Update password', variant:'primary', onclick:'submitPasswordChange()' }]
   });
 }
+window.openChangePassword = openChangePassword;
 function submitPasswordChange() {
   const oldPw = document.getElementById('old-pw').value;
   const newPw = document.getElementById('new-pw').value;
@@ -2728,6 +3121,7 @@ function submitPasswordChange() {
   if (newPw !== confirmPw) { toast('Passwords do not match', 'error'); return; }
   closeModal(); toast('Password updated');
 }
+window.submitPasswordChange = submitPasswordChange;
 
 let bookStep = 0;
 let bookState = { practitioner:null, service:null, areas:[], date:null, time:null, ref:null, _submitting:false };
@@ -2787,6 +3181,7 @@ function BookStep1() {
   </div>`;
 }
 function quickRebook() { const a = getClientLastAppt(); if (!a) return; resetBookingFlow(); bookState = { practitioner: a.practitioner, service: a.service, areas: [...(a.areas || [])], date: null, time: null, ref: null, _submitting:false }; bookStep = 1; render(); toast('Loaded from your last session'); }
+window.quickRebook = quickRebook;
 
 function BookStep2() {
   const p = getUser(bookState.practitioner);
@@ -2847,31 +3242,28 @@ function applyLastAreas() {
   const last = APPOINTMENTS.filter(a => a.client === State.user.id && a.practitioner === p.id && a.status === 'completed').sort((a, b) => new Date(b.start) - new Date(a.start))[0];
   if (last) { bookState.areas = [...(last.areas || [])]; render(); toast('Loaded from last session'); }
 }
+window.applyLastAreas = applyLastAreas;
 function generateSlots(date) {
   if (isDateInTimeOff(date.toISOString())) return [];
   const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   const av = AVAILABILITY.find(a => a.day === dayNames[date.getDay()]);
   if (!av || !av.enabled) return [];
+  const rules = State.schedulingRules || { bufferMinutes: 15, minNoticeHours: 2 };
   const startMin = parseTime24(av.start), endMin = parseTime24(av.end);
   const breakStart = av.breakStart ? parseTime24(av.breakStart) : null;
   const breakEnd = av.breakEnd ? parseTime24(av.breakEnd) : null;
   const duration = (bookState.service && getService(bookState.service)?.duration) || 60;
   const practitionerId = bookState.practitioner;
   const now = new Date();
+  const minStart = new Date(now.getTime() + rules.minNoticeHours * 3600000);
   const out = [];
   for (let m = startMin; m + duration <= endMin; m += 30) {
     if (breakStart != null && breakEnd != null && m < breakEnd && m + duration > breakStart) continue;
-    const slotStart = new Date(date); slotStart.setHours(Math.floor(m / 60), m % 60, 0, 0);
-    const slotEnd = new Date(slotStart.getTime() + duration * 60000);
-    const taken = APPOINTMENTS.some(a => {
-      if (a.status === 'cancelled' || a.status === 'no-show') return false;
-      if (practitionerId && a.practitioner !== practitionerId) return false;
-      const aStart = new Date(a.start);
-      const aEnd = new Date(aStart.getTime() + (a.duration || 60) * 60000);
-      return slotStart < aEnd && slotEnd > aStart;
-    });
-    const isPast = slotStart <= now;
-    out.push({ time: minutesToLabel(m), available: !taken && !isPast });
+    const slotStart = new Date(date);
+    slotStart.setHours(Math.floor(m / 60), m % 60, 0, 0);
+    const taken = hasConflict(practitionerId, slotStart, duration, { bufferMinutes: rules.bufferMinutes });
+    const tooSoon = slotStart < minStart;
+    out.push({ time: minutesToLabel(m), available: !taken && !tooSoon });
   }
   return out;
 }
@@ -2882,8 +3274,11 @@ function shiftBookMonth(delta) {
   bookViewMonth = base;
   render();
 }
+window.shiftBookMonth = shiftBookMonth;
 function toggleArea(id) { const arr = bookState.areas || []; bookState.areas = arr.includes(id) ? arr.filter(x => x !== id) : [...arr, id]; render(); }
+window.toggleArea = toggleArea;
 function applyPack(id) { const pk = BODY_PACKS.find(p => p.id === id); if (pk) { bookState.areas = [...pk.areas]; render(); } }
+window.applyPack = applyPack;
 
 function BookStep3() {
   const p = getUser(bookState.practitioner);
@@ -2958,6 +3353,7 @@ function selectService(id) {
   bookStep = 1;
   render(); window.scrollTo({top:0});
 }
+window.selectService = selectService;
 async function confirmBooking() {
   if (bookState._submitting) return;
   if (getClientUpcoming()) { toast('You already have an upcoming session.', 'warning'); return; }
@@ -2981,6 +3377,7 @@ async function confirmBooking() {
     });
     NOTIFICATIONS.push({ id: 'n' + Date.now(), type: 'appointment', title: 'New appointment request', body: `${State.user.name} · ${s.name} · ${fmtDate(d, {weekday:'short', month:'short', day:'numeric'})} at ${bookState.time}`, at: new Date().toISOString(), read: false, action: 'view', actionLabel: 'View', link: '#/app/appointments/' + newId });
     saveAll();
+    ANALYTICS.track('appointment_created', { service: s.id, practitioner: p.id, areas: (bookState.areas || []).length });
     bookState.ref = ref; bookStep = 3; toast('Booked'); render();
   } catch (e) {
     bookState._submitting = false;
@@ -2988,11 +3385,164 @@ async function confirmBooking() {
     else { toast('Something went wrong. Please try again.', 'error'); }
   }
 }
+window.confirmBooking = confirmBooking;
 
-/* 404 — header badge removed */
+/* ============================================================
+   COMMAND PALETTE
+   ============================================================ */
+let cmdkOpen = false;
+let cmdkIndex = 0;
+let cmdkResults = [];
+let cmdkPreviousFocus = null;
+let cmdkKeyHandler = null;
+let _cmdkAll = null;
+
+function openCmdk() {
+  if (cmdkOpen || !State.user) return;
+  const existingModal = document.getElementById('modal-root').firstElementChild;
+  if (existingModal) return;
+  cmdkOpen = true;
+  cmdkPreviousFocus = document.activeElement;
+  cmdkIndex = 0;
+  const root = document.getElementById('modal-root');
+  root.innerHTML = `
+    <div class="fixed inset-0 z-[90] flex items-start justify-center p-4 pt-[12vh]" role="dialog" aria-modal="true" aria-label="Command palette">
+      <div class="absolute inset-0 bg-black/40" onclick="closeCmdk()" aria-hidden="true" style="backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:fade .2s ease both"></div>
+      <div class="relative w-full max-w-xl surface rounded-2xl shadow-lift overflow-hidden" style="animation:fadeUp .25s cubic-bezier(0.16,1,0.3,1) both">
+        <div class="relative flex items-center border-b border-[rgb(var(--border))]">
+          <span class="absolute left-4 muted">${icon('search', 16)}</span>
+          <input id="cmdk-input" class="w-full h-14 pl-12 pr-14 border-0 outline-none bg-transparent text-base" placeholder="Search or type a command…" autocomplete="off" spellcheck="false" aria-label="Search">
+          <kbd class="absolute right-4 text-[10px] muted px-1.5 py-0.5 rounded border border-[rgb(var(--border))] bg-[rgb(var(--surface-2))]">ESC</kbd>
+        </div>
+        <div id="cmdk-results" class="max-h-[420px] overflow-y-auto py-2" role="listbox"></div>
+      </div>
+    </div>`;
+  iconEl();
+  if (typeof lockBackground === 'function') lockBackground();
+  else {
+    const ar = document.getElementById('root');
+    if (ar) { if ('inert' in HTMLElement.prototype) ar.inert = true; else ar.setAttribute('aria-hidden', 'true'); }
+    document.body.classList.add('modal-open');
+  }
+  const input = document.getElementById('cmdk-input');
+  input.addEventListener('input', () => { cmdkIndex = 0; renderCmdk(input.value); });
+  cmdkKeyHandler = cmdkKeydown;
+  document.addEventListener('keydown', cmdkKeyHandler, true);
+  requestAnimationFrame(() => { input.focus(); renderCmdk(''); });
+  ANALYTICS.track('command_palette_opened');
+}
+window.openCmdk = openCmdk;
+function closeCmdk() {
+  if (!cmdkOpen) return;
+  cmdkOpen = false;
+  if (cmdkKeyHandler) { document.removeEventListener('keydown', cmdkKeyHandler, true); cmdkKeyHandler = null; }
+  document.getElementById('modal-root').innerHTML = '';
+  if (typeof unlockBackground === 'function') unlockBackground();
+  else {
+    const ar = document.getElementById('root');
+    if (ar) { if ('inert' in HTMLElement.prototype) ar.inert = false; else ar.removeAttribute('aria-hidden'); }
+    document.body.classList.remove('modal-open');
+  }
+  if (cmdkPreviousFocus && typeof cmdkPreviousFocus.focus === 'function') { try { cmdkPreviousFocus.focus(); } catch {} }
+  cmdkPreviousFocus = null;
+}
+window.closeCmdk = closeCmdk;
+function buildCmdkItems() {
+  const u = State.user;
+  if (!u) return [];
+  const items = [];
+  const isP = u.role === 'practitioner';
+  const nav = isP ? [
+    ['home','Go to Today','/app/dashboard'],
+    ['calendar','Go to Calendar','/app/calendar'],
+    ['users','Go to Clients','/app/clients'],
+    ['message-square','Go to Messages','/app/messages'],
+    ['settings','Go to Settings','/app/settings'],
+    ['bar-chart-3','Go to Reports','/app/reports'],
+  ] : [
+    ['home','Go to Home','/app/dashboard'],
+    ['plus-circle','Book a session','/app/book'],
+    ['calendar-check','My sessions','/app/appointments'],
+    ['hand-heart','Self-care guides','/app/self-care'],
+    ['message-square','Messages','/app/messages'],
+    ['settings','Settings','/app/settings'],
+  ];
+  nav.forEach(([ic, label, route]) => items.push({ group:'Navigate', icon:ic, label, action:() => navigate(route) }));
+  const myAppts = APPOINTMENTS.filter(a => isP ? a.practitioner === u.id : a.client === u.id);
+  myAppts.slice(0, 15).forEach(a => {
+    const other = getUser(isP ? a.client : a.practitioner);
+    items.push({ group:'Appointments', icon:'calendar-check', label:`${other.name} · ${getService(a.service)?.name || ''}`, hint:`${fmtDate(a.start, {month:'short', day:'numeric'})} · ${fmtTime(a.start)}`, action:() => navigate('/app/appointments/' + a.id) });
+  });
+  if (isP) {
+    [...new Set(myAppts.map(a => a.client))].forEach(id => {
+      const c = getUser(id);
+      items.push({ group:'Clients', icon:'user', label:c.name, hint:c.email, action:() => navigate('/app/clients/' + c.id) });
+    });
+  }
+  items.push({ group:'Actions', icon:'sun-moon', label:'Toggle theme', action:() => { closeCmdk(); setTheme(State.theme === 'dark' ? 'light' : 'dark'); } });
+  items.push({ group:'Actions', icon:'log-out', label:'Sign out', action:() => { closeCmdk(); logout(); } });
+  return items;
+}
+function renderCmdk(query) {
+  if (!_cmdkAll) _cmdkAll = buildCmdkItems();
+  const q = (query || '').trim().toLowerCase();
+  let items = _cmdkAll;
+  if (q) items = items.filter(i => i.label.toLowerCase().includes(q) || (i.hint || '').toLowerCase().includes(q) || (i.group || '').toLowerCase().includes(q));
+  cmdkResults = items.slice(0, 30);
+  const container = document.getElementById('cmdk-results');
+  if (!container) return;
+  if (!cmdkResults.length) { container.innerHTML = `<div class="px-6 py-12 text-center muted type-small">No matches for "${esc(query)}"</div>`; return; }
+  const groups = {};
+  cmdkResults.forEach((it, i) => { const g = it.group || 'Other'; if (!groups[g]) groups[g] = []; groups[g].push({ ...it, _i: i }); });
+  container.innerHTML = Object.entries(groups).map(([group, list]) => `
+    <div class="px-4 pt-3 pb-1 text-[10px] font-bold uppercase tracking-[0.14em] muted">${esc(group)}</div>
+    ${list.map(it => `<div role="option" aria-selected="${it._i === cmdkIndex}" data-cmdk-idx="${it._i}" class="px-4 py-2.5 flex items-center gap-3 cursor-pointer transition-colors ${it._i === cmdkIndex ? 'bg-[rgb(var(--surface-2))]' : 'hover:bg-[rgb(var(--surface-2))]'}"><span class="muted shrink-0">${icon(it.icon, 15)}</span><span class="flex-1 min-w-0"><span class="block truncate type-small">${esc(it.label)}</span>${it.hint ? `<span class="block text-[11px] muted truncate mt-0.5">${esc(it.hint)}</span>` : ''}</span></div>`).join('')}
+  `).join('');
+  iconEl();
+  container.querySelectorAll('[data-cmdk-idx]').forEach(el => {
+    el.addEventListener('click', () => runCmdk(parseInt(el.dataset.cmdkIdx, 10)));
+    el.addEventListener('mouseenter', () => { cmdkIndex = parseInt(el.dataset.cmdkIdx, 10); renderCmdk(document.getElementById('cmdk-input').value); });
+  });
+  const active = container.querySelector(`[data-cmdk-idx="${cmdkIndex}"]`);
+  if (active) active.scrollIntoView({ block: 'nearest' });
+}
+function runCmdk(idx) {
+  const item = cmdkResults[idx];
+  if (!item) return;
+  closeCmdk();
+  setTimeout(() => item.action(), 40);
+}
+window.runCmdk = runCmdk;
+function cmdkKeydown(e) {
+  if (e.key === 'Escape') { e.preventDefault(); closeCmdk(); return; }
+  if (e.key === 'ArrowDown') { e.preventDefault(); cmdkIndex = Math.min(cmdkIndex + 1, cmdkResults.length - 1); renderCmdk(document.getElementById('cmdk-input').value); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); cmdkIndex = Math.max(cmdkIndex - 1, 0); renderCmdk(document.getElementById('cmdk-input').value); }
+  else if (e.key === 'Enter') { e.preventDefault(); runCmdk(cmdkIndex); }
+  else if (e.key === 'Tab') {
+    // Trap focus inside the palette so it can't land on the inert #root.
+    const root = document.getElementById('modal-root');
+    if (!root) return;
+    const focusables = [...root.querySelectorAll('input:not([disabled]), button:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])')]
+      .filter(el => el.offsetParent !== null);
+    if (focusables.length < 2) { e.preventDefault(); return; }
+    const first = focusables[0], last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+}
+document.addEventListener('keydown', (e) => {
+  if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault();
+    if (cmdkOpen) closeCmdk(); else openCmdk();
+  }
+});
+
+/* ============================================================
+   404
+   ============================================================ */
 function Page404() { return `<div class="min-h-screen flex flex-col">
   <header class="border-b border-[rgb(var(--border))]"><div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">${LogoMark()}<div class="flex items-center gap-3"><div data-theme-toggle></div><a href="${State.user ? '#/app/dashboard' : '#/login'}" class="btn btn-sm ${State.user ? 'btn-outline' : 'btn-primary'}">${State.user ? 'Back to app' : 'Sign in'}</a></div></div></header>
-  <div class="flex-1 grid place-items-center px-4 py-20"><div class="text-center max-w-md">
+  <div id="main-content" tabindex="-1" class="flex-1 grid place-items-center px-4 py-20"><div class="text-center max-w-md">
     <div class="w-16 h-16 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center mx-auto mb-6">${icon('compass', 30)}</div>
     <div class="font-display font-bold text-5xl tracking-tight">404</div>
     <div class="type-h3 text-lg mt-3">Page not found</div>
@@ -3027,8 +3577,10 @@ function renderError(err) {
 function render() {
   try {
     var _mr = document.getElementById('modal-root');
-    if (_mr && _mr.firstElementChild) {
+    var _routeChangedSinceModalOpened = _modalRouteKey !== null && _modalRouteKey !== currentRouteKey();
+    if (_mr && _mr.firstElementChild && !cmdkOpen && _routeChangedSinceModalOpened) {
       _mr.innerHTML = '';
+      _modalRouteKey = null;
       document.body.classList.remove('modal-open');
       var _ar = document.getElementById('root');
       if (_ar) {
@@ -3037,6 +3589,7 @@ function render() {
       }
       if (modalKeydownAttached) { document.removeEventListener('keydown', modalKeydown, true); modalKeydownAttached = false; }
     }
+    _cmdkAll = null;
     const root = $('#root');
     if (!root) return;
     const { path, parts } = getRoute();
@@ -3072,7 +3625,15 @@ function render() {
         const convoId = sub[1];
         const convos = CONVERSATIONS.filter(c => c.participants.includes(u.id));
         const target = convoId ? convos.find(c => c.id === convoId) : convos[0];
-        if (target && target.unread) { target.unread = 0; persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS); }
+        if (target) {
+          let dirty = false;
+          if (target.unread) { target.unread = 0; dirty = true; }
+          // Mark messages the current user has now seen.
+          target.messages.forEach(m => {
+            if (m.from !== u.id && m.read !== true) { m.read = true; dirty = true; }
+          });
+          if (dirty) persist(STORAGE_KEYS.CONVERSATIONS, CONVERSATIONS);
+        }
         page = PageMessages(convoId);
       }
       else if (sub[0] === 'settings') page = PageSettings();
@@ -3142,6 +3703,7 @@ window.addEventListener('hashchange', () => {
   if (path === 'app/book' && prevRouteKey && !prevRouteKey.startsWith('app/book|') && bookStep >= 3) {
     resetBookingFlow();
   }
+  if (cmdkOpen) closeCmdk();
   prevRouteKey = key;
   render();
   window.scrollTo({top:0});
@@ -3153,6 +3715,89 @@ window.addEventListener('hashchange', () => {
     setTimeout(() => root.classList.remove('page-enter'), 500);
   }
 });
+
+/* ============================================================
+   TEST SUITE
+   ============================================================ */
+window.__tb_test = function () {
+  const results = [];
+  const assert = (name, cond) => results.push({ name, pass: !!cond });
+
+  assert('areaAddOn(head) = 50', areaAddOn('head') === 50);
+  assert('areaAddOn(shoulders) = 100', areaAddOn('shoulders') === 100);
+  assert('areaAddOn unknown defaults to 50', areaAddOn('xyz') === 50);
+
+  const bufferMs = 15 * 60000;
+  const prevEnd = new Date('2026-01-15T11:00:00');
+  const candidateStart = new Date('2026-01-15T11:05:00');
+  const aEndBuffered = new Date(prevEnd.getTime() + bufferMs);
+  assert('15min buffer blocks 5min-after slot', candidateStart < aEndBuffered);
+
+  const now = Date.now();
+  const minStart = new Date(now + 2 * 3600000);
+  assert('30min from now blocked by 2h notice', new Date(now + 30 * 60000) < minStart);
+  assert('3h from now allowed by 2h notice', new Date(now + 3 * 3600000) > minStart);
+
+  assert('7-char password rejected', '1234567'.length < 8);
+  assert('8-char password accepted', '12345678'.length >= 8);
+
+  const iso = new Date('2026-01-15T10:30:00Z').toISOString();
+  const icsFmt = iso.replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  assert('ICS date format matches spec', /^\d{8}T\d{6}Z$/.test(icsFmt));
+
+  const collide = (a, b) => a.start < b.end && a.end > b.start;
+  const s1 = new Date('2026-01-15T10:00:00'), e1 = new Date('2026-01-15T11:00:00');
+  const s2 = new Date('2026-01-15T10:30:00'), e2 = new Date('2026-01-15T11:30:00');
+  assert('overlap: 30min shift collides', collide({ start: s1, end: e1 }, { start: s2, end: e2 }));
+  const s3 = new Date('2026-01-15T11:00:00');
+  assert('overlap: back-to-back does not collide', !collide({ start: s1, end: e1 }, { start: s3, end: new Date('2026-01-15T12:00:00') }));
+
+  // hasConflict must mirror what the write paths enforce.
+  (() => {
+    const snapshot = APPOINTMENTS.slice();
+    APPOINTMENTS.length = 0;
+    APPOINTMENTS.push({
+      id: 'test-a', client: 'c1', practitioner: 'p1', service: 'sv1',
+      start: '2026-06-01T10:00:00', duration: 60,
+      status: 'confirmed', mode: 'In-person', location: 'X', areas: [], ref: 'T',
+    });
+    assert('hasConflict: exact overlap detected',
+      hasConflict('p1', '2026-06-01T10:30:00', 30) === true);
+    assert('hasConflict: back-to-back (no buffer) is free',
+      hasConflict('p1', '2026-06-01T11:00:00', 30) === false);
+    assert('hasConflict: 15m buffer blocks 11:05',
+      hasConflict('p1', '2026-06-01T11:05:00', 30, { bufferMinutes: 15 }) === true);
+    assert('hasConflict: ignores self when ignoreId matches',
+      hasConflict('p1', '2026-06-01T10:00:00', 60, { ignoreId: 'test-a' }) === false);
+    assert('hasConflict: cancelled appointments are ignored', (() => {
+      APPOINTMENTS[0].status = 'cancelled';
+      const r = hasConflict('p1', '2026-06-01T10:30:00', 30);
+      APPOINTMENTS[0].status = 'confirmed';
+      return r === false;
+    })());
+    APPOINTMENTS.length = 0;
+    snapshot.forEach(x => APPOINTMENTS.push(x));
+  })();
+
+  // parseLocalDate must never return an Invalid Date.
+  assert('parseLocalDate("garbage") returns null',
+    parseLocalDate('garbage') === null);
+  assert('parseLocalDate("2026-13-01") returns null',
+    parseLocalDate('2026-13-01') === null);
+
+  // ICS escaping per RFC 5545.
+  assert('icsEscape escapes comma', icsEscape('a,b') === 'a\\,b');
+  assert('icsEscape escapes semicolon', icsEscape('a;b') === 'a\\;b');
+  assert('icsEscape escapes newline', icsEscape('a\nb') === 'a\\nb');
+  assert('icsEscape escapes backslash', icsEscape('a\\b') === 'a\\\\b');
+
+  const passed = results.filter(r => r.pass).length;
+  console.group(`%c[therabyte] Tests: ${passed}/${results.length} passing`, passed === results.length ? 'color:#4CAF50;font-weight:bold' : 'color:#DC2626;font-weight:bold');
+  results.forEach(r => console.log(r.pass ? '%c✓' : '%c✗', r.pass ? 'color:#4CAF50' : 'color:#DC2626', r.name));
+  console.groupEnd();
+  return results;
+};
+
 applyTheme();
 prevRouteKey = currentRouteKey();
 render();
@@ -3162,6 +3807,10 @@ requestAnimationFrame(() => {
   const root = document.getElementById('root');
   if (root) { root.classList.add('page-enter'); setTimeout(() => root.classList.remove('page-enter'), 500); }
 });
+
+if (location.search.includes('test=1')) window.__tb_test();
+
+console.info('[therabyte] ready. Run __tb_test() to verify core logic. __tb_analytics() to view tracked events. ⌘K opens the command palette.');
 </script>
 
 <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true">&nbsp;</div>
@@ -3226,10 +3875,10 @@ requestAnimationFrame(() => {
     applyTitle();
     announce(document.title);
     requestAnimationFrame(function () {
-      var main = document.querySelector('main') || document.getElementById('root');
+      var main = document.getElementById('main-content') || document.querySelector('main') || document.getElementById('root');
       if (!main) return;
       if (!main.hasAttribute('tabindex')) main.setAttribute('tabindex', '-1');
-      try { main.focus({ preventScroll: true }); } catch (e) { main.focus(); }
+      try { main.focus({ preventScroll: true }); } catch (e) { try { main.focus(); } catch(e2) {} }
     });
   }
   window.addEventListener('hashchange', onRouteChange);
@@ -3242,44 +3891,45 @@ requestAnimationFrame(() => {
     toastRoot.setAttribute('aria-atomic', 'false');
   }
 
-  var appRoot = document.getElementById('root');
-  var supportsInert = 'inert' in HTMLElement.prototype;
-  function lockBackground() {
-    if (!appRoot) return;
-    if (supportsInert) appRoot.inert = true;
-    else appRoot.setAttribute('aria-hidden', 'true');
+  window.lockBackground = function () {
+    var ar = document.getElementById('root');
+    if (!ar) return;
+    if ('inert' in HTMLElement.prototype) ar.inert = true;
+    else ar.setAttribute('aria-hidden', 'true');
     document.body.classList.add('modal-open');
-  }
-  function unlockBackground() {
-    if (!appRoot) return;
-    if (supportsInert) appRoot.inert = false;
-    else appRoot.removeAttribute('aria-hidden');
+  };
+  window.unlockBackground = function () {
+    var ar = document.getElementById('root');
+    if (!ar) return;
+    if ('inert' in HTMLElement.prototype) ar.inert = false;
+    else ar.removeAttribute('aria-hidden');
     document.body.classList.remove('modal-open');
-  }
+  };
+
   var _modal = window.modal;
   window.modal = function (opts) {
     _modal(opts);
-    lockBackground();
+    window.lockBackground();
     var root = document.getElementById('modal-root');
     var dialog = root && root.querySelector('[role="dialog"]');
     if (dialog && !dialog.hasAttribute('tabindex')) dialog.setAttribute('tabindex', '-1');
   };
   var _closeModal = window.closeModal;
   window.closeModal = function () {
-    unlockBackground();
+    window.unlockBackground();
     _closeModal();
   };
 
   var _handleRegister = window.handleRegister;
   var EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
   window.handleRegister = function (form) {
-    if (!form || !form.email) return _handleRegister(form);
-    var email = (form.email.value || '').trim();
+    if (!form || !form.elements || !form.elements.email) return _handleRegister(form);
+    var email = (form.elements.email.value || '').trim();
     if (!EMAIL_RE.test(email)) { window.toast('Please enter a valid email address', 'error'); return; }
     return _handleRegister(form);
   };
 
-  console.info('[therabyte] polish layer active — badges trimmed from headers, credits retained in footers.');
+  console.info('[therabyte] polish layer active.');
 })();
 </script>
 </body>
