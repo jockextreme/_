@@ -93,7 +93,6 @@ body {
 ::selection { background: rgba(76,175,80,0.25); color: rgb(var(--fg)); }
 @media (prefers-reduced-motion: reduce) { *,*::before,*::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; scroll-behavior: auto !important; } }
 
-/* ---------- Typography ---------- */
 h1, h2, h3, h4, h5 { font-family: 'Poppins', 'Inter', system-ui, sans-serif; letter-spacing: -0.022em; }
 .type-display { font-family: 'Poppins', sans-serif; font-weight: 800; letter-spacing: -0.038em; line-height: 1.02; }
 .type-h1 { font-family: 'Poppins', sans-serif; font-weight: 700; letter-spacing: -0.028em; line-height: 1.1; }
@@ -104,7 +103,6 @@ h1, h2, h3, h4, h5 { font-family: 'Poppins', 'Inter', system-ui, sans-serif; let
 .type-small { font-size: 13px; line-height: 1.5; }
 .type-mono { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-feature-settings: 'tnum'; }
 
-/* ---------- Nav ---------- */
 .nav-item { display: flex; align-items: center; gap: 11px; padding: 0 10px; min-height: 36px; border-radius: 7px; font-size: 13.5px; font-weight: 500; color: rgb(var(--muted)); transition: all .22s var(--ease-out-expo); cursor: pointer; text-decoration: none; position: relative; }
 .nav-item:hover { background: rgb(var(--surface-2)); color: rgb(var(--fg)); transform: translateX(2px); }
 .nav-item.active { background: linear-gradient(90deg, rgba(46,125,50,0.14) 0%, rgba(46,125,50,0.04) 100%); color: rgb(var(--brand)); font-weight: 600; }
@@ -112,7 +110,6 @@ h1, h2, h3, h4, h5 { font-family: 'Poppins', 'Inter', system-ui, sans-serif; let
 .nav-item.active::before { height: 20px; }
 .dark .nav-item.active { background: linear-gradient(90deg, rgba(129,199,132,0.20) 0%, rgba(129,199,132,0.05) 100%); color: rgb(180,204,169); }
 
-/* ---------- Buttons ---------- */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; font-weight: 600; font-size: 13.5px; letter-spacing: -0.005em; border-radius: 8px; transition: transform .2s var(--ease-out-expo), box-shadow .25s ease, background .2s ease, color .2s ease, border-color .2s ease; cursor: pointer; white-space: nowrap; border: none; min-height: 38px; padding: 0 14px; position: relative; overflow: hidden; }
 .btn:hover:not(:disabled) { transform: translateY(-1px); }
 .btn:active:not(:disabled) { transform: translateY(0) scale(0.98); }
@@ -130,7 +127,6 @@ h1, h2, h3, h4, h5 { font-family: 'Poppins', 'Inter', system-ui, sans-serif; let
 .btn-sm { min-height: 32px; padding: 0 11px; font-size: 12.5px; border-radius: 7px; }
 .btn-lg { min-height: 46px; padding: 0 22px; font-size: 14.5px; border-radius: 10px; }
 
-/* ---------- Forms ---------- */
 .input { width: 100%; height: 40px; padding: 0 12px; border-radius: 8px; border: 1px solid rgb(var(--border-strong)); background: rgb(var(--surface)); color: rgb(var(--fg)); font-size: 14px; outline: none; transition: border-color .2s ease, box-shadow .25s var(--ease-out-expo), background .2s ease; font-family: inherit; }
 .input:hover { border-color: rgb(var(--muted)); }
 .input:focus { border-color: rgb(var(--brand)); box-shadow: 0 0 0 4px rgba(46,125,50,0.14); }
@@ -142,7 +138,6 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
   .btn-lg { min-height: 48px; padding: 0 20px; }
 }
 
-/* ---------- Cards ---------- */
 .card { background: rgb(var(--surface)); border: 1px solid rgb(var(--border)); border-radius: 12px; box-shadow: 0 1px 2px rgba(20,23,25,0.02); transition: box-shadow .35s var(--ease-out-expo), border-color .25s ease, transform .35s var(--ease-out-expo); }
 .card-lg { border-radius: 16px; }
 .card-hover { transition: box-shadow .35s var(--ease-out-expo), border-color .25s ease, transform .35s var(--ease-out-expo); }
@@ -158,7 +153,6 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .list-row-static { padding: 16px 18px; }
 .list-row-static + .list-row-static { border-top: 1px solid rgb(var(--border)); }
 
-/* ---------- Badges / chips / tabs ---------- */
 .badge { display: inline-flex; align-items: center; gap: 5px; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: 600; letter-spacing: 0.005em; }
 .chip { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 32px; padding: 0 12px; border-radius: 999px; font-size: 12.5px; font-weight: 500; cursor: pointer; transition: all .22s var(--ease-out-expo); white-space: nowrap; border: 1px solid transparent; }
 .chip:hover { transform: translateY(-1px); }
@@ -175,7 +169,6 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .divider { height: 1px; background: rgb(var(--border)); }
 .help-text { font-size: 12px; color: rgb(var(--muted)); margin-top: 6px; display: flex; align-items: flex-start; gap: 5px; line-height: 1.5; }
 
-/* ---------- Body map ---------- */
 .body-svg { width: 100%; height: auto; max-width: 180px; display: block; margin: 0 auto; }
 .body-svg-lg { max-width: 240px; }
 .body-zone { fill: rgba(76,175,80,0.08); stroke: rgba(76,175,80,0.30); stroke-width: 1.2; transition: fill .25s ease, stroke .25s ease, transform .25s var(--ease-out-expo); transform-origin: center; transform-box: fill-box; }
@@ -187,7 +180,6 @@ select.input { appearance: none; background-image: url("data:image/svg+xml,%3Csv
 .body-label { fill: rgb(110,118,124); font-size: 9px; font-weight: 600; pointer-events: none; user-select: none; letter-spacing: 0.02em; }
 .dark .body-label { fill: rgb(145,152,158); }
 
-/* ---------- Calendar ---------- */
 .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
 .cal-day { aspect-ratio: 1; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; transition: all .2s var(--ease-out-expo); border: 1px solid transparent; position: relative; font-size: 13px; font-weight: 500; background: transparent; color: rgb(var(--fg)); }
 .cal-day:hover:not(:disabled):not(.disabled) { background: rgb(var(--surface-2)); transform: scale(1.06); }
@@ -385,11 +377,9 @@ body.scrolled header.sticky { box-shadow: 0 6px 24px -10px rgba(20,23,25,0.10); 
 button, .chip, .tab, .nav-item { touch-action: manipulation; }
 body.modal-open { overflow: hidden; }
 
-/* Details marker (Safari) */
 details > summary { list-style: none; }
 details > summary::-webkit-details-marker { display: none; }
 
-/* Anchor scroll offset for sticky headers */
 section[id] { scroll-margin-top: 80px; }
 
 @media print { .no-print { display: none !important; } body { background: white; } }
@@ -486,7 +476,7 @@ function avatar(u, size=40){
   const isMe = State.user && State.user.id === u.id;
   const mySaved = isMe && State.savedAvatar && State.savedAvatar.userId === u.id ? State.savedAvatar.dataUrl : null;
   const src = mySaved || u.avatar;
-  return `<img src="${src}" alt="${esc(u.name)}" class="rounded-full object-cover shrink-0 bg-black/5" style="width:${size}px;height:${size}px" onerror="this.onerror=null;this.src='https://i.pravatar.cc/150?u=${u.id}'">`;
+  return `<img src="${src}" alt="${esc(u.name)}" loading="lazy" decoding="async" class="rounded-full object-cover shrink-0 bg-black/5" style="width:${size}px;height:${size}px" onerror="this.onerror=null;this.src='https://i.pravatar.cc/150?u=${u.id}'">`;
 }
 function icon(n, s=18, c=''){ return `<i data-lucide="${n}" class="${c}" style="width:${s}px;height:${s}px"></i>`; }
 function iconEl(){ if (window.lucide) lucide.createIcons(); }
@@ -845,6 +835,7 @@ function LogoMark(small, iconOnly) {
   </a>`;
 }
 
+/* Kept for potential future use in modals or footers. No longer rendered in headers. */
 function GroupCreditBadge() {
   return `<a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer" class="group-credit-badge" title="Built by ${esc(CREDIT.name)}">
     ${icon('zap', 10)}<span>${esc(CREDIT.name)}</span>${icon('arrow-up-right', 9)}
@@ -955,6 +946,9 @@ function StarsDisplay(rating, size = 14) {
   return `<div class="flex items-center gap-0.5 text-amber-500">${Array.from({length:5}).map((_,i) => `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${i < rating ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>`).join('')}</div>`;
 }
 
+/* ============================================================
+   STATIC LAYOUT — header badge removed, footer credit kept
+   ============================================================ */
 function StaticFooter() {
   return `
   <footer class="border-t border-[rgb(var(--border))] mt-16">
@@ -1012,7 +1006,6 @@ function StaticPageLayout({ active, eyebrow, title, description, lastUpdated, ch
       <div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between gap-3">
         ${LogoMark()}
         <div class="flex items-center gap-3">
-          ${GroupCreditBadge()}
           <div data-theme-toggle class="hidden sm:block"></div>
           <a href="${State.user ? '#/app/dashboard' : '#/login'}" class="btn btn-sm ${State.user ? 'btn-outline' : 'btn-primary'}">${State.user ? 'Back to app' : 'Sign in'}</a>
         </div>
@@ -1266,6 +1259,9 @@ function PageHelp() {
   });
 }
 
+/* ============================================================
+   LANDING — header badge removed, footer credit kept
+   ============================================================ */
 function Landing() {
   return `
   <div class="min-h-screen overflow-x-hidden">
@@ -1279,7 +1275,6 @@ function Landing() {
           <a href="#faq" onclick="scrollToSection(event,'faq')" class="muted hover:text-[rgb(var(--fg))] transition">FAQ</a>
         </nav>
         <div class="flex items-center gap-3">
-          ${GroupCreditBadge()}
           <div data-theme-toggle class="hidden sm:block"></div>
           <a href="#/login" class="hidden sm:inline type-small font-medium muted hover:text-[rgb(var(--fg))] transition">Sign in</a>
           <a href="#/register" class="btn btn-sm btn-primary">Get started</a>
@@ -1325,7 +1320,7 @@ function Landing() {
           </div>
           <div class="absolute -bottom-8 -left-3 sm:-left-8 card p-4 shadow-lift max-w-[250px] hidden sm:block">
             <div class="flex items-center gap-2 mb-2.5"><div class="w-1.5 h-1.5 rounded-full bg-brand-500"></div><div class="text-[10px] font-bold tracking-[0.12em] uppercase muted">Practitioner view</div></div>
-            <div class="flex items-center gap-2.5 mb-2.5"><img src="https://i.pravatar.cc/150?img=68" class="w-8 h-8 rounded-full object-cover bg-black/5" alt=""><div class="min-w-0"><div class="text-xs font-semibold truncate">Alex Rivera</div><div class="text-[10px] muted">Today · 10:00 AM</div></div></div>
+            <div class="flex items-center gap-2.5 mb-2.5"><img src="https://i.pravatar.cc/150?img=68" loading="lazy" decoding="async" class="w-8 h-8 rounded-full object-cover bg-black/5" alt=""><div class="min-w-0"><div class="text-xs font-semibold truncate">Alex Rivera</div><div class="text-[10px] muted">Today · 10:00 AM</div></div></div>
             <div class="flex flex-wrap gap-1">${['Neck','Shoulders','Upper back'].map(x => `<span class="text-[9px] px-1.5 py-0.5 rounded bg-brand-500/12 text-brand-700 dark:text-brand-300 font-medium">${x}</span>`).join('')}</div>
           </div>
         </div>
@@ -1382,7 +1377,7 @@ function Landing() {
               ['Alex Rivera','10:00 AM','Relaxation Massage','3rd visit · neck, shoulders','https://i.pravatar.cc/150?img=68'],
               ['Jamie Santos','1:00 PM','Deep Tissue Therapy','2nd visit · upper back, glutes','https://i.pravatar.cc/150?img=32'],
               ['Kai Nakamura','3:30 PM','Stretching Session','First visit','https://i.pravatar.cc/150?img=14'],
-            ].map(([name,time,svc,prep,img]) => `<div class="flex items-center gap-3 p-3 rounded-lg surface-2"><img src="${img}" class="w-10 h-10 rounded-full object-cover bg-black/5" alt=""><div class="flex-1 min-w-0"><div class="text-[13.5px] font-semibold truncate">${name}</div><div class="text-[11px] muted mt-0.5 truncate">${svc} · ${time}</div><div class="text-[10px] muted mt-1 flex items-center gap-1">${icon('clipboard-list', 9)}<span class="truncate">${prep}</span></div></div></div>`).join('')}</div>
+            ].map(([name,time,svc,prep,img]) => `<div class="flex items-center gap-3 p-3 rounded-lg surface-2"><img src="${img}" loading="lazy" decoding="async" class="w-10 h-10 rounded-full object-cover bg-black/5" alt=""><div class="flex-1 min-w-0"><div class="text-[13.5px] font-semibold truncate">${name}</div><div class="text-[11px] muted mt-0.5 truncate">${svc} · ${time}</div><div class="text-[10px] muted mt-1 flex items-center gap-1">${icon('clipboard-list', 9)}<span class="truncate">${prep}</span></div></div></div>`).join('')}</div>
             <div class="mt-5 pt-5 border-t border-[rgb(var(--border))]">
               <div class="text-[10px] font-bold tracking-[0.12em] uppercase muted mb-3">What your clients ask for</div>
               <div class="space-y-2.5">${[['Neck',62],['Shoulders',54],['Lower back',38]].map(([label,pct]) => `<div><div class="flex items-center justify-between text-xs mb-1"><span class="font-medium">${label}</span><span class="muted">${pct}%</span></div><div class="h-1 rounded-full bg-[rgb(var(--surface-2))] overflow-hidden"><div class="h-full rounded-full" style="width:${pct}%;background:linear-gradient(90deg,#8BC34A,#2E7D32)"></div></div></div>`).join('')}</div>
@@ -1468,6 +1463,9 @@ function Landing() {
   </div>`;
 }
 
+/* ============================================================
+   AUTH — mobile header badge removed, panel footer credit kept
+   ============================================================ */
 function AuthLayout(children) {
   return `
   <div class="min-h-screen grid lg:grid-cols-2">
@@ -1507,7 +1505,7 @@ function AuthLayout(children) {
     <div class="flex flex-col relative overflow-hidden">
       <div class="lg:hidden p-4 flex items-center justify-between border-b border-[rgb(var(--border))]">
         <a href="#/">${LogoMark(true)}</a>
-        <div class="flex items-center gap-2">${GroupCreditBadge()}<div data-theme-toggle></div></div>
+        <div data-theme-toggle></div>
       </div>
       <div class="flex-1 grid place-items-center p-5 sm:p-10"><div class="w-full max-w-md animate-fadeUp">${children}</div></div>
       <div class="hidden lg:flex items-center justify-end p-5"><div data-theme-toggle></div></div>
@@ -1609,7 +1607,7 @@ function OnboardingPage() {
   }
   return `
   <div class="min-h-screen flex flex-col">
-    <header class="border-b border-[rgb(var(--border))]"><div class="max-w-2xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">${LogoMark(true)}<div class="flex items-center gap-2">${GroupCreditBadge()}<div data-theme-toggle></div></div></div></header>
+    <header class="border-b border-[rgb(var(--border))]"><div class="max-w-2xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">${LogoMark(true)}<div data-theme-toggle></div></div></header>
     <div class="max-w-2xl w-full mx-auto px-4 sm:px-6 py-10 flex-1">
       <div class="mb-6"><div class="section-eyebrow mb-1">Step ${onboardStep+1} of ${steps.length}</div><h1 class="type-h2 text-2xl sm:text-3xl">${steps[onboardStep][0]}</h1><p class="type-small muted mt-1">${steps[onboardStep][1]}</p></div>
       <div class="flex items-center gap-1.5 mb-6">${steps.map((_,i) => `<div class="flex-1 h-1 rounded-full ${i<=onboardStep?'bg-brand-600':'bg-[rgb(var(--border))]'} transition-colors"></div>`).join('')}</div>
@@ -1629,6 +1627,9 @@ function nextOnboard() {
 function prevOnboard() { if (onboardStep > 0) { onboardStep--; render(); } }
 function finishOnboard() { toast('Welcome to therabyte'); onboardStep = 0; navigate('/app/dashboard'); }
 
+/* ============================================================
+   APP SHELL — sidebar header credit icon removed, sidebar footer credit kept
+   ============================================================ */
 const PRACTITIONER_NAV = [
   { route:'dashboard', label:'Today', icon:'home' },
   { route:'calendar', label:'Calendar', icon:'calendar' },
@@ -1655,13 +1656,10 @@ function AppShell(page) {
   return `
   <div class="min-h-screen flex relative">
     <aside class="app-sidebar hidden md:flex flex-col border-r border-[rgb(var(--border))] bg-[rgb(var(--surface))] sticky top-0 h-screen shrink-0 relative z-10 no-print">
-      <div class="sidebar-header px-3 h-14 flex items-center justify-between gap-2 border-b border-[rgb(var(--border))]">
-        <a href="#/app/dashboard" class="min-w-0 flex-1 flex items-center justify-center lg:justify-start">
+      <div class="sidebar-header px-3 h-14 flex items-center justify-center border-b border-[rgb(var(--border))]">
+        <a href="#/app/dashboard" class="min-w-0 flex items-center justify-center">
           <span class="lg:hidden">${LogoMark(true, true)}</span>
           <span class="hidden lg:inline-flex">${LogoMark(true)}</span>
-        </a>
-        <a href="${CREDIT.url}" target="_blank" rel="noopener noreferrer" class="credit-icon hidden lg:grid shrink-0" title="Built by ${esc(CREDIT.name)}" aria-label="Built by ${esc(CREDIT.name)}">
-          ${icon('zap', 12)}
         </a>
       </div>
       <nav class="flex-1 overflow-y-auto px-2.5 py-4 space-y-0.5 no-scrollbar">
@@ -1700,7 +1698,6 @@ function AppShell(page) {
         <div class="h-14 px-4 sm:px-6 flex items-center gap-2">
           <a href="#/app/dashboard" class="md:hidden">${LogoMark(true)}</a>
           <div class="ml-auto flex items-center gap-1 sm:gap-2">
-            <div class="md:hidden">${GroupCreditBadge()}</div>
             <div data-theme-toggle class="hidden sm:block"></div>
             <a href="#/app/notifications" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Notifications">${icon('bell', 17)}${unreadNotifs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose2-500"></span>' : ''}</a>
             <a href="#/app/messages" class="relative w-9 h-9 rounded-lg grid place-items-center hover:bg-[rgb(var(--surface-2))] transition" aria-label="Messages">${icon('message-circle', 17)}${unreadMsgs ? '<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full" style="background:#4CAF50"></span>' : ''}</a>
@@ -2992,8 +2989,9 @@ async function confirmBooking() {
   }
 }
 
+/* 404 — header badge removed */
 function Page404() { return `<div class="min-h-screen flex flex-col">
-  <header class="border-b border-[rgb(var(--border))]"><div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">${LogoMark()}<div class="flex items-center gap-3">${GroupCreditBadge()}<div data-theme-toggle></div><a href="${State.user ? '#/app/dashboard' : '#/login'}" class="btn btn-sm ${State.user ? 'btn-outline' : 'btn-primary'}">${State.user ? 'Back to app' : 'Sign in'}</a></div></div></header>
+  <header class="border-b border-[rgb(var(--border))]"><div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between">${LogoMark()}<div class="flex items-center gap-3"><div data-theme-toggle></div><a href="${State.user ? '#/app/dashboard' : '#/login'}" class="btn btn-sm ${State.user ? 'btn-outline' : 'btn-primary'}">${State.user ? 'Back to app' : 'Sign in'}</a></div></div></header>
   <div class="flex-1 grid place-items-center px-4 py-20"><div class="text-center max-w-md">
     <div class="w-16 h-16 rounded-xl bg-brand-500/10 text-brand-600 grid place-items-center mx-auto mb-6">${icon('compass', 30)}</div>
     <div class="font-display font-bold text-5xl tracking-tight">404</div>
@@ -3168,19 +3166,8 @@ requestAnimationFrame(() => {
 
 <div id="sr-announcer" class="sr-only" aria-live="polite" aria-atomic="true">&nbsp;</div>
 <script>
-/* ============================================================
-   POLISH LAYER — QA pass applied
-   1. UTC date drift fix for YYYY-MM-DD strings
-   2. Per-route document title (aware of signed-in state)
-   3. Screen reader announcements (deduplicated)
-   4. Focus management on navigation
-   5. Toast container aria-live (individual roles handled in main script)
-   6. Modal background isolation (WCAG 2.1.2) — unlock before restore focus
-   7. Email sanity check for register (guarded)
-   ============================================================ */
 (function () {
   'use strict';
-
   var ISO_DATE_ONLY = /^\d{4}-\d{2}-\d{2}$/;
   function asLocalDate(d) {
     if (typeof d === 'string' && ISO_DATE_ONLY.test(d)) {
@@ -3191,23 +3178,17 @@ requestAnimationFrame(() => {
   }
   var _fmtDate = window.fmtDate;
   window.fmtDate = function (d, o) { return _fmtDate(asLocalDate(d), o); };
-
   var _fmtTime = window.fmtTime;
   window.fmtTime = function (d) { return _fmtTime(asLocalDate(d)); };
-
   var _toDateInputValue = window.toDateInputValue;
   window.toDateInputValue = function (d) { return _toDateInputValue(asLocalDate(d)); };
 
   var TITLES = {
     '': 'therabyte — Booking & intake for bodywork',
-    'login': 'Sign in — therabyte',
-    'register': 'Create account — therabyte',
-    'forgot': 'Reset password — therabyte',
-    'about': 'About — therabyte',
-    'help': 'Help Center — therabyte',
-    'privacy': 'Privacy Policy — therabyte',
-    'terms': 'Terms of Service — therabyte',
-    'onboard': 'Get started — therabyte',
+    'login': 'Sign in — therabyte', 'register': 'Create account — therabyte',
+    'forgot': 'Reset password — therabyte', 'about': 'About — therabyte',
+    'help': 'Help Center — therabyte', 'privacy': 'Privacy Policy — therabyte',
+    'terms': 'Terms of Service — therabyte', 'onboard': 'Get started — therabyte',
     'self-care': 'Self-care guides — therabyte'
   };
   var APP_TITLES = {
@@ -3225,13 +3206,10 @@ requestAnimationFrame(() => {
     if (!title && top === 'app') {
       var signedIn = false;
       try { signedIn = !!(typeof State !== 'undefined' && State && State.user); } catch (e) { signedIn = false; }
-      title = signedIn
-        ? ((APP_TITLES[parts[1]] || 'App') + ' — therabyte')
-        : 'Sign in — therabyte';
+      title = signedIn ? ((APP_TITLES[parts[1]] || 'App') + ' — therabyte') : 'Sign in — therabyte';
     }
     if (title) document.title = title;
   }
-
   var previousAnnouncement = '';
   function announce(msg) {
     if (!msg || msg === previousAnnouncement) return;
@@ -3241,7 +3219,6 @@ requestAnimationFrame(() => {
     el.textContent = '';
     requestAnimationFrame(function () { el.textContent = msg; });
   }
-
   var lastHash = location.hash;
   function onRouteChange() {
     if (location.hash === lastHash) return;
@@ -3269,20 +3246,14 @@ requestAnimationFrame(() => {
   var supportsInert = 'inert' in HTMLElement.prototype;
   function lockBackground() {
     if (!appRoot) return;
-    if (supportsInert) {
-      appRoot.inert = true;
-    } else {
-      appRoot.setAttribute('aria-hidden', 'true');
-    }
+    if (supportsInert) appRoot.inert = true;
+    else appRoot.setAttribute('aria-hidden', 'true');
     document.body.classList.add('modal-open');
   }
   function unlockBackground() {
     if (!appRoot) return;
-    if (supportsInert) {
-      appRoot.inert = false;
-    } else {
-      appRoot.removeAttribute('aria-hidden');
-    }
+    if (supportsInert) appRoot.inert = false;
+    else appRoot.removeAttribute('aria-hidden');
     document.body.classList.remove('modal-open');
   }
   var _modal = window.modal;
@@ -3304,14 +3275,11 @@ requestAnimationFrame(() => {
   window.handleRegister = function (form) {
     if (!form || !form.email) return _handleRegister(form);
     var email = (form.email.value || '').trim();
-    if (!EMAIL_RE.test(email)) {
-      window.toast('Please enter a valid email address', 'error');
-      return;
-    }
+    if (!EMAIL_RE.test(email)) { window.toast('Please enter a valid email address', 'error'); return; }
     return _handleRegister(form);
   };
 
-  console.info('[therabyte] polish layer active — date drift, a11y, focus, modal isolation. QA pass applied.');
+  console.info('[therabyte] polish layer active — badges trimmed from headers, credits retained in footers.');
 })();
 </script>
 </body>
